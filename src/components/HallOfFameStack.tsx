@@ -11,7 +11,6 @@ type Manager = {
   losses: number;
 };
 
-// Rotation and offset for each position in the visual stack (0 = top card)
 const STACK_STYLE = [
   { rotate:  1, x:  0, y: 0 },
   { rotate: -6, x:  5, y: 4 },
@@ -29,27 +28,22 @@ export default function HallOfFameStack({
   managers: Manager[];
   maxChamps: number;
 }) {
+  const total = managers.length;
   const [topIndex, setTopIndex] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  // flyingOff: top card exits left
-  const [flyingOff, setFlyingOff] = useState(false);
-  // flyingIn: previous card enters from the right (placed off-screen, then animated in)
-  const [flyingIn, setFlyingIn] = useState(false);
+  const [dismissDir, setDismissDir] = useState<'left' | 'right' | null>(null);
   const startXRef = useRef(0);
 
-  const total = managers.length;
-  const remaining = total - topIndex;
-
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (flyingOff || flyingIn) return;
+    if (dismissDir) return;
     e.currentTarget.setPointerCapture(e.pointerId);
     startXRef.current = e.clientX;
     setIsDragging(true);
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging || flyingOff || flyingIn) return;
+    if (!isDragging || dismissDir) return;
     setDragX(e.clientX - startXRef.current);
   };
 
@@ -57,48 +51,29 @@ export default function HallOfFameStack({
     if (!isDragging) return;
     setIsDragging(false);
 
-    if (dragX < -SWIPE_THRESHOLD) {
-      // Swipe left → dismiss
-      setFlyingOff(true);
+    if (Math.abs(dragX) > SWIPE_THRESHOLD) {
+      const dir = dragX < 0 ? 'left' : 'right';
+      setDismissDir(dir);
       setTimeout(() => {
-        setTopIndex(i => i + 1);
+        setTopIndex(i => dir === 'left'
+          ? (i + 1) % total
+          : (i - 1 + total) % total
+        );
         setDragX(0);
-        setFlyingOff(false);
+        setDismissDir(null);
       }, 280);
-    } else if (dragX > SWIPE_THRESHOLD && topIndex > 0) {
-      // Swipe right → bring back previous card
-      // 1. Snap topIndex back (card appears off-screen right, no transition)
-      setTopIndex(i => i - 1);
-      setFlyingIn(true);
-      setDragX(0);
-      // 2. Two RAFs later: enable transition so it animates in
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => setFlyingIn(false))
-      );
     } else {
       setDragX(0);
     }
   };
 
-  if (remaining === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-12 gap-3">
-        <p className="text-slate-400 text-sm">That&apos;s the whole deck!</p>
-        <button
-          onClick={() => setTopIndex(0)}
-          className="text-emerald-400 text-sm font-medium hover:text-emerald-300 transition-colors"
-        >
-          ↺ Start over
-        </button>
-      </div>
-    );
-  }
-
-  const visibleManagers = managers.slice(topIndex, topIndex + 4);
+  // Always show up to 4 cards, wrapping around infinitely
+  const visibleManagers = Array.from({ length: Math.min(4, total) }, (_, i) =>
+    managers[(topIndex + i) % total]
+  );
 
   return (
     <div className="flex flex-col items-center gap-5">
-      {/* Stack */}
       <div className="relative w-full" style={{ height: '196px' }}>
         {[...visibleManagers].reverse().map((manager, reversedPos) => {
           const stackPos = visibleManagers.length - 1 - reversedPos;
@@ -110,15 +85,9 @@ export default function HallOfFameStack({
           let transition = 'transform 0.28s ease';
 
           if (isTop) {
-            if (flyingOff) {
-              // Animate out to the left
-              translateX = -FLY_DISTANCE;
-              rotate = s.rotate - 25;
-            } else if (flyingIn) {
-              // Placed off-screen right instantly (no transition)
-              translateX = FLY_DISTANCE;
-              rotate = 20;
-              transition = 'none';
+            if (dismissDir) {
+              translateX = dismissDir === 'left' ? -FLY_DISTANCE : FLY_DISTANCE;
+              rotate = s.rotate + (dismissDir === 'left' ? -25 : 25);
             } else if (isDragging) {
               translateX = dragX;
               rotate = s.rotate + dragX * 0.04;
@@ -128,7 +97,7 @@ export default function HallOfFameStack({
 
           return (
             <div
-              key={manager.manager}
+              key={`${manager.manager}-${(topIndex + stackPos) % total}`}
               style={{
                 position: 'absolute',
                 inset: 0,
@@ -177,8 +146,6 @@ export default function HallOfFameStack({
             className={`rounded-full transition-all duration-300 ${
               i === topIndex
                 ? 'w-4 h-1.5 bg-emerald-400'
-                : i < topIndex
-                ? 'w-1.5 h-1.5 bg-slate-700'
                 : 'w-1.5 h-1.5 bg-slate-600'
             }`}
           />
