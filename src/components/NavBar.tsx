@@ -191,41 +191,35 @@ export default function NavBar() {
         </svg>
       </button>
 
-      {/* Mobile sidebar overlay */}
+      {/* Mobile bottom sheet overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 bg-black/60 z-[9998] md:hidden" onClick={closeSidebar} />
       )}
 
-      {/* Mobile sidebar drawer */}
+      {/* Mobile bottom sheet */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-slate-900 border-r border-slate-800 z-[9999] transform transition-transform duration-300 ease-in-out md:hidden ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed bottom-0 left-0 right-0 max-h-[80vh] bg-slate-900 border-t border-slate-800 rounded-t-2xl z-[9999] transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+          sidebarOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
       >
-        <div className="flex items-center justify-between px-4 h-16 border-b border-slate-800">
-          <Link href="/" className="font-bold text-xl flex items-center gap-2" onClick={closeSidebar}>
-            <span className="text-2xl">🏈</span>
-            <span className="text-emerald-500">Frodd</span>
-            <span className="text-emerald-400">FFL</span>
-          </Link>
-          <button
-            onClick={closeSidebar}
-            className="p-2 rounded-md hover:bg-slate-800 transition-colors"
-            aria-label="Close navigation"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-2 shrink-0 cursor-pointer" onClick={closeSidebar}>
+          <div className="w-10 h-1 rounded-full bg-slate-700" />
         </div>
 
-        <div className="py-2">
-          <Link href="/" className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/') ? 'text-emerald-400 bg-slate-800/60' : ''}`} onClick={closeSidebar}>
-            Dashboard
-          </Link>
+        {/* Scrollable links */}
+        <div className="overflow-y-auto py-2 pb-10">
+          {[
+            { href: '/', label: 'Dashboard' },
+          ].map(({ href, label }) => (
+            <Link key={href} href={href}
+              className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-slate-800/60' : ''}`}
+              onClick={closeSidebar}
+            >{label}</Link>
+          ))}
 
           <button
-            className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
+            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
             onClick={() => setSidebarExpanded(s => ({ ...s, history: !s.history }))}
           >
             League History {chevron(sidebarExpanded.history)}
@@ -238,13 +232,16 @@ export default function NavBar() {
                 { href: '/shotgun', label: 'Shotgun' },
                 { href: '/highroller', label: 'High Roller' },
               ].map(({ href, label }) => (
-                <Link key={href} href={href} className={`block px-8 py-2.5 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`} onClick={closeSidebar}>{label}</Link>
+                <Link key={href} href={href}
+                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`}
+                  onClick={closeSidebar}
+                >{label}</Link>
               ))}
             </div>
           )}
 
           <button
-            className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
+            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
             onClick={() => setSidebarExpanded(s => ({ ...s, analytics: !s.analytics }))}
           >
             Analytics {chevron(sidebarExpanded.analytics)}
@@ -257,14 +254,18 @@ export default function NavBar() {
                 { href: '/matrix', label: 'Supremacy Matrix' },
                 { href: '/rivalries', label: 'Rivalries' },
               ].map(({ href, label }) => (
-                <Link key={href} href={href} className={`block px-8 py-2.5 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`} onClick={closeSidebar}>{label}</Link>
+                <Link key={href} href={href}
+                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`}
+                  onClick={closeSidebar}
+                >{label}</Link>
               ))}
             </div>
           )}
 
-          <Link href="/allstar" className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`} onClick={closeSidebar}>
-            All-Star
-          </Link>
+          <Link href="/allstar"
+            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
+            onClick={closeSidebar}
+          >All-Star</Link>
         </div>
       </div>
     </>
