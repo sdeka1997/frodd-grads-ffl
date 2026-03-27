@@ -3,13 +3,51 @@
 import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing';
 import { DollarSign, TrendingUp, Calendar, Crown, Sparkles } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from 'recharts';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function HighRollerPage() {
   const weeklyHighs = getWeeklyHighScores();
   const highRollerStats = getHighRollerStats();
 
   const [activeTab, setActiveTab] = useState<'winners' | 'breakdown'>('winners');
+
+  const years = ['2024', '2025'];
+  const [topYear, setTopYear] = useState(0);
+  const [yearDragX, setYearDragX] = useState(0);
+  const [isDraggingYear, setIsDraggingYear] = useState(false);
+  const [yearDismissDir, setYearDismissDir] = useState<'left' | 'right' | null>(null);
+  const yearStartX = useRef(0);
+
+  const onYearPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (yearDismissDir) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    yearStartX.current = e.clientX;
+    setIsDraggingYear(true);
+  };
+  const onYearPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingYear || yearDismissDir) return;
+    setYearDragX(e.clientX - yearStartX.current);
+  };
+  const onYearPointerUp = () => {
+    if (!isDraggingYear) return;
+    setIsDraggingYear(false);
+    if (Math.abs(yearDragX) > 75) {
+      const dir = yearDragX < 0 ? 'left' : 'right';
+      setYearDismissDir(dir);
+      setTimeout(() => {
+        setTopYear(i => dir === 'left' ? (i + 1) % years.length : (i - 1 + years.length) % years.length);
+        setYearDragX(0);
+        setYearDismissDir(null);
+      }, 280);
+    } else {
+      setYearDragX(0);
+    }
+  };
+
+  const STACK_STYLE = [
+    { rotate: 1, x: 0, y: 0 },
+    { rotate: -4, x: 4, y: 5 },
+  ];
 
   const [tooltip, setTooltip] = useState<{
     manager: string;
@@ -144,47 +182,89 @@ export default function HighRollerPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {['2024', '2025'].map(year => {
-            const yearHighs = weeklyHighs.filter(h => h.year === year);
-            const totalPayout = yearHighs.length * 15;
-            const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
-            const winCounts = yearHighs.reduce((acc, h) => {
-              acc[h.manager] = (acc[h.manager] || 0) + 1;
-              return acc;
-            }, {} as Record<string, number>);
-            const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
+        <div className="flex flex-col items-center gap-5">
+          <div className="relative w-full" style={{ height: '180px' }}>
+            {[...Array.from({ length: Math.min(2, years.length) }, (_, i) => years[(topYear + i) % years.length])].reverse().map((year, reversedPos) => {
+              const stackPos = Math.min(2, years.length) - 1 - reversedPos;
+              const isTop = stackPos === 0;
+              const s = STACK_STYLE[stackPos] ?? STACK_STYLE[STACK_STYLE.length - 1];
 
-            return (
-              <div key={year} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold text-white">{year} Season</h3>
-                  <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
-                </div>
+              const yearHighs = weeklyHighs.filter(h => h.year === year);
+              const totalPayout = yearHighs.length * 15;
+              const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
+              const winCounts = yearHighs.reduce((acc, h) => {
+                acc[h.manager] = (acc[h.manager] || 0) + 1;
+                return acc;
+              }, {} as Record<string, number>);
+              const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <div className="text-slate-400">Total Weeks</div>
-                    <div className="text-xl font-bold text-white">{yearHighs.length}</div>
-                  </div>
-                  <div>
-                    <div className="text-slate-400">Unique Winners</div>
-                    <div className="text-xl font-bold text-white">{uniqueWinners}</div>
-                  </div>
-                </div>
+              let translateX = s.x;
+              let rotate = s.rotate;
+              let transition = 'transform 0.28s ease';
 
-                <div className="mt-4 pt-4 border-t border-slate-700">
-                  <div className="text-slate-400 text-xs">Most Wins</div>
-                  {topWinner && (
-                    <div className="flex items-center justify-between mt-1">
-                      <span className="font-bold text-white">{topWinner[0]}</span>
-                      <span className="text-emerald-400 font-bold">{topWinner[1]} weeks 👑</span>
+              if (isTop) {
+                if (yearDismissDir) {
+                  translateX = yearDismissDir === 'left' ? -600 : 600;
+                  rotate = s.rotate + (yearDismissDir === 'left' ? -20 : 20);
+                } else if (isDraggingYear) {
+                  translateX = yearDragX;
+                  rotate = s.rotate + yearDragX * 0.04;
+                  transition = 'none';
+                }
+              }
+
+              return (
+                <div
+                  key={`${year}-${(topYear + stackPos) % years.length}`}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    transform: `translate(${translateX}px, ${s.y}px) rotate(${rotate}deg)`,
+                    zIndex: Math.min(2, years.length) - stackPos,
+                    transition,
+                    touchAction: 'none',
+                    transformOrigin: 'center bottom',
+                  }}
+                  {...(isTop ? { onPointerDown: onYearPointerDown, onPointerMove: onYearPointerMove, onPointerUp: onYearPointerUp } : {})}
+                >
+                  <div className={`bg-slate-900 border border-slate-800 rounded-xl p-6 h-full ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-2xl font-bold text-white">{year} Season</h3>
+                      <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
                     </div>
-                  )}
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <div className="text-slate-400">Total Weeks</div>
+                        <div className="text-xl font-bold text-white">{yearHighs.length}</div>
+                      </div>
+                      <div>
+                        <div className="text-slate-400">Unique Winners</div>
+                        <div className="text-xl font-bold text-white">{uniqueWinners}</div>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-slate-700">
+                      <div className="text-slate-400 text-xs">Most Wins</div>
+                      {topWinner && (
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="font-bold text-white">{topWinner[0]}</span>
+                          <span className="text-emerald-400 font-bold">{topWinner[1]} wins</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          <div className="flex gap-1.5">
+            {years.map((_, i) => (
+              <div
+                key={i}
+                className={`rounded-full transition-all duration-300 ${i === topYear ? 'w-4 h-1.5 bg-emerald-400' : 'w-1.5 h-1.5 bg-slate-600'}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
