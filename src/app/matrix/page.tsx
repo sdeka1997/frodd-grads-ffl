@@ -124,10 +124,10 @@ export default function MatrixPage() {
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-slate-500 mt-3 px-1">
-            <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
-          </p>
         </div>
+        <p className="text-xs text-slate-500 mt-3 px-1">
+          <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
+        </p>
       </section>
 
       {/* DOMINANCE RANKINGS */}
