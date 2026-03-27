@@ -1,9 +1,10 @@
 import { getCumulativeRecords } from '@/utils/dataProcessing';
-import { Trophy, Target } from 'lucide-react';
+import { Trophy, Target, Star, Calendar } from 'lucide-react';
 import CumulativeTable from '@/components/CumulativeTable';
 import { Medal } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import AllStarCountdown from '@/components/AllStarCountdown';
 
 export default function Home() {
   const records = getCumulativeRecords();
@@ -22,6 +23,8 @@ export default function Home() {
           The complete digital home for the Frodd Grads <span className="whitespace-nowrap">(2019-2025)</span>. League history, analytics, memories, and more.
         </p>
       </header>
+
+      <AllStarCountdown />
 
       <section>
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
