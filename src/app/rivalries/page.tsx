@@ -156,7 +156,7 @@ export default function RivalriesPage() {
       {/* SERIES BREAKDOWN TABLE */}
       <section>
         <h2 className="text-xl md:text-3xl font-bold mb-6 flex items-center gap-2">
-          <Search className="text-emerald-400 shrink-0" /> <span className="truncate">Series Breakdown: {manager1}</span>
+          <Search className="text-emerald-400 shrink-0 w-5 h-5 md:w-6 md:h-6" /> <span className="truncate">Series Breakdown: {manager1}</span>
         </h2>
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto shadow-2xl">
           <table className="w-full text-sm text-left">
