@@ -28,30 +28,33 @@ export default function LuckPage() {
         </p>
       </header>
 
-      {/* LUCK INDEX CHART */}
+      {/* QUADRANT LEGEND */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-200">Quadrant Analysis</h2>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded bg-emerald-400"></div>
-              <span><span className="text-emerald-400 font-medium">Bottom Right:</span> Good & Lucky (Score High, Low PA)</span>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <h2 className="text-2xl font-bold text-slate-200 mb-4">Quadrant Analysis</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-3 p-3 bg-emerald-400/10 border border-emerald-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-emerald-400 shrink-0"></div>
+              <span><span className="text-emerald-400 font-medium">Bottom Right:</span> Good &amp; Lucky (Score High, Low PA)</span>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded bg-blue-400"></div>
-              <span><span className="text-blue-400 font-medium">Top Right:</span> Good & Unlucky (Score High, High PA)</span>
+            <div className="flex items-center gap-3 p-3 bg-blue-400/10 border border-blue-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-blue-400 shrink-0"></div>
+              <span><span className="text-blue-400 font-medium">Top Right:</span> Good &amp; Unlucky (Score High, High PA)</span>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded bg-amber-400"></div>
-              <span><span className="text-amber-400 font-medium">Bottom Left:</span> Bad & Lucky (Score Low, Low PA)</span>
+            <div className="flex items-center gap-3 p-3 bg-amber-400/10 border border-amber-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-amber-400 shrink-0"></div>
+              <span><span className="text-amber-400 font-medium">Bottom Left:</span> Bad &amp; Lucky (Score Low, Low PA)</span>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-4 h-4 rounded bg-red-400"></div>
-              <span><span className="text-red-400 font-medium">Top Left:</span> Bad & Unlucky (Score Low, High PA)</span>
+            <div className="flex items-center gap-3 p-3 bg-red-400/10 border border-red-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-red-400 shrink-0"></div>
+              <span><span className="text-red-400 font-medium">Top Left:</span> Bad &amp; Unlucky (Score Low, High PA)</span>
             </div>
           </div>
         </div>
+      </section>
 
+      {/* LUCK INDEX CHART */}
+      <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 md:p-6 h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 40, right: 20, bottom: 20, left: -10 }}>
