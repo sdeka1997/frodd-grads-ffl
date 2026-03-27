@@ -58,7 +58,7 @@ export default function ClutchnessPage() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={clutchData}
-                margin={{ top: 20, right: 30, left: -15, bottom: 5 }}
+                margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                 <XAxis dataKey="name" stroke="#94a3b8" tick={{fill: '#94a3b8'}} />

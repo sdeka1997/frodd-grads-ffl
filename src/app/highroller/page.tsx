@@ -9,8 +9,6 @@ export default function HighRollerPage() {
   const weeklyHighs = getWeeklyHighScores();
   const highRollerStats = getHighRollerStats();
 
-  const [activeTab, setActiveTab] = useState<'winners' | 'breakdown'>('winners');
-
   const [tooltip, setTooltip] = useState<{
     manager: string;
     earnings: number;
@@ -57,8 +55,8 @@ export default function HighRollerPage() {
     <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-          <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
-            <DollarSign className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
+          <h1 className="text-4xl font-extrabold flex items-center gap-3">
+            <DollarSign className="w-10 h-10 text-emerald-400" />
             High Roller Leaderboard
           </h1>
           <span className="text-slate-500 text-sm">
@@ -84,26 +82,22 @@ export default function HighRollerPage() {
           </p>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6">
-          <div className="overflow-x-auto">
-            <div style={{ minWidth: `${Math.max(500, highRollerStats.length * 65)}px`, height: '360px' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={highRollerStats}
-                  margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                  <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
-                  <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
-                  <Bar dataKey="totalEarnings" name="Total Earnings" radius={[4, 4, 0, 0]} onClick={handleBarClick} style={{ cursor: 'pointer' }}>
-                    {highRollerStats.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={getWinnerColor(entry, highRollerStats)} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={highRollerStats}
+              margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+              <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+              <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
+              <Bar dataKey="totalEarnings" name="Total Earnings" radius={[4, 4, 0, 0]} onClick={handleBarClick} style={{ cursor: 'pointer' }}>
+                {highRollerStats.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getWinnerColor(entry, highRollerStats)} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
         {tooltip && (
@@ -133,6 +127,84 @@ export default function HighRollerPage() {
         </div>
       </section>
 
+      {/* RECENT WEEKLY HIGHS */}
+      <section>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <Calendar className="text-purple-400" /> Recent Winners
+          </h2>
+          <p className="text-slate-400 mt-2">
+            The most recent weekly high scorers and their payouts.
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {weeklyHighs.slice(0, 10).map((high, index) => (
+            <div
+              key={`${high.year}-${high.week}-${high.manager}`}
+              className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
+                  <Calendar className="w-4 h-4" />
+                  {high.year} Week {high.week}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Crown className="w-5 h-5 text-emerald-400" />
+                  <span className="text-lg font-bold text-white">{high.manager}</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
+                <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* EARNINGS BREAKDOWN */}
+      <section>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <DollarSign className="text-green-400" /> Earnings Breakdown
+          </h2>
+          <p className="text-slate-400 mt-2">
+            How the money is distributed across seasons and managers.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {highRollerStats.slice(0, 6).map((stats, index) => (
+            <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+                <div className="text-right">
+                  <div className="flex items-center gap-1 text-emerald-400">
+                    <Crown className="w-5 h-5" />
+                    <span className="text-2xl font-bold">{stats.totalWins}</span>
+                  </div>
+                  <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+                  <div key={year} className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">{year}:</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-white font-bold">{seasonStats.wins} wins</span>
+                      <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
+                      <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* SEASON TOTALS */}
       <section>
         <div className="mb-6">
@@ -149,11 +221,6 @@ export default function HighRollerPage() {
             const yearHighs = weeklyHighs.filter(h => h.year === year);
             const totalPayout = yearHighs.length * 15;
             const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
-            const winCounts = yearHighs.reduce((acc, h) => {
-              acc[h.manager] = (acc[h.manager] || 0) + 1;
-              return acc;
-            }, {} as Record<string, number>);
-            const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
 
             return (
               <div key={year} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
@@ -174,11 +241,15 @@ export default function HighRollerPage() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-slate-700">
-                  <div className="text-slate-400 text-xs">Most Wins</div>
-                  {topWinner && (
+                  <div className="text-slate-400 text-xs">Top Scorer</div>
+                  {yearHighs.length > 0 && (
                     <div className="flex items-center justify-between mt-1">
-                      <span className="font-bold text-white">{topWinner[0]}</span>
-                      <span className="text-emerald-400 font-bold">{topWinner[1]} weeks 👑</span>
+                      <span className="font-bold text-white">
+                        {yearHighs.reduce((max, current) => current.points > max.points ? current : max).manager}
+                      </span>
+                      <span className="text-emerald-400 font-bold">
+                        {yearHighs.reduce((max, current) => current.points > max.points ? current : max).points} pts
+                      </span>
                     </div>
                   )}
                 </div>
@@ -186,91 +257,6 @@ export default function HighRollerPage() {
             );
           })}
         </div>
-      </section>
-
-      {/* RECENT WINNERS / EARNINGS BREAKDOWN TABS */}
-      <section>
-        <div className="mb-4">
-          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-full">
-            <button
-              onClick={() => setActiveTab('winners')}
-              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${
-                activeTab === 'winners'
-                  ? 'bg-emerald-500/20 text-emerald-300'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
-            >
-              👑 Recent Winners
-            </button>
-            <button
-              onClick={() => setActiveTab('breakdown')}
-              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
-                activeTab === 'breakdown'
-                  ? 'bg-green-500/20 text-green-300'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
-            >
-              💰 Year by Year
-            </button>
-          </div>
-        </div>
-
-        {activeTab === 'winners' && (
-          <div className="grid gap-4">
-            {weeklyHighs.slice(0, 10).map((high) => (
-              <div
-                key={`${high.year}-${high.week}-${high.manager}`}
-                className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
-                    <Calendar className="w-4 h-4" />
-                    {high.year} Week {high.week}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Crown className="w-5 h-5 text-emerald-400" />
-                    <span className="text-lg font-bold text-white">{high.manager}</span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
-                  <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'breakdown' && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {highRollerStats.map((stats) => (
-              <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                  <div className="text-right">
-                    <div className="flex items-center gap-1 text-emerald-400">
-                      <Crown className="w-5 h-5" />
-                      <span className="text-2xl font-bold">{stats.totalWins}</span>
-                    </div>
-                    <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                    <div key={year} className="flex items-center justify-between text-sm">
-                      <span className="text-slate-400">{year}:</span>
-                      <div className="flex items-center gap-3">
-                        <span className="text-white font-bold">{seasonStats.wins} wins</span>
-                        <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
-                        <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
       </section>
     </div>
   );

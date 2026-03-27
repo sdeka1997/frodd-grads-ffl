@@ -168,7 +168,7 @@ export default function RivalriesPage() {
                 <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors" onClick={() => handleSort('total')}>
                   Total Meetings {getSortIcon('total')}
                 </th>
-                <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors min-w-[100px]" onClick={() => handleSort('wins')>
+                <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors" onClick={() => handleSort('wins')}>
                   Record {getSortIcon('wins')}
                 </th>
                 <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors" onClick={() => handleSort('winPct')}>

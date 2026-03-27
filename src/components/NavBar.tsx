@@ -29,18 +29,15 @@ export default function NavBar() {
   const pathname = usePathname();
   const pageName = getPageName(pathname);
 
+  const navRef = useRef<HTMLElement>(null);
+
   // Desktop dropdown state
   const [open, setOpen] = useState<DropdownName>(null);
   const [pos, setPos] = useState({ top: 0, left: 0 });
 
-  // Mobile bottom sheet state
+  // Mobile sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpanded, setSidebarExpanded] = useState({ history: true, analytics: true });
-
-  // Bottom sheet drag-to-dismiss
-  const [sheetDragY, setSheetDragY] = useState(0);
-  const [isDraggingSheet, setIsDraggingSheet] = useState(false);
-  const sheetDragStartY = useRef(0);
 
   // FAB one-time pulse
   const [fabPulse, setFabPulse] = useState(false);
@@ -56,7 +53,6 @@ export default function NavBar() {
   }, []);
 
   const toggleDropdown = (name: DropdownName, e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
     if (open === name) {
       setOpen(null);
     } else {
@@ -67,7 +63,11 @@ export default function NavBar() {
   };
 
   useEffect(() => {
-    const close = () => setOpen(null);
+    const close = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpen(null);
+      }
+    };
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
   }, []);
@@ -83,29 +83,6 @@ export default function NavBar() {
   const closeSidebar = () => {
     setSidebarOpen(false);
     setSidebarExpanded({ history: true, analytics: true });
-    setSheetDragY(0);
-    setIsDraggingSheet(false);
-  };
-
-  const onHandlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    sheetDragStartY.current = e.clientY;
-    setIsDraggingSheet(true);
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-
-  const onHandlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingSheet) return;
-    const delta = Math.max(0, e.clientY - sheetDragStartY.current);
-    setSheetDragY(delta);
-  };
-
-  const onHandlePointerUp = () => {
-    setIsDraggingSheet(false);
-    if (sheetDragY > 80) {
-      closeSidebar();
-    } else {
-      setSheetDragY(0);
-    }
   };
 
   const desktopLinkClass =
@@ -124,12 +101,12 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className="border-b border-slate-800 bg-slate-900 sticky top-0 z-50 w-full">
+      <nav ref={navRef} className="border-b border-slate-800 bg-slate-900 sticky top-0 z-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
+          <div className="relative flex items-center h-16">
 
-            {/* Mobile: 🏈 + page name — left aligned */}
-            <div className="md:hidden">
+            {/* Mobile: 🏈 + page name centered */}
+            <div className="md:hidden absolute left-1/2 -translate-x-1/2">
               <Link
                 href="/"
                 className="font-bold text-xl flex items-center gap-2"
@@ -186,7 +163,6 @@ export default function NavBar() {
           <div
             style={{ position: 'fixed', top: pos.top, left: pos.left }}
             className="w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]"
-            onClick={(e) => e.stopPropagation()}
           >
             <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
             <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
@@ -198,7 +174,6 @@ export default function NavBar() {
           <div
             style={{ position: 'fixed', top: pos.top, left: pos.left }}
             className="w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]"
-            onClick={(e) => e.stopPropagation()}
           >
             <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
             <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Playoff Clutchness</Link>
@@ -208,7 +183,7 @@ export default function NavBar() {
         )}
       </nav>
 
-      {/* Mobile FAB — bottom-left, opens bottom sheet */}
+      {/* Mobile FAB — bottom-left, opens sidebar */}
       <button
         className={`fixed bottom-6 left-4 z-[9997] md:hidden bg-slate-800 border border-slate-700 text-slate-100 rounded-full p-3.5 hover:bg-slate-700 transition-colors fab-glow ${fabPulse ? 'fab-pulse' : ''}`}
         onClick={() => setSidebarOpen(true)}
@@ -219,45 +194,41 @@ export default function NavBar() {
         </svg>
       </button>
 
-      {/* Mobile bottom sheet overlay — touch-none prevents scroll bleed */}
+      {/* Mobile bottom sheet overlay */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/60 z-[9998] md:hidden touch-none" onClick={closeSidebar} />
+        <div className="fixed inset-0 bg-black/60 z-[9998] md:hidden" onClick={closeSidebar} />
       )}
 
       {/* Mobile bottom sheet */}
       <div
-        className={`fixed bottom-0 left-0 right-0 max-h-[80vh] bg-slate-900 border-t border-slate-700 rounded-t-2xl z-[9999] md:hidden flex flex-col ${
-          isDraggingSheet ? '' : 'transition-transform duration-300 ease-in-out'
-        } ${sidebarOpen && sheetDragY === 0 ? 'translate-y-0' : sidebarOpen ? '' : 'translate-y-full'}`}
-        style={sidebarOpen && sheetDragY > 0 ? { transform: `translateY(${sheetDragY}px)` } : undefined}
+        className={`fixed bottom-0 left-0 right-0 max-h-[80vh] bg-slate-900 border-t border-slate-800 rounded-t-2xl z-[9999] transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+          sidebarOpen ? 'translate-y-0' : 'translate-y-full'
+        }`}
       >
-        {/* Drag handle — swipe down to dismiss */}
-        <div
-          className="flex justify-center pt-3 pb-2 shrink-0 cursor-grab active:cursor-grabbing touch-none"
-          onPointerDown={onHandlePointerDown}
-          onPointerMove={onHandlePointerMove}
-          onPointerUp={onHandlePointerUp}
-        >
-          <div className="w-10 h-1 rounded-full bg-slate-600" />
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-2 shrink-0 cursor-pointer" onClick={closeSidebar}>
+          <div className="w-10 h-1 rounded-full bg-slate-700" />
         </div>
 
         {/* Scrollable links */}
-        <div className="overflow-y-auto overscroll-contain py-1 pb-8">
-          <Link href="/"
-            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
-            onClick={closeSidebar}
-          >Dashboard</Link>
-
-          <div className="border-t border-slate-800" />
+        <div className="overflow-y-auto py-2 pb-10">
+          {[
+            { href: '/', label: 'Dashboard' },
+          ].map(({ href, label }) => (
+            <Link key={href} href={href}
+              className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-slate-800/60' : ''}`}
+              onClick={closeSidebar}
+            >{label}</Link>
+          ))}
 
           <button
-            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-colors"
+            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
             onClick={() => setSidebarExpanded(s => ({ ...s, history: !s.history }))}
           >
             League History {chevron(sidebarExpanded.history)}
           </button>
           {sidebarExpanded.history && (
-            <div className="bg-slate-950/60">
+            <div className="bg-slate-950">
               {[
                 { href: '/managers', label: 'Managers' },
                 { href: '/seasons', label: 'Seasons' },
@@ -265,23 +236,21 @@ export default function NavBar() {
                 { href: '/highroller', label: 'High Roller' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href}
-                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
+                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`}
                   onClick={closeSidebar}
                 >{label}</Link>
               ))}
             </div>
           )}
 
-          <div className="border-t border-slate-800" />
-
           <button
-            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-colors"
+            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
             onClick={() => setSidebarExpanded(s => ({ ...s, analytics: !s.analytics }))}
           >
             Analytics {chevron(sidebarExpanded.analytics)}
           </button>
           {sidebarExpanded.analytics && (
-            <div className="bg-slate-950/60">
+            <div className="bg-slate-950">
               {[
                 { href: '/luck', label: 'Luck Index' },
                 { href: '/clutchness', label: 'Playoff Clutchness' },
@@ -289,21 +258,17 @@ export default function NavBar() {
                 { href: '/rivalries', label: 'Rivalries' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href}
-                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
+                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`}
                   onClick={closeSidebar}
                 >{label}</Link>
               ))}
             </div>
           )}
 
-          <div className="border-t border-slate-800" />
-
           <Link href="/allstar"
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
           >All-Star</Link>
-
-          <div className="border-t border-slate-800" />
         </div>
       </div>
     </>
