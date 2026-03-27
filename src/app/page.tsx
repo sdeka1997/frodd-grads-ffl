@@ -34,9 +34,9 @@ export default function Home() {
         </h2>
         {/* Mobile: swipeable carousel */}
         <div className="md:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
-          <div className="flex gap-4 pb-2 w-max">
+          <div className="flex gap-3 pb-2 w-max pr-8">
             {hallOfFame.map((manager) => (
-              <div key={manager.manager} className="snap-center shrink-0 w-[calc(100vw-2rem)]">
+              <div key={manager.manager} className="snap-center shrink-0 w-[78vw]">
                 <Link href={`/managers/${manager.manager}`} className="block group">
                   <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group-hover:border-emerald-500/50 transition-colors">
                     <div className="absolute top-0 right-0 p-4">
