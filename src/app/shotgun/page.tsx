@@ -29,7 +29,7 @@ export default function ShotgunPage() {
     return '#64748b';
   };
 
-  const handleBarClick = (data: any, _index: number, event: React.MouseEvent) => {
+  const handleBarClick = (data: any, _index: number, event: any) => {
     event.stopPropagation();
     if (tooltip?.manager === data.manager) {
       setTooltip(null);
