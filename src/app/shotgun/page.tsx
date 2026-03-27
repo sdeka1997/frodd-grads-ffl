@@ -2,17 +2,45 @@
 
 import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
 import { Beer, TrendingDown, Calendar, Trophy, Zap } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from 'recharts';
+import { useState, useEffect } from 'react';
 
 export default function ShotgunPage() {
   const weeklyLows = getWeeklyLowScores();
   const shotgunStats = getShotgunStats();
 
+  const [tooltip, setTooltip] = useState<{
+    manager: string;
+    shotguns: number;
+    x: number;
+    y: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const close = () => setTooltip(null);
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, []);
+
   const getShameColor = (index: number) => {
-    if (index === 0) return '#dc2626'; // Most shameful - red
-    if (index === 1) return '#ea580c'; // Second - orange
-    if (index === 2) return '#d97706'; // Third - amber
-    return '#64748b'; // Others - slate
+    if (index === 0) return '#dc2626';
+    if (index === 1) return '#ea580c';
+    if (index === 2) return '#d97706';
+    return '#64748b';
+  };
+
+  const handleBarClick = (data: any, _index: number, event: any) => {
+    event.stopPropagation();
+    if (tooltip?.manager === data.manager) {
+      setTooltip(null);
+      return;
+    }
+    setTooltip({
+      manager: data.manager,
+      shotguns: data.totalShotguns,
+      x: event.clientX,
+      y: event.clientY,
+    });
   };
 
   return (
@@ -50,21 +78,12 @@ export default function ShotgunPage() {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={shotgunStats}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-              <XAxis dataKey="manager" stroke="#94a3b8" tick={{fill: '#94a3b8'}} />
-              <YAxis stroke="#94a3b8" tick={{fill: '#94a3b8'}} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0f172a',
-                  borderColor: '#1e293b',
-                  color: '#f8fafc',
-                  borderRadius: '0.5rem'
-                }}
-                itemStyle={{ color: '#cbd5e1' }}
-              />
-              <Bar dataKey="totalShotguns" name="Total Shotguns" radius={[4, 4, 0, 0]}>
+              <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+              <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
+              <Bar dataKey="totalShotguns" name="Total Shotguns" radius={[4, 4, 0, 0]} onClick={handleBarClick} style={{ cursor: 'pointer' }}>
                 {shotgunStats.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={getShameColor(index)} />
                 ))}
@@ -72,6 +91,16 @@ export default function ShotgunPage() {
             </BarChart>
           </ResponsiveContainer>
         </div>
+
+        {tooltip && (
+          <div
+            style={{ position: 'fixed', left: tooltip.x, top: tooltip.y - 12, transform: 'translate(-50%, -100%)', pointerEvents: 'none' }}
+            className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 z-50 shadow-xl text-sm"
+          >
+            <div className="font-bold text-white">{tooltip.manager}</div>
+            <div className="text-slate-300">{tooltip.shotguns} Shotguns 🍺</div>
+          </div>
+        )}
 
         <div className="mt-6 flex gap-6 text-xs font-bold uppercase tracking-widest justify-center md:justify-start">
           <span className="flex items-center gap-2 text-red-600">
