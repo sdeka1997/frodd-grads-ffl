@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className={`${inter.variable} font-sans bg-slate-950 text-slate-50 antialiased overflow-x-hidden w-full`}>
         <NavBar />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8 min-h-screen">
           {children}
         </main>
       </body>

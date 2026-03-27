@@ -195,7 +195,7 @@ export default function NavBar() {
               <Link href="/" className={desktopLinkClass} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
-              <div className="relative" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
+              <div className="relative pb-1" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
                 <button className={`${desktopLinkClass} flex items-center gap-1`}>
                   League History {chevron(open === 'history')}
                 </button>
