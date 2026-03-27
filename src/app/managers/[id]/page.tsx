@@ -1,4 +1,4 @@
-import { getManagerStats, getManagerHistory } from '@/utils/dataProcessing';
+import { getManagerStats, getManagerHistory, getShotgunStats, getHighRollerStats } from '@/utils/dataProcessing';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { notFound } from 'next/navigation';
 import { Trophy, Activity, History, Swords, TrendingUp, TrendingDown } from 'lucide-react';
@@ -17,6 +17,9 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
   const allManagers = getAllH2HManagers();
   const totalGames = stats.wins + stats.losses;
   const winPct = totalGames > 0 ? ((stats.wins / totalGames) * 100).toFixed(1) : "0.0";
+
+  const shotgunData = getShotgunStats().find(s => s.manager === decodedId);
+  const highRollerData = getHighRollerStats().find(s => s.manager === decodedId);
 
   // Calculate Rivals
   const rivalryStats = allManagers
@@ -52,7 +55,7 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
             </span>
           )}
         </h1>
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Overall Record</div>
             <div className="text-2xl font-bold">{stats.wins} - {stats.losses}</div>
@@ -68,6 +71,14 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Championships</div>
             <div className="text-2xl font-bold text-emerald-400">{stats.championships}</div>
+          </div>
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+            <div className="text-slate-400 text-sm">Shotguns 🍺</div>
+            <div className="text-2xl font-bold text-amber-400">{shotgunData?.totalShotguns ?? 0}</div>
+          </div>
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+            <div className="text-slate-400 text-sm">High Scorer Weeks 👑</div>
+            <div className="text-2xl font-bold text-yellow-400">{highRollerData?.totalWins ?? 0}</div>
           </div>
         </div>
       </header>
@@ -106,6 +117,37 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8 border-t border-slate-800">
         <section>
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+            <Activity className="text-purple-400" /> Scoring Metrics
+          </h2>
+          <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8">
+            <div>
+              <div className="flex justify-between mb-2">
+                <span className="text-slate-400 font-medium">Points For vs Average</span>
+                <span className={`font-bold text-lg ${stats.pf_vs_avg > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {stats.pf_vs_avg > 0 ? '+' : ''}{stats.pf_vs_avg}
+                </span>
+              </div>
+              <div className="w-full bg-slate-800 rounded-full h-3">
+                <div className={`h-3 rounded-full ${stats.pf_vs_avg > 0 ? 'bg-emerald-400' : 'bg-red-400'}`} style={{ width: `${Math.min(Math.abs(stats.pf_vs_avg) * 10, 100)}%` }}></div>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-slate-800">
+              <div className="flex justify-between mb-2">
+                <span className="text-slate-400 font-medium">Points Against vs Average</span>
+                <span className={`font-bold text-lg ${stats.pa_vs_avg < 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {stats.pa_vs_avg > 0 ? '+' : ''}{stats.pa_vs_avg}
+                </span>
+              </div>
+              <div className="w-full bg-slate-800 rounded-full h-3 flex justify-end">
+                <div className={`h-3 rounded-full ${stats.pa_vs_avg < 0 ? 'bg-emerald-400' : 'bg-red-400'}`} style={{ width: `${Math.min(Math.abs(stats.pa_vs_avg) * 10, 100)}%` }}></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
             <History className="text-blue-400" /> Team History
           </h2>
           <div className="space-y-4">
@@ -123,37 +165,6 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Activity className="text-purple-400" /> Scoring Metrics
-          </h2>
-          <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8">
-            <div>
-              <div className="flex justify-between mb-2">
-                <span className="text-slate-400 font-medium">Points For vs Average</span>
-                <span className={`font-bold text-lg ${stats.pf_vs_avg > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {stats.pf_vs_avg > 0 ? '+' : ''}{stats.pf_vs_avg}
-                </span>
-              </div>
-              <div className="w-full bg-slate-800 rounded-full h-3">
-                <div className={`h-3 rounded-full ${stats.pf_vs_avg > 0 ? 'bg-emerald-400' : 'bg-red-400'}`} style={{ width: `${Math.min(Math.abs(stats.pf_vs_avg) * 10, 100)}%` }}></div>
-              </div>
-            </div>
-            
-            <div className="pt-4 border-t border-slate-800">
-              <div className="flex justify-between mb-2">
-                <span className="text-slate-400 font-medium">Points Against vs Average</span>
-                <span className={`font-bold text-lg ${stats.pa_vs_avg < 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {stats.pa_vs_avg > 0 ? '+' : ''}{stats.pa_vs_avg}
-                </span>
-              </div>
-              <div className="w-full bg-slate-800 rounded-full h-3 flex justify-end">
-                <div className={`h-3 rounded-full ${stats.pa_vs_avg < 0 ? 'bg-emerald-400' : 'bg-red-400'}`} style={{ width: `${Math.min(Math.abs(stats.pa_vs_avg) * 10, 100)}%` }}></div>
-              </div>
-            </div>
           </div>
         </section>
       </div>

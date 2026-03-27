@@ -210,7 +210,7 @@ export default function HighRollerPage() {
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
               }`}
             >
-              💰 Earnings Breakdown
+              💰 Year by Year
             </button>
           </div>
         </div>
