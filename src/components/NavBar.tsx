@@ -41,6 +41,7 @@ export default function NavBar() {
   const [sheetDragY, setSheetDragY] = useState(0);
   const [isDraggingSheet, setIsDraggingSheet] = useState(false);
   const sheetDragStartY = useRef(0);
+  const sheetScrollRef = useRef<HTMLDivElement>(null);
 
   // FAB one-time pulse
   const [fabPulse, setFabPulse] = useState(false);
@@ -102,19 +103,24 @@ export default function NavBar() {
     setIsDraggingSheet(false);
   };
 
-  const onHandlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+  const onSheetPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     sheetDragStartY.current = e.clientY;
-    setIsDraggingSheet(true);
-    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
-  const onHandlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingSheet) return;
-    const delta = Math.max(0, e.clientY - sheetDragStartY.current);
-    setSheetDragY(delta);
+  const onSheetPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const delta = e.clientY - sheetDragStartY.current;
+    if (!isDraggingSheet) {
+      // Only activate if pulling down and scroll content is at the top
+      if (delta > 8 && (sheetScrollRef.current?.scrollTop ?? 0) === 0) {
+        setIsDraggingSheet(true);
+        e.currentTarget.setPointerCapture(e.pointerId);
+      }
+      return;
+    }
+    setSheetDragY(Math.max(0, delta));
   };
 
-  const onHandlePointerUp = () => {
+  const onSheetPointerUp = () => {
     setIsDraggingSheet(false);
     if (sheetDragY > 80) {
       closeSidebar();
@@ -245,19 +251,17 @@ export default function NavBar() {
           isDraggingSheet ? '' : 'transition-transform duration-300 ease-in-out'
         } ${sidebarOpen && sheetDragY === 0 ? 'translate-y-0' : sidebarOpen ? '' : 'translate-y-full'}`}
         style={sidebarOpen && sheetDragY > 0 ? { transform: `translateY(${sheetDragY}px)` } : undefined}
+        onPointerDown={onSheetPointerDown}
+        onPointerMove={onSheetPointerMove}
+        onPointerUp={onSheetPointerUp}
       >
-        {/* Drag handle — swipe down to dismiss */}
-        <div
-          className="flex justify-center pt-3 pb-2 shrink-0 cursor-grab active:cursor-grabbing touch-none"
-          onPointerDown={onHandlePointerDown}
-          onPointerMove={onHandlePointerMove}
-          onPointerUp={onHandlePointerUp}
-        >
+        {/* Drag handle visual */}
+        <div className="flex justify-center pt-3 pb-2 shrink-0">
           <div className="w-10 h-1 rounded-full bg-slate-600" />
         </div>
 
         {/* Scrollable links */}
-        <div className="overflow-y-auto overscroll-contain py-1 pb-8">
+        <div ref={sheetScrollRef} className="overflow-y-auto overscroll-contain py-1 pb-8">
           <Link href="/"
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
