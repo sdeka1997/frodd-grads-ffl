@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { getCurrentManagers } from '@/utils/dataProcessing';
 import { Swords, Search, Trophy, History, ArrowUpDown } from 'lucide-react';
 import Link from 'next/link';
 
-export default function RivalriesPage() {
+function RivalriesContent() {
   const allManagers = useMemo(() => getAllH2HManagers(), []);
   const activeManagers = useMemo(() => getCurrentManagers().sort(), []);
   const searchParams = useSearchParams();
@@ -211,4 +211,8 @@ export default function RivalriesPage() {
       </section>
     </div>
   );
+}
+
+export default function RivalriesPage() {
+  return <Suspense><RivalriesContent /></Suspense>;
 }

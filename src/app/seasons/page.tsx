@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { getLeagueData, SeasonTeam } from '@/utils/dataProcessing';
 import { Calendar, Medal, ArrowUpDown, Trash2 } from 'lucide-react';
 import Link from 'next/link';
@@ -12,10 +12,11 @@ const parseFinish = (finish: string | undefined): number => {
   return match ? parseInt(match[0]) : 999;
 };
 
-export default function SeasonsPage() {
+function SeasonsContent() {
   const data = getLeagueData();
   const years = Object.keys(data.seasons).sort((a, b) => parseInt(b) - parseInt(a));
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [selectedYear, setSelectedYear] = useState<string>(() => {
     const y = searchParams.get('year');
     return y && years.includes(y) ? y : years[0];
@@ -101,6 +102,7 @@ export default function SeasonsPage() {
           onChange={(e) => {
             setSelectedYear(e.target.value);
             setSortConfig(null);
+            router.replace(`?year=${e.target.value}`, { scroll: false });
           }}
           className="bg-slate-900 border border-slate-700 text-white text-lg rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5 outline-none cursor-pointer"
         >
@@ -178,4 +180,8 @@ export default function SeasonsPage() {
       </div>
     </div>
   );
+}
+
+export default function SeasonsPage() {
+  return <Suspense><SeasonsContent /></Suspense>;
 }
