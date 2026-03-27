@@ -41,8 +41,8 @@ export default function NavBar() {
             onClick={() => setOpen(null)}
           >
             <span className="text-2xl">🏈</span>
-            <span className="text-emerald-500">Frodd</span>
-            <span className="text-emerald-400">FFL</span>
+            <span className="hidden sm:inline text-emerald-500">Frodd</span>
+            <span className="hidden sm:inline text-emerald-400">FFL</span>
           </Link>
 
           <div className="flex items-center gap-1 overflow-x-auto no-scrollbar min-w-0">
