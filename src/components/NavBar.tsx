@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -29,6 +29,8 @@ export default function NavBar() {
   const pathname = usePathname();
   const pageName = getPageName(pathname);
 
+  const navRef = useRef<HTMLElement>(null);
+
   // Desktop dropdown state
   const [open, setOpen] = useState<DropdownName>(null);
   const [pos, setPos] = useState({ top: 0, left: 0 });
@@ -51,7 +53,6 @@ export default function NavBar() {
   }, []);
 
   const toggleDropdown = (name: DropdownName, e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
     if (open === name) {
       setOpen(null);
     } else {
@@ -62,7 +63,11 @@ export default function NavBar() {
   };
 
   useEffect(() => {
-    const close = () => setOpen(null);
+    const close = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpen(null);
+      }
+    };
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
   }, []);
@@ -96,7 +101,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className="border-b border-slate-800 bg-slate-900 sticky top-0 z-50 w-full">
+      <nav ref={navRef} className="border-b border-slate-800 bg-slate-900 sticky top-0 z-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
 
@@ -158,7 +163,6 @@ export default function NavBar() {
           <div
             style={{ position: 'fixed', top: pos.top, left: pos.left }}
             className="w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]"
-            onClick={(e) => e.stopPropagation()}
           >
             <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
             <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
@@ -170,7 +174,6 @@ export default function NavBar() {
           <div
             style={{ position: 'fixed', top: pos.top, left: pos.left }}
             className="w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]"
-            onClick={(e) => e.stopPropagation()}
           >
             <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
             <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Playoff Clutchness</Link>
