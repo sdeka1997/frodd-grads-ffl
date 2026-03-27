@@ -11,7 +11,7 @@ export default function HighRollerPage() {
 
   const [activeTab, setActiveTab] = useState<'winners' | 'breakdown'>('winners');
 
-  const years = ['2024', '2025'];
+  const years = ['2025', '2024'];
   const [topYear, setTopYear] = useState(0);
   const [yearDragX, setYearDragX] = useState(0);
   const [isDraggingYear, setIsDraggingYear] = useState(false);
