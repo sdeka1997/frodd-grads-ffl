@@ -3,12 +3,10 @@
 import { getLuckIndex } from '@/utils/dataProcessing';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, Cell, ReferenceLine } from 'recharts';
 import { ScatterChart as ScatterIcon } from 'lucide-react';
-import { useState } from 'react';
 import Link from 'next/link';
 
 export default function LuckPage() {
   const luckData = getLuckIndex();
-  const [activeTab, setActiveTab] = useState<'luck' | 'skill'>('luck');
 
   const getQuadrantColor = (x: number, y: number) => {
     if (x >= 0 && y <= 0) return '#34d399'; // Bottom Right: Good & Lucky
@@ -107,79 +105,57 @@ export default function LuckPage() {
 
       {/* LUCK RANKINGS */}
       <section>
-        <div className="mb-4">
-          <h2 className="text-2xl font-bold text-slate-200 mb-4">Luck & Skill Rankings</h2>
-          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-full">
-            <button
-              onClick={() => setActiveTab('luck')}
-              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${
-                activeTab === 'luck'
-                  ? 'bg-red-500/20 text-red-300'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
-            >
-              😰 Most Unlucky
-            </button>
-            <button
-              onClick={() => setActiveTab('skill')}
-              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
-                activeTab === 'skill'
-                  ? 'bg-emerald-500/20 text-emerald-300'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
-            >
-              🎯 Most Skilled
-            </button>
+        <h2 className="text-2xl font-bold text-slate-200 mb-6">Luck & Skill Rankings</h2>
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-lg font-bold text-red-300 mb-1">😰 Most Unlucky</h3>
+            <p className="text-slate-400 text-sm mb-3">Points Against vs Average — higher means more unlucky</p>
+            <div className="space-y-2">
+              {[...luckData].sort((a, b) => b.y - a.y).map((manager, index) => {
+                const getMiseryColor = (paVsAvg: number) => {
+                  if (paVsAvg >= 3) return 'bg-red-500/20 border-red-500/40 text-red-300';
+                  if (paVsAvg >= 1) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
+                  if (paVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
+                  if (paVsAvg >= -2) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
+                  return 'bg-green-600/20 border-green-600/40 text-green-300';
+                };
+                return (
+                  <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity`}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
+                      <span className="font-medium text-white">{manager.name}</span>
+                    </div>
+                    <div className="text-xl font-bold">{manager.y > 0 ? '+' : ''}{manager.y}</div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-emerald-300 mb-1">🎯 Most Skilled</h3>
+            <p className="text-slate-400 text-sm mb-3">Points For vs Average — higher means more skilled</p>
+            <div className="space-y-2">
+              {[...luckData].sort((a, b) => b.x - a.x).map((manager, index) => {
+                const getProwessColor = (pfVsAvg: number) => {
+                  if (pfVsAvg >= 3) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
+                  if (pfVsAvg >= 1) return 'bg-green-500/20 border-green-500/40 text-green-300';
+                  if (pfVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
+                  if (pfVsAvg >= -2) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
+                  return 'bg-red-600/20 border-red-600/40 text-red-300';
+                };
+                return (
+                  <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity`}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
+                      <span className="font-medium text-white">{manager.name}</span>
+                    </div>
+                    <div className="text-xl font-bold">{manager.x > 0 ? '+' : ''}{manager.x}</div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
-
-        {activeTab === 'luck' && (
-          <div className="space-y-2">
-            <p className="text-slate-400 text-sm mb-3">Points Against vs Average — higher means more unlucky</p>
-            {[...luckData].sort((a, b) => b.y - a.y).map((manager, index) => {
-              const getMiseryColor = (paVsAvg: number) => {
-                if (paVsAvg >= 3) return 'bg-red-500/20 border-red-500/40 text-red-300';
-                if (paVsAvg >= 1) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
-                if (paVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
-                if (paVsAvg >= -2) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
-                return 'bg-green-600/20 border-green-600/40 text-green-300';
-              };
-              return (
-                <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity`}>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
-                    <span className="font-medium text-white">{manager.name}</span>
-                  </div>
-                  <div className="text-xl font-bold">{manager.y > 0 ? '+' : ''}{manager.y}</div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
-
-        {activeTab === 'skill' && (
-          <div className="space-y-2">
-            <p className="text-slate-400 text-sm mb-3">Points For vs Average — higher means more skilled</p>
-            {[...luckData].sort((a, b) => b.x - a.x).map((manager, index) => {
-              const getProwessColor = (pfVsAvg: number) => {
-                if (pfVsAvg >= 3) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
-                if (pfVsAvg >= 1) return 'bg-green-500/20 border-green-500/40 text-green-300';
-                if (pfVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
-                if (pfVsAvg >= -2) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
-                return 'bg-red-600/20 border-red-600/40 text-red-300';
-              };
-              return (
-                <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity`}>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
-                    <span className="font-medium text-white">{manager.name}</span>
-                  </div>
-                  <div className="text-xl font-bold">{manager.x > 0 ? '+' : ''}{manager.x}</div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
       </section>
     </div>
   );

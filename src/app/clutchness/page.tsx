@@ -114,43 +114,50 @@ export default function ClutchnessPage() {
           </p>
         </div>
 
-        <div className="grid gap-4">
-          {clutchData.map((manager, index) => (
-            <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors ${
-              manager.differential > 0 ? 'bg-emerald-400/5' : 'bg-red-400/5'
-            }`}>
-              <div className="flex items-center gap-4">
-                <div className="text-2xl font-bold text-slate-500">#{index + 1}</div>
-                <div className="flex items-center gap-3">
-                  {manager.differential > 0 ? (
-                    <Trophy className="w-6 h-6 text-emerald-400" />
-                  ) : (
-                    <Target className="w-6 h-6 text-red-400" />
-                  )}
-                  <div>
-                    <div className="text-lg font-bold text-white">{manager.name}</div>
-                    <div className={`text-sm font-medium ${
-                      manager.differential > 0 ? 'text-emerald-400' : 'text-red-400'
-                    }`}>
-                      {manager.differential > 0 ? 'Clutch Performer' : 'Pressure Sensitive'}
+        <div className="grid md:grid-cols-2 gap-4">
+          {[clutchData.slice(0, Math.ceil(clutchData.length / 2)), clutchData.slice(Math.ceil(clutchData.length / 2))].map((half, col) => (
+            <div key={col} className="grid gap-4">
+              {half.map((manager, i) => {
+                const index = col * Math.ceil(clutchData.length / 2) + i;
+                return (
+                  <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors ${
+                    manager.differential > 0 ? 'bg-emerald-400/5' : 'bg-red-400/5'
+                  }`}>
+                    <div className="flex items-center gap-4">
+                      <div className="text-2xl font-bold text-slate-500">#{index + 1}</div>
+                      <div className="flex items-center gap-3">
+                        {manager.differential > 0 ? (
+                          <Trophy className="w-6 h-6 text-emerald-400" />
+                        ) : (
+                          <Target className="w-6 h-6 text-red-400" />
+                        )}
+                        <div>
+                          <div className="text-lg font-bold text-white">{manager.name}</div>
+                          <div className={`text-sm font-medium ${
+                            manager.differential > 0 ? 'text-emerald-400' : 'text-red-400'
+                          }`}>
+                            {manager.differential > 0 ? 'Clutch Performer' : 'Pressure Sensitive'}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className={`text-2xl font-bold ${
-                  manager.differential > 0 ? 'text-emerald-400' : 'text-red-400'
-                }`}>
-                  {manager.differential > 0 ? '+' : ''}{manager.differential}
-                </div>
-                <div className="text-sm text-slate-400">
-                  {manager.regularPPG} → {manager.playoffPPG} PPG
-                </div>
-                <div className="text-xs text-slate-500">
-                  {manager.playoffGames} playoff games
-                </div>
-              </div>
-            </Link>
+                    <div className="text-right">
+                      <div className={`text-2xl font-bold ${
+                        manager.differential > 0 ? 'text-emerald-400' : 'text-red-400'
+                      }`}>
+                        {manager.differential > 0 ? '+' : ''}{manager.differential}
+                      </div>
+                      <div className="text-sm text-slate-400">
+                        {manager.regularPPG} → {manager.playoffPPG} PPG
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {manager.playoffGames} playoff games
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           ))}
         </div>
       </section>
