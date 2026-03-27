@@ -35,7 +35,7 @@ export default function NavBar() {
 
   // Mobile sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarExpanded, setSidebarExpanded] = useState<DropdownName>(null);
+  const [sidebarExpanded, setSidebarExpanded] = useState({ history: true, analytics: true });
 
   // FAB one-time pulse
   const [fabPulse, setFabPulse] = useState(false);
@@ -74,7 +74,7 @@ export default function NavBar() {
 
   const closeSidebar = () => {
     setSidebarOpen(false);
-    setSidebarExpanded(null);
+    setSidebarExpanded({ history: true, analytics: true });
   };
 
   const desktopLinkClass =
@@ -223,11 +223,11 @@ export default function NavBar() {
 
           <button
             className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
-            onClick={() => setSidebarExpanded(sidebarExpanded === 'history' ? null : 'history')}
+            onClick={() => setSidebarExpanded(s => ({ ...s, history: !s.history }))}
           >
-            League History {chevron(sidebarExpanded === 'history')}
+            League History {chevron(sidebarExpanded.history)}
           </button>
-          {sidebarExpanded === 'history' && (
+          {sidebarExpanded.history && (
             <div className="bg-slate-950">
               <Link href="/managers" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Managers</Link>
               <Link href="/seasons" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Seasons</Link>
@@ -238,11 +238,11 @@ export default function NavBar() {
 
           <button
             className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
-            onClick={() => setSidebarExpanded(sidebarExpanded === 'analytics' ? null : 'analytics')}
+            onClick={() => setSidebarExpanded(s => ({ ...s, analytics: !s.analytics }))}
           >
-            Analytics {chevron(sidebarExpanded === 'analytics')}
+            Analytics {chevron(sidebarExpanded.analytics)}
           </button>
-          {sidebarExpanded === 'analytics' && (
+          {sidebarExpanded.analytics && (
             <div className="bg-slate-950">
               <Link href="/luck" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Luck Index</Link>
               <Link href="/clutchness" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Playoff Clutchness</Link>
