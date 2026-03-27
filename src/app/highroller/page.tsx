@@ -128,7 +128,7 @@ export default function HighRollerPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={highRollerStats}
-                  margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
+                  margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                   <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
