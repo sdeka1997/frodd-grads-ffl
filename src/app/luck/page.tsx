@@ -87,8 +87,8 @@ export default function LuckPage() {
                   fill="#cbd5e1"
                   fontSize={10}
                   offset={10}
-                  content={({ x, y, value }) => (
-                    <text x={x} y={y - 10} fill="#cbd5e1" fontSize={12} textAnchor="middle" style={{ whiteSpace: 'nowrap' }}>
+                  content={({ x, y, value }: any) => (
+                    <text x={x} y={(y as number) - 10} fill="#cbd5e1" fontSize={12} textAnchor="middle" style={{ whiteSpace: 'nowrap' }}>
                       {value}
                     </text>
                   )}

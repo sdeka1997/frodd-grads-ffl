@@ -69,7 +69,7 @@ export default function HighRollerPage() {
                   borderRadius: '0.5rem'
                 }}
                 itemStyle={{ color: '#cbd5e1' }}
-                formatter={(value: number) => [formatCurrency(value), 'Total Earnings']}
+                formatter={(value: any) => [formatCurrency(value as number), 'Total Earnings']}
               />
               <Bar dataKey="totalEarnings" name="Total Earnings" radius={[4, 4, 0, 0]}>
                 {highRollerStats.map((entry, index) => (
