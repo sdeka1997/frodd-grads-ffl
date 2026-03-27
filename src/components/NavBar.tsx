@@ -179,14 +179,13 @@ export default function NavBar() {
 
       {/* Mobile FAB — bottom-left, opens sidebar */}
       <button
-        className={`fixed bottom-6 left-4 z-[9997] md:hidden flex items-center gap-2 bg-slate-800 border border-slate-700 text-slate-100 rounded-full px-4 py-3 shadow-lg hover:bg-slate-700 transition-colors ${fabPulse ? 'fab-pulse' : ''}`}
+        className={`fixed bottom-6 left-4 z-[9997] md:hidden bg-slate-800 border border-slate-700 text-slate-100 rounded-full p-3.5 shadow-lg hover:bg-slate-700 transition-colors ${fabPulse ? 'fab-pulse' : ''}`}
         onClick={() => setSidebarOpen(true)}
         aria-label="Open navigation"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <span className="text-sm font-medium">Menu</span>
       </button>
 
       {/* Mobile sidebar overlay */}
