@@ -111,8 +111,8 @@ export default function AllStarPage() {
                   : 'border-slate-800 bg-slate-900 hover:border-slate-600'
               }`}
             >
-              <div className="text-2xl font-bold">{yearData.year}</div>
-              <div className="text-sm text-slate-400 mt-1">
+              <div className="text-xl font-bold">{yearData.year}</div>
+              <div className="text-xs text-slate-400 mt-1 truncate">
                 {yearData.location !== 'TBD' && yearData.location !== 'Add location...'
                   ? yearData.location
                   : 'All-Star Weekend'

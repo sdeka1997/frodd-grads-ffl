@@ -58,27 +58,27 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
         <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Overall Record</div>
-            <div className="text-2xl font-bold">{stats.wins} - {stats.losses}</div>
+            <div className="text-2xl font-bold text-emerald-400">{stats.wins} - {stats.losses}</div>
           </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Win Percentage</div>
-            <div className="text-2xl font-bold text-emerald-400">{winPct}%</div>
+            <div className="text-2xl font-bold">{winPct}%</div>
           </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Playoff Record</div>
-            <div className="text-2xl font-bold text-emerald-400">{stats.playoff_record}</div>
+            <div className="text-2xl font-bold">{stats.playoff_record}</div>
           </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Championships</div>
-            <div className={`text-2xl font-bold ${stats.championships > 0 ? 'text-yellow-400' : ''}`}>{stats.championships}</div>
+            <div className={`text-2xl font-bold ${stats.championships > 0 ? 'text-yellow-400' : 'text-emerald-400'}`}>{stats.championships}</div>
           </div>
           <Link href="/shotgun" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="text-slate-400 text-sm">Shotguns</div>
-            <div className="text-2xl font-bold">{shotgunData?.totalShotguns ?? 0}</div>
+            <div className="text-2xl font-bold text-emerald-400">{shotgunData?.totalShotguns ?? 0}</div>
           </Link>
           <Link href="/highroller" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="text-slate-400 text-sm">High Scorer</div>
-            <div className="text-2xl font-bold text-emerald-400">{highRollerData?.totalWins ?? 0}</div>
+            <div className="text-2xl font-bold">{highRollerData?.totalWins ?? 0}</div>
           </Link>
         </div>
       </header>
@@ -116,10 +116,11 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8 border-t border-slate-800">
         <section>
-          <Link href="/luck" className="text-2xl font-bold mb-6 flex items-center gap-2 hover:text-emerald-400 transition-colors">
+          <Link href="/luck" className="block group">
+          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 group-hover:text-emerald-400 transition-colors">
             <Activity className="text-purple-400" /> Scoring Metrics
-          </Link>
-          <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8">
+          </h2>
+          <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8 group-hover:border-slate-700 transition-colors">
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-400 font-medium">Points For vs Average</span>
@@ -144,6 +145,7 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
               </div>
             </div>
           </div>
+          </Link>
         </section>
 
         <section>
