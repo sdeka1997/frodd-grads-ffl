@@ -125,7 +125,7 @@ export default function ShotgunPage() {
 
       {/* RECENT SHAME / SEASONAL BREAKDOWN */}
       <section>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
           <div>
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">🍺 Recent Shame</h2>
             <div className="grid gap-3">
@@ -153,31 +153,81 @@ export default function ShotgunPage() {
               ))}
             </div>
           </div>
-          <div>
+          <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2"><Zap className="text-amber-400 w-6 h-6" /> Year by Year</h2>
-            <div className="grid gap-4">
-              {shotgunStats.map((stats) => (
-                <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                    <div className="flex items-center gap-1 text-red-400">
-                      <Beer className="w-5 h-5" />
-                      <span className="text-2xl font-bold">{stats.totalShotguns}</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+              {(() => {
+                // Balance columns by total number of season rows
+                const leftCol: typeof shotgunStats = [];
+                const rightCol: typeof shotgunStats = [];
+                let leftHeight = 0;
+                let rightHeight = 0;
+
+                shotgunStats.forEach(stats => {
+                  // Weight is base height (title/total) + number of season rows
+                  const weight = 2 + Object.keys(stats.seasons).length;
+                  if (leftHeight <= rightHeight) {
+                    leftCol.push(stats);
+                    leftHeight += weight;
+                  } else {
+                    rightCol.push(stats);
+                    rightHeight += weight;
+                  }
+                });
+
+                return (
+                  <>
+                    <div className="space-y-4">
+                      {leftCol.map((stats) => (
+                        <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+                            <div className="flex items-center gap-1 text-red-400">
+                              <Beer className="w-5 h-5" />
+                              <span className="text-2xl font-bold">{stats.totalShotguns}</span>
+                            </div>
+                          </div>
+                          <div className="space-y-3">
+                            {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+                              <div key={year} className="flex items-center justify-between text-sm">
+                                <span className="text-slate-400">{year}:</span>
+                                <div className="flex items-center gap-3">
+                                  <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
+                                  <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </Link>
+                      ))}
                     </div>
-                  </div>
-                  <div className="space-y-3">
-                    {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                      <div key={year} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-400">{year}:</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
-                          <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Link>
-              ))}
+                    <div className="space-y-4">
+                      {rightCol.map((stats) => (
+                        <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
+                          <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+                            <div className="flex items-center gap-1 text-red-400">
+                              <Beer className="w-5 h-5" />
+                              <span className="text-2xl font-bold">{stats.totalShotguns}</span>
+                            </div>
+                          </div>
+                          <div className="space-y-3">
+                            {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+                              <div key={year} className="flex items-center justify-between text-sm">
+                                <span className="text-slate-400">{year}:</span>
+                                <div className="flex items-center gap-3">
+                                  <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
+                                  <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
         </div>

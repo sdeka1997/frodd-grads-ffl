@@ -200,7 +200,7 @@ export default function NavBar() {
                   League History {chevron(open === 'history')}
                 </button>
                 {open === 'history' && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
+                  <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
                     <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
                     <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
                     <Link href="/shotgun" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Shotgun</Link>
@@ -208,12 +208,12 @@ export default function NavBar() {
                   </div>
                 )}
               </div>
-              <div className="relative" onMouseEnter={() => setOpen('analytics')} onMouseLeave={() => setOpen(null)}>
+              <div className="relative pb-1" onMouseEnter={() => setOpen('analytics')} onMouseLeave={() => setOpen(null)}>
                 <button className={`${desktopLinkClass} flex items-center gap-1`}>
                   Analytics {chevron(open === 'analytics')}
                 </button>
                 {open === 'analytics' && (
-                  <div className="absolute top-full left-0 mt-1 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
+                  <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
                     <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
                     <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Playoff Clutchness</Link>
                     <Link href="/matrix" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Supremacy Matrix</Link>

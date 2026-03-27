@@ -1,4 +1,21 @@
 import fflData from '../data/ffl_data.json';
+import matchups2019 from '../data/matchups/2019_espn.json';
+import matchups2020 from '../data/matchups/2020_espn.json';
+import matchups2021 from '../data/matchups/2021_espn.json';
+import matchups2022 from '../data/matchups/2022_espn.json';
+import matchups2023 from '../data/matchups/2023_espn.json';
+import matchups2024 from '../data/matchups/2024_espn.json';
+import matchups2025 from '../data/matchups/2025_sleeper.json';
+
+const ALL_MATCHUPS: Record<string, any> = {
+  '2019': matchups2019,
+  '2020': matchups2020,
+  '2021': matchups2021,
+  '2022': matchups2022,
+  '2023': matchups2023,
+  '2024': matchups2024,
+  '2025': matchups2025,
+};
 
 export interface ManagerRecord {
   manager: string;
@@ -155,7 +172,8 @@ export const getWeeklyLowScores = (): WeeklyLowScore[] => {
 
   years.forEach(year => {
     try {
-      const matchupData = require(`../data/matchups/${year}_${year === '2025' ? 'sleeper' : 'espn'}.json`);
+      const matchupData = ALL_MATCHUPS[year];
+      if (!matchupData) return;
       const regularSeasonLength = matchupData.settings?.regularSeasonLength || 14;
 
       // Group scores by week
@@ -291,7 +309,8 @@ export const getWeeklyHighScores = (): WeeklyHighScore[] => {
 
   years.forEach(year => {
     try {
-      const matchupData = require(`../data/matchups/${year}_${year === '2025' ? 'sleeper' : 'espn'}.json`);
+      const matchupData = ALL_MATCHUPS[year];
+      if (!matchupData) return;
       const regularSeasonLength = matchupData.settings?.regularSeasonLength || 14;
 
       // Group scores by week
