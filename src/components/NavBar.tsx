@@ -2,10 +2,33 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 type DropdownName = 'history' | 'analytics' | null;
 
+const PAGE_NAMES: Record<string, string> = {
+  '/managers': 'Managers',
+  '/seasons': 'Seasons',
+  '/shotgun': 'Shotgun',
+  '/highroller': 'High Roller',
+  '/luck': 'Luck Index',
+  '/clutchness': 'Playoff Clutchness',
+  '/matrix': 'Supremacy Matrix',
+  '/rivalries': 'Rivalries',
+  '/allstar': 'All-Star',
+  '/analytics': 'Analytics',
+};
+
+function getPageName(path: string): string | null {
+  if (PAGE_NAMES[path]) return PAGE_NAMES[path];
+  if (path.startsWith('/managers/')) return 'Managers';
+  return null;
+}
+
 export default function NavBar() {
+  const pathname = usePathname();
+  const pageName = getPageName(pathname);
+
   // Desktop dropdown state
   const [open, setOpen] = useState<DropdownName>(null);
   const [pos, setPos] = useState({ top: 0, left: 0 });
@@ -13,6 +36,19 @@ export default function NavBar() {
   // Mobile sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarExpanded, setSidebarExpanded] = useState<DropdownName>(null);
+
+  // FAB one-time pulse
+  const [fabPulse, setFabPulse] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('fab-hint-shown')) {
+      const t = setTimeout(() => {
+        setFabPulse(true);
+        localStorage.setItem('fab-hint-shown', '1');
+      }, 1000);
+      return () => clearTimeout(t);
+    }
+  }, []);
 
   const toggleDropdown = (name: DropdownName, e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -25,14 +61,12 @@ export default function NavBar() {
     }
   };
 
-  // Close desktop dropdowns on outside click
   useEffect(() => {
     const close = () => setOpen(null);
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
   }, []);
 
-  // Prevent body scroll when sidebar is open
   useEffect(() => {
     document.body.style.overflow = sidebarOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
@@ -51,9 +85,7 @@ export default function NavBar() {
   const chevron = (rotated: boolean) => (
     <svg
       className={`w-4 h-4 shrink-0 transition-transform duration-200 ${rotated ? 'rotate-180' : ''}`}
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" viewBox="0 0 24 24"
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
     </svg>
@@ -64,21 +96,30 @@ export default function NavBar() {
       <nav className="border-b border-slate-800 bg-slate-900 sticky top-0 z-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative flex items-center h-16">
-            {/* Hamburger — mobile only */}
-            <button
-              className="md:hidden p-2 rounded-md hover:bg-slate-800 transition-colors shrink-0"
-              onClick={() => setSidebarOpen(true)}
-              aria-label="Open navigation"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
 
-            {/* Logo — centered on mobile, left-aligned on desktop */}
+            {/* Mobile: 🏈 + page name centered */}
+            <div className="md:hidden absolute left-1/2 -translate-x-1/2">
+              <Link
+                href="/"
+                className="font-bold text-xl flex items-center gap-2"
+                onClick={() => setOpen(null)}
+              >
+                <span className="text-2xl">🏈</span>
+                {pageName ? (
+                  <span className="text-slate-100">{pageName}</span>
+                ) : (
+                  <>
+                    <span className="text-emerald-500">Frodd</span>
+                    <span className="text-emerald-400">FFL</span>
+                  </>
+                )}
+              </Link>
+            </div>
+
+            {/* Desktop: logo + nav links */}
             <Link
               href="/"
-              className="font-bold text-xl flex items-center gap-2 shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:mr-4"
+              className="hidden md:flex font-bold text-xl items-center gap-2 shrink-0 mr-4"
               onClick={() => setOpen(null)}
             >
               <span className="text-2xl">🏈</span>
@@ -86,28 +127,22 @@ export default function NavBar() {
               <span className="text-emerald-400">FFL</span>
             </Link>
 
-            {/* Desktop nav links — hidden on mobile */}
             <div className="hidden md:flex items-center gap-1">
               <Link href="/" className={desktopLinkClass} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
-
               <button
                 onClick={(e) => toggleDropdown('history', e)}
                 className={`${desktopLinkClass} flex items-center gap-1`}
               >
-                League History
-                {chevron(open === 'history')}
+                League History {chevron(open === 'history')}
               </button>
-
               <button
                 onClick={(e) => toggleDropdown('analytics', e)}
                 className={`${desktopLinkClass} flex items-center gap-1`}
               >
-                Analytics
-                {chevron(open === 'analytics')}
+                Analytics {chevron(open === 'analytics')}
               </button>
-
               <Link href="/allstar" className={desktopLinkClass} onClick={() => setOpen(null)}>
                 All-Star
               </Link>
@@ -142,12 +177,20 @@ export default function NavBar() {
         )}
       </nav>
 
+      {/* Mobile FAB — bottom-left, opens sidebar */}
+      <button
+        className={`fixed bottom-6 left-4 z-[9997] md:hidden bg-slate-800 border border-slate-700 text-slate-100 rounded-full p-3.5 shadow-lg hover:bg-slate-700 transition-colors ${fabPulse ? 'fab-pulse' : ''}`}
+        onClick={() => setSidebarOpen(true)}
+        aria-label="Open navigation"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 z-[9998] md:hidden"
-          onClick={closeSidebar}
-        />
+        <div className="fixed inset-0 bg-black/60 z-[9998] md:hidden" onClick={closeSidebar} />
       )}
 
       {/* Mobile sidebar drawer */}
@@ -156,7 +199,6 @@ export default function NavBar() {
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Sidebar header */}
         <div className="flex items-center justify-between px-4 h-16 border-b border-slate-800">
           <Link href="/" className="font-bold text-xl flex items-center gap-2" onClick={closeSidebar}>
             <span className="text-2xl">🏈</span>
@@ -174,23 +216,16 @@ export default function NavBar() {
           </button>
         </div>
 
-        {/* Sidebar links */}
         <div className="py-2">
-          <Link
-            href="/"
-            className="block px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
-            onClick={closeSidebar}
-          >
+          <Link href="/" className="block px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>
             Dashboard
           </Link>
 
-          {/* League History expandable */}
           <button
             className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
             onClick={() => setSidebarExpanded(sidebarExpanded === 'history' ? null : 'history')}
           >
-            League History
-            {chevron(sidebarExpanded === 'history')}
+            League History {chevron(sidebarExpanded === 'history')}
           </button>
           {sidebarExpanded === 'history' && (
             <div className="bg-slate-950">
@@ -201,13 +236,11 @@ export default function NavBar() {
             </div>
           )}
 
-          {/* Analytics expandable */}
           <button
             className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
             onClick={() => setSidebarExpanded(sidebarExpanded === 'analytics' ? null : 'analytics')}
           >
-            Analytics
-            {chevron(sidebarExpanded === 'analytics')}
+            Analytics {chevron(sidebarExpanded === 'analytics')}
           </button>
           {sidebarExpanded === 'analytics' && (
             <div className="bg-slate-950">
@@ -218,11 +251,7 @@ export default function NavBar() {
             </div>
           )}
 
-          <Link
-            href="/allstar"
-            className="block px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors"
-            onClick={closeSidebar}
-          >
+          <Link href="/allstar" className="block px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>
             All-Star
           </Link>
         </div>
