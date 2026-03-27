@@ -219,9 +219,9 @@ export default function NavBar() {
         </svg>
       </button>
 
-      {/* Mobile bottom sheet overlay */}
+      {/* Mobile bottom sheet overlay — touch-none prevents scroll bleed */}
       {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/60 z-[9998] md:hidden" onClick={closeSidebar} />
+        <div className="fixed inset-0 bg-black/60 z-[9998] md:hidden touch-none" onClick={closeSidebar} />
       )}
 
       {/* Mobile bottom sheet */}
@@ -242,7 +242,7 @@ export default function NavBar() {
         </div>
 
         {/* Scrollable links */}
-        <div className="overflow-y-auto py-1 pb-8">
+        <div className="overflow-y-auto overscroll-contain py-1 pb-8">
           <Link href="/"
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
@@ -302,6 +302,8 @@ export default function NavBar() {
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
           >All-Star</Link>
+
+          <div className="border-t border-slate-800" />
         </div>
       </div>
     </>

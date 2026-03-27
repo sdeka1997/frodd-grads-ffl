@@ -155,10 +155,10 @@ export default function RivalriesPage() {
 
       {/* SERIES BREAKDOWN TABLE */}
       <section>
-        <h2 className="text-xl md:text-3xl font-bold mb-6 flex items-center gap-2">
-          <Search className="text-emerald-400 shrink-0" /> <span className="truncate">Series Breakdown: {manager1}</span>
+        <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
+          <Search className="text-emerald-400" /> Series Breakdown: {manager1}
         </h2>
-        <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto shadow-2xl">
+        <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
           <table className="w-full text-sm text-left">
             <thead className="bg-slate-950 text-slate-400 uppercase text-xs">
               <tr>
@@ -168,7 +168,7 @@ export default function RivalriesPage() {
                 <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors" onClick={() => handleSort('total')}>
                   Total Meetings {getSortIcon('total')}
                 </th>
-                <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors" onClick={() => handleSort('wins')}>
+                <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors min-w-[100px]" onClick={() => handleSort('wins')}>
                   Record {getSortIcon('wins')}
                 </th>
                 <th className="px-6 py-4 text-center cursor-pointer group hover:bg-slate-800 transition-colors" onClick={() => handleSort('winPct')}>

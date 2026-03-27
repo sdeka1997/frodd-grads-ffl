@@ -145,7 +145,7 @@ export default function ShotgunPage() {
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
               }`}
             >
-              ⚡ Seasonal Breakdown
+              ⚡ Year by Year
             </button>
           </div>
         </div>
