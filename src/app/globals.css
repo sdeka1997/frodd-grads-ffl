@@ -15,6 +15,16 @@ body {
   background: theme('colors.slate.950');
 }
 
+@keyframes sonar-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55); }
+  100% { box-shadow: 0 0 0 18px rgba(52, 211, 153, 0); }
+}
+
+.fab-pulse {
+  animation: sonar-ring 0.9s ease-out 3;
+  animation-delay: 1s;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
