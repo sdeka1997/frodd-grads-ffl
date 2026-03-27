@@ -105,14 +105,14 @@ export default function AllStarPage() {
             <button
               key={yearData.year}
               onClick={() => setSelectedYear(yearData.year)}
-              className={`p-4 rounded-xl border transition-all ${
+              className={`p-4 rounded-xl border overflow-hidden transition-all text-left ${
                 selectedYear === yearData.year
                   ? 'border-yellow-400 bg-yellow-400/10 text-yellow-400'
                   : 'border-slate-800 bg-slate-900 hover:border-slate-600'
               }`}
             >
               <div className="text-xl font-bold">{yearData.year}</div>
-              <div className="text-xs text-slate-400 mt-1 truncate">
+              <div className="text-xs text-slate-400 mt-1 truncate w-full">
                 {yearData.location !== 'TBD' && yearData.location !== 'Add location...'
                   ? yearData.location
                   : 'All-Star Weekend'
@@ -127,8 +127,8 @@ export default function AllStarPage() {
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold flex items-center gap-2 mb-6">
-              <Star className="text-yellow-400" />
+            <h2 className="text-xl md:text-3xl font-bold flex items-center gap-2 mb-6">
+              <Star className="text-yellow-400 shrink-0" />
               {selectedYear} All-Star Weekend
             </h2>
 
