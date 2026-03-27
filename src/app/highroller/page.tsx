@@ -9,6 +9,8 @@ export default function HighRollerPage() {
   const weeklyHighs = getWeeklyHighScores();
   const highRollerStats = getHighRollerStats();
 
+  const [activeTab, setActiveTab] = useState<'winners' | 'breakdown'>('winners');
+
   const [tooltip, setTooltip] = useState<{
     manager: string;
     earnings: number;
@@ -186,82 +188,89 @@ export default function HighRollerPage() {
         </div>
       </section>
 
-      {/* RECENT WEEKLY HIGHS */}
+      {/* RECENT WINNERS / EARNINGS BREAKDOWN TABS */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <Calendar className="text-purple-400" /> Recent Winners
-          </h2>
-          <p className="text-slate-400 mt-2">
-            The most recent weekly high scorers and their payouts.
-          </p>
-        </div>
-
-        <div className="grid gap-4">
-          {weeklyHighs.slice(0, 10).map((high, index) => (
-            <div
-              key={`${high.year}-${high.week}-${high.manager}`}
-              className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
+        <div className="mb-4">
+          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-full">
+            <button
+              onClick={() => setActiveTab('winners')}
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${
+                activeTab === 'winners'
+                  ? 'bg-emerald-500/20 text-emerald-300'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
             >
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
-                  <Calendar className="w-4 h-4" />
-                  {high.year} Week {high.week}
-                </div>
-                <div className="flex items-center gap-2">
-                  <Crown className="w-5 h-5 text-emerald-400" />
-                  <span className="text-lg font-bold text-white">{high.manager}</span>
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
-                <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* EARNINGS BREAKDOWN */}
-      <section>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <DollarSign className="text-green-400" /> Earnings Breakdown
-          </h2>
-          <p className="text-slate-400 mt-2">
-            How the money is distributed across seasons and managers.
-          </p>
+              👑 Recent Winners
+            </button>
+            <button
+              onClick={() => setActiveTab('breakdown')}
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
+                activeTab === 'breakdown'
+                  ? 'bg-green-500/20 text-green-300'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              💰 Earnings Breakdown
+            </button>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {highRollerStats.map((stats, index) => (
-            <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+        {activeTab === 'winners' && (
+          <div className="grid gap-4">
+            {weeklyHighs.slice(0, 10).map((high) => (
+              <div
+                key={`${high.year}-${high.week}-${high.manager}`}
+                className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
+                    <Calendar className="w-4 h-4" />
+                    {high.year} Week {high.week}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Crown className="w-5 h-5 text-emerald-400" />
+                    <span className="text-lg font-bold text-white">{high.manager}</span>
+                  </div>
+                </div>
                 <div className="text-right">
-                  <div className="flex items-center gap-1 text-emerald-400">
-                    <Crown className="w-5 h-5" />
-                    <span className="text-2xl font-bold">{stats.totalWins}</span>
-                  </div>
-                  <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
+                  <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
+                  <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
 
-              <div className="space-y-3">
-                {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                  <div key={year} className="flex items-center justify-between text-sm">
-                    <span className="text-slate-400">{year}:</span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-white font-bold">{seasonStats.wins} wins</span>
-                      <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
-                      <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+        {activeTab === 'breakdown' && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {highRollerStats.map((stats) => (
+              <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+                  <div className="text-right">
+                    <div className="flex items-center gap-1 text-emerald-400">
+                      <Crown className="w-5 h-5" />
+                      <span className="text-2xl font-bold">{stats.totalWins}</span>
                     </div>
+                    <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
                   </div>
-                ))}
+                </div>
+                <div className="space-y-3">
+                  {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+                    <div key={year} className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">{year}:</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-white font-bold">{seasonStats.wins} wins</span>
+                        <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
+                        <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
