@@ -1,0 +1,232 @@
+"use client";
+
+import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing';
+import { DollarSign, TrendingUp, Calendar, Crown, Sparkles } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+
+export default function HighRollerPage() {
+  const weeklyHighs = getWeeklyHighScores();
+  const highRollerStats = getHighRollerStats();
+
+  const getWinnerColor = (manager: any, stats: any[]) => {
+    const earnings = manager.totalEarnings;
+    const sortedEarnings = [...new Set(stats.map(s => s.totalEarnings))].sort((a, b) => b - a);
+    const rank = sortedEarnings.indexOf(earnings);
+
+    if (rank === 0) return '#10b981'; // Most dominant - emerald
+    if (rank === 1) return '#06d6a0'; // Second - teal
+    if (rank === 2) return '#ffd166'; // Third - gold
+    return '#64748b'; // Others - slate
+  };
+
+  const formatCurrency = (amount: number) => `$${amount}`;
+
+  return (
+    <div className="space-y-16">
+      <header className="border-b border-slate-800 pb-8">
+        <div className="flex items-center justify-between">
+          <h1 className="text-4xl font-extrabold flex items-center gap-3">
+            <DollarSign className="w-10 h-10 text-emerald-400" />
+            High Roller Leaderboard
+          </h1>
+          <span className="text-slate-500 text-sm">
+            Established 2024
+          </span>
+        </div>
+        <p className="mt-4 text-slate-400 text-lg">
+          Weekly high scores: Manager with the highest score each week gets money from the pot.
+          <span className="block mt-2 text-emerald-400 font-medium">
+            💰 Score big, get paid.
+          </span>
+        </p>
+      </header>
+
+      {/* HIGH ROLLER LEADERBOARD */}
+      <section>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <TrendingUp className="text-emerald-400" /> Money Leaders
+          </h2>
+          <p className="text-slate-400 mt-2">
+            Total weekly high scores and earnings since the rule started.
+          </p>
+        </div>
+
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={highRollerStats}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+              <XAxis dataKey="manager" stroke="#94a3b8" tick={{fill: '#94a3b8'}} />
+              <YAxis stroke="#94a3b8" tick={{fill: '#94a3b8'}} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: '#0f172a',
+                  borderColor: '#1e293b',
+                  color: '#f8fafc',
+                  borderRadius: '0.5rem'
+                }}
+                itemStyle={{ color: '#cbd5e1' }}
+                formatter={(value: number) => [formatCurrency(value), 'Total Earnings']}
+              />
+              <Bar dataKey="totalEarnings" name="Total Earnings" radius={[4, 4, 0, 0]}>
+                {highRollerStats.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getWinnerColor(entry, highRollerStats)} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="mt-6 flex gap-6 text-xs font-bold uppercase tracking-widest justify-center md:justify-start">
+          <span className="flex items-center gap-2 text-emerald-500">
+            <Crown className="w-4 h-4" />
+            Money King
+          </span>
+          <span className="flex items-center gap-2 text-teal-400">
+            <Sparkles className="w-4 h-4" />
+            High Roller
+          </span>
+          <span className="flex items-center gap-2 text-yellow-400">
+            <DollarSign className="w-4 h-4" />
+            Big Earner
+          </span>
+        </div>
+      </section>
+
+      {/* RECENT WEEKLY HIGHS */}
+      <section>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <Calendar className="text-purple-400" /> Recent Winners
+          </h2>
+          <p className="text-slate-400 mt-2">
+            The most recent weekly high scorers and their payouts.
+          </p>
+        </div>
+
+        <div className="grid gap-4">
+          {weeklyHighs.slice(0, 10).map((high, index) => (
+            <div
+              key={`${high.year}-${high.week}-${high.manager}`}
+              className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
+                  <Calendar className="w-4 h-4" />
+                  {high.year} Week {high.week}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Crown className="w-5 h-5 text-emerald-400" />
+                  <span className="text-lg font-bold text-white">{high.manager}</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
+                <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* EARNINGS BREAKDOWN */}
+      <section>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <DollarSign className="text-green-400" /> Earnings Breakdown
+          </h2>
+          <p className="text-slate-400 mt-2">
+            How the money is distributed across seasons and managers.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {highRollerStats.slice(0, 6).map((stats, index) => (
+            <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+                <div className="text-right">
+                  <div className="flex items-center gap-1 text-emerald-400">
+                    <Crown className="w-5 h-5" />
+                    <span className="text-2xl font-bold">{stats.totalWins}</span>
+                  </div>
+                  <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+                  <div key={year} className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400">{year}:</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-white font-bold">{seasonStats.wins} wins</span>
+                      <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
+                      <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SEASON TOTALS */}
+      <section>
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <Sparkles className="text-blue-400" /> Season Summary
+          </h2>
+          <p className="text-slate-400 mt-2">
+            Total money distributed each season.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {['2024', '2025'].map(year => {
+            const yearHighs = weeklyHighs.filter(h => h.year === year);
+            const totalPayout = yearHighs.length * 15;
+            const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
+
+            return (
+              <div key={year} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-2xl font-bold text-white">{year} Season</h3>
+                  <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <div className="text-slate-400">Total Weeks</div>
+                    <div className="text-xl font-bold text-white">{yearHighs.length}</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-400">Unique Winners</div>
+                    <div className="text-xl font-bold text-white">{uniqueWinners}</div>
+                  </div>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-slate-700">
+                  <div className="text-slate-400 text-xs">Top Scorer</div>
+                  {yearHighs.length > 0 && (
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="font-bold text-white">
+                        {yearHighs.reduce((max, current) => current.points > max.points ? current : max).manager}
+                      </span>
+                      <span className="text-emerald-400 font-bold">
+                        {yearHighs.reduce((max, current) => current.points > max.points ? current : max).points} pts
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </div>
+  );
+}
