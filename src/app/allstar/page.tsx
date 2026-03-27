@@ -76,8 +76,8 @@ export default function AllStarPage() {
     <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-          <h1 className="text-4xl font-extrabold flex items-center gap-3">
-            <Star className="w-10 h-10 text-yellow-400" />
+          <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
+            <Star className="w-8 h-8 md:w-10 md:h-10 text-yellow-400" />
             All-Star Weekend
           </h1>
           <span className="text-slate-500 text-sm">

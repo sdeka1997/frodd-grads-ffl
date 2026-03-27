@@ -52,9 +52,9 @@ export default function MatrixPage() {
   return (
     <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
-        <h1 className="text-4xl font-extrabold flex items-center gap-3">
-          <Grid3X3 className="w-10 h-10 text-emerald-400" />
-          The Supremacy Matrix
+        <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
+          <Grid3X3 className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
+          Supremacy Matrix
         </h1>
         <p className="mt-4 text-slate-400 text-lg">
           An interactive matrix showing the historical records between managers. Discover who dominates head-to-head matchups and who struggles against specific opponents.

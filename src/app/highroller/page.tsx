@@ -179,7 +179,7 @@ export default function HighRollerPage() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {highRollerStats.slice(0, 6).map((stats, index) => (
+          {highRollerStats.map((stats, index) => (
             <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
@@ -225,6 +225,11 @@ export default function HighRollerPage() {
             const yearHighs = weeklyHighs.filter(h => h.year === year);
             const totalPayout = yearHighs.length * 15;
             const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
+            const winCounts = yearHighs.reduce((acc, h) => {
+              acc[h.manager] = (acc[h.manager] || 0) + 1;
+              return acc;
+            }, {} as Record<string, number>);
+            const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
 
             return (
               <div key={year} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
@@ -245,15 +250,11 @@ export default function HighRollerPage() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-slate-700">
-                  <div className="text-slate-400 text-xs">Top Scorer</div>
-                  {yearHighs.length > 0 && (
+                  <div className="text-slate-400 text-xs">Most Wins</div>
+                  {topWinner && (
                     <div className="flex items-center justify-between mt-1">
-                      <span className="font-bold text-white">
-                        {yearHighs.reduce((max, current) => current.points > max.points ? current : max).manager}
-                      </span>
-                      <span className="text-emerald-400 font-bold">
-                        {yearHighs.reduce((max, current) => current.points > max.points ? current : max).points} pts
-                      </span>
+                      <span className="font-bold text-white">{topWinner[0]}</span>
+                      <span className="text-emerald-400 font-bold">{topWinner[1]} weeks 👑</span>
                     </div>
                   )}
                 </div>

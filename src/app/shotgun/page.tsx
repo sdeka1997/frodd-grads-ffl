@@ -170,7 +170,7 @@ export default function ShotgunPage() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {shotgunStats.slice(0, 6).map((stats, index) => (
+          {shotgunStats.map((stats, index) => (
             <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
