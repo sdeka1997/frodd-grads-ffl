@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { getPlayoffClutchness } from '@/utils/dataProcessing';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
 import { BarChart3, Trophy, Target } from 'lucide-react';
@@ -115,7 +116,7 @@ export default function ClutchnessPage() {
 
         <div className="grid gap-4">
           {clutchData.map((manager, index) => (
-            <div key={manager.name} className={`border border-slate-800 rounded-lg p-4 flex items-center justify-between ${
+            <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors ${
               manager.differential > 0 ? 'bg-emerald-400/5' : 'bg-red-400/5'
             }`}>
               <div className="flex items-center gap-4">
@@ -149,7 +150,7 @@ export default function ClutchnessPage() {
                   {manager.playoffGames} playoff games
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

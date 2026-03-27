@@ -4,6 +4,7 @@ import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
 import { Beer, TrendingDown, Calendar, Trophy, Zap } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from 'recharts';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function ShotgunPage() {
   const weeklyLows = getWeeklyLowScores();
@@ -153,9 +154,10 @@ export default function ShotgunPage() {
         {activeTab === 'shame' && (
           <div className="grid gap-4">
             {weeklyLows.slice(0, 10).map((low) => (
-              <div
+              <Link
                 key={`${low.year}-${low.week}-${low.manager}`}
-                className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
+                href={`/managers/${encodeURIComponent(low.manager)}`}
+                className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
@@ -171,7 +173,7 @@ export default function ShotgunPage() {
                   <div className="text-2xl font-bold text-red-400">{low.points}</div>
                   <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
@@ -179,7 +181,7 @@ export default function ShotgunPage() {
         {activeTab === 'breakdown' && (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {shotgunStats.map((stats) => (
-              <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
                   <div className="flex items-center gap-1 text-red-400">
@@ -198,7 +200,7 @@ export default function ShotgunPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from 'react';
+import Link from 'next/link';
 import { getCurrentManagers } from '@/utils/dataProcessing';
 import { getLifetimeH2H } from '@/utils/h2hProcessing';
 import { Grid3X3, Trophy, Target, Users } from 'lucide-react';
@@ -142,11 +143,10 @@ export default function MatrixPage() {
 
         <div className="grid gap-4">
           {dominanceStats.map((stats, index) => (
-            <div key={stats.manager} className={`border border-slate-800 rounded-lg p-4 ${
+            <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className={`border border-slate-800 rounded-lg p-4 hover:border-slate-700 transition-colors flex items-center justify-between ${
               stats.netDominance > 0 ? 'bg-emerald-400/5' :
               stats.netDominance < 0 ? 'bg-red-400/5' : 'bg-slate-900/50'
             }`}>
-              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="text-2xl font-bold text-slate-500">#{index + 1}</div>
                   <div className="flex items-center gap-3">
@@ -179,8 +179,7 @@ export default function MatrixPage() {
                     Net dominance
                   </div>
                 </div>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

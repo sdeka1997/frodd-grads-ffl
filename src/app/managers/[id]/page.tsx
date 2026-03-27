@@ -72,14 +72,14 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
             <div className="text-slate-400 text-sm">Championships</div>
             <div className={`text-2xl font-bold ${stats.championships > 0 ? 'text-yellow-400' : ''}`}>{stats.championships}</div>
           </div>
-          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+          <Link href="/shotgun" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="text-slate-400 text-sm">Shotguns</div>
             <div className="text-2xl font-bold">{shotgunData?.totalShotguns ?? 0}</div>
-          </div>
-          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+          </Link>
+          <Link href="/highroller" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="text-slate-400 text-sm">High Scorer</div>
             <div className="text-2xl font-bold">{highRollerData?.totalWins ?? 0}</div>
-          </div>
+          </Link>
         </div>
       </header>
 
