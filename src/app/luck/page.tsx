@@ -57,7 +57,7 @@ export default function LuckPage() {
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 md:p-6 h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 40, right: 20, bottom: 20, left: -10 }}>
+            <ScatterChart margin={{ top: 40, right: 20, bottom: 20, left: -25 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis
                 type="number"
@@ -108,10 +108,10 @@ export default function LuckPage() {
       <section>
         <div className="mb-4">
           <h2 className="text-2xl font-bold text-slate-200 mb-4">Luck & Skill Rankings</h2>
-          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-fit">
+          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-full">
             <button
               onClick={() => setActiveTab('luck')}
-              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${
                 activeTab === 'luck'
                   ? 'bg-red-500/20 text-red-300'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -121,7 +121,7 @@ export default function LuckPage() {
             </button>
             <button
               onClick={() => setActiveTab('skill')}
-              className={`px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
                 activeTab === 'skill'
                   ? 'bg-emerald-500/20 text-emerald-300'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
