@@ -124,10 +124,10 @@ export default function MatrixPage() {
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-slate-500 mt-3 px-1">
-            <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
-          </p>
         </div>
+        <p className="text-xs text-slate-500 mt-3 px-1">
+          <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
+        </p>
       </section>
 
       {/* DOMINANCE RANKINGS */}
@@ -139,45 +139,52 @@ export default function MatrixPage() {
           </p>
         </div>
 
-        <div className="grid gap-4">
-          {dominanceStats.map((stats, index) => (
-            <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className={`border border-slate-800 rounded-lg p-4 hover:border-slate-700 transition-colors flex items-center justify-between ${
-              stats.netDominance > 0 ? 'bg-emerald-400/5' :
-              stats.netDominance < 0 ? 'bg-red-400/5' : 'bg-slate-900/50'
-            }`}>
-                <div className="flex items-center gap-4">
-                  <div className="text-2xl font-bold text-slate-500">#{index + 1}</div>
-                  <div className="flex items-center gap-3">
-                    {stats.netDominance > 0 ? (
-                      <Trophy className="w-6 h-6 text-emerald-400" />
-                    ) : stats.netDominance < 0 ? (
-                      <Target className="w-6 h-6 text-red-400" />
-                    ) : (
-                      <Users className="w-6 h-6 text-slate-400" />
-                    )}
-                    <div>
-                      <div className="text-lg font-bold text-white">{stats.manager}</div>
-                      <div className="text-sm text-slate-400">
-                        Dominates {stats.dominated} • Fears {stats.dominatedBy}
+        <div className="grid md:grid-cols-2 gap-4">
+          {[dominanceStats.slice(0, Math.ceil(dominanceStats.length / 2)), dominanceStats.slice(Math.ceil(dominanceStats.length / 2))].map((half, col) => (
+            <div key={col} className="grid gap-4">
+              {half.map((stats, i) => {
+                const index = col * Math.ceil(dominanceStats.length / 2) + i;
+                return (
+                  <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className={`border border-slate-800 rounded-lg p-4 hover:border-slate-700 transition-colors flex items-center justify-between ${
+                    stats.netDominance > 0 ? 'bg-emerald-400/5' :
+                    stats.netDominance < 0 ? 'bg-red-400/5' : 'bg-slate-900/50'
+                  }`}>
+                    <div className="flex items-center gap-4">
+                      <div className="text-2xl font-bold text-slate-500">#{index + 1}</div>
+                      <div className="flex items-center gap-3">
+                        {stats.netDominance > 0 ? (
+                          <Trophy className="w-6 h-6 text-emerald-400" />
+                        ) : stats.netDominance < 0 ? (
+                          <Target className="w-6 h-6 text-red-400" />
+                        ) : (
+                          <Users className="w-6 h-6 text-slate-400" />
+                        )}
+                        <div>
+                          <div className="text-lg font-bold text-white">{stats.manager}</div>
+                          <div className="text-sm text-slate-400">
+                            Dominates {stats.dominated} • Fears {stats.dominatedBy}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className={`text-2xl font-bold ${
-                    stats.netDominance > 0 ? 'text-emerald-400' :
-                    stats.netDominance < 0 ? 'text-red-400' : 'text-slate-400'
-                  }`}>
-                    {stats.netDominance > 0 ? '+' : ''}{stats.netDominance}
-                  </div>
-                  <div className="text-sm text-slate-400">
-                    {stats.wins}-{stats.losses} ({stats.winRate}%)
-                  </div>
-                  <div className="text-xs text-slate-500">
-                    Net dominance
-                  </div>
-                </div>
-            </Link>
+                    <div className="text-right">
+                      <div className={`text-2xl font-bold ${
+                        stats.netDominance > 0 ? 'text-emerald-400' :
+                        stats.netDominance < 0 ? 'text-red-400' : 'text-slate-400'
+                      }`}>
+                        {stats.netDominance > 0 ? '+' : ''}{stats.netDominance}
+                      </div>
+                      <div className="text-sm text-slate-400">
+                        {stats.wins}-{stats.losses} ({stats.winRate}%)
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        Net dominance
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           ))}
         </div>
       </section>

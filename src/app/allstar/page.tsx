@@ -127,7 +127,7 @@ export default function AllStarPage() {
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
           <div className="mb-8">
-            <h2 className="text-xl md:text-3xl font-bold flex items-center gap-2 mb-6">
+            <h2 className="text-xl md:text-3xl font-bold flex items-center justify-center md:justify-start gap-2 mb-6">
               <Star className="text-yellow-400 shrink-0" />
               {selectedYear} All-Star Weekend
             </h2>
