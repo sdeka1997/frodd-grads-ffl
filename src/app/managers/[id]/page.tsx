@@ -62,11 +62,11 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Win Percentage</div>
-            <div className="text-2xl font-bold">{winPct}%</div>
+            <div className="text-2xl font-bold text-emerald-400">{winPct}%</div>
           </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Playoff Record</div>
-            <div className="text-2xl font-bold">{stats.playoff_record}</div>
+            <div className="text-2xl font-bold text-emerald-400">{stats.playoff_record}</div>
           </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Championships</div>
@@ -78,7 +78,7 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </Link>
           <Link href="/highroller" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
             <div className="text-slate-400 text-sm">High Scorer</div>
-            <div className="text-2xl font-bold">{highRollerData?.totalWins ?? 0}</div>
+            <div className="text-2xl font-bold text-emerald-400">{highRollerData?.totalWins ?? 0}</div>
           </Link>
         </div>
       </header>
@@ -91,10 +91,10 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </h2>
           <div className="space-y-4">
             {sons.length > 0 ? sons.map(rival => (
-              <div key={rival.name} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <Link key={rival.name} href={`/rivalries?m1=${encodeURIComponent(decodedId)}&m2=${encodeURIComponent(rival.name)}`} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
                 <span className="font-bold text-lg">{rival.name}</span>
                 <span className="text-emerald-400 font-black text-xl">{rival.total.wins} - {rival.total.losses}</span>
-              </div>
+              </Link>
             )) : <p className="text-slate-500 italic">No dominant records yet.</p>}
           </div>
         </div>
@@ -105,10 +105,10 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </h2>
           <div className="space-y-4">
             {kryptonites.length > 0 ? kryptonites.map(rival => (
-              <div key={rival.name} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <Link key={rival.name} href={`/rivalries?m1=${encodeURIComponent(decodedId)}&m2=${encodeURIComponent(rival.name)}`} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
                 <span className="font-bold text-lg">{rival.name}</span>
                 <span className="text-red-400 font-black text-xl">{rival.total.wins} - {rival.total.losses}</span>
-              </div>
+              </Link>
             )) : <p className="text-slate-500 italic">No significant losing records.</p>}
           </div>
         </div>
@@ -116,9 +116,9 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8 border-t border-slate-800">
         <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+          <Link href="/luck" className="text-2xl font-bold mb-6 flex items-center gap-2 hover:text-emerald-400 transition-colors">
             <Activity className="text-purple-400" /> Scoring Metrics
-          </h2>
+          </Link>
           <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8">
             <div>
               <div className="flex justify-between mb-2">
@@ -152,7 +152,7 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </h2>
           <div className="space-y-4">
             {history.reverse().map((h) => (
-              <div key={h.year} className="bg-slate-900 p-4 rounded-lg border border-slate-800 flex justify-between items-center hover:border-slate-700 transition-colors">
+              <Link key={h.year} href={`/seasons?year=${h.year}`} className="bg-slate-900 p-4 rounded-lg border border-slate-800 flex justify-between items-center hover:border-slate-700 transition-colors">
                 <div>
                   <span className="text-emerald-400 font-bold mr-3">{h.year}</span>
                   <span className="font-medium text-lg">{h.team.team}</span>
@@ -163,7 +163,7 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
                     {`${h.team.regular_season.wins}-${h.team.regular_season.losses}`}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
