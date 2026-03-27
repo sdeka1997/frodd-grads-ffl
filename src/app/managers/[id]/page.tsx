@@ -56,27 +56,27 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           )}
         </h1>
         <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 md:order-1">
             <div className="text-slate-400 text-sm">Overall Record</div>
             <div className="text-2xl font-bold text-emerald-400">{stats.wins} - {stats.losses}</div>
           </div>
-          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 md:order-2">
             <div className="text-slate-400 text-sm">Win Percentage</div>
             <div className="text-2xl font-bold">{winPct}%</div>
           </div>
-          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 md:order-4">
             <div className="text-slate-400 text-sm">Playoff Record</div>
             <div className="text-2xl font-bold">{stats.playoff_record}</div>
           </div>
-          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 md:order-3">
             <div className="text-slate-400 text-sm">Championships</div>
             <div className={`text-2xl font-bold ${stats.championships > 0 ? 'text-yellow-400' : 'text-emerald-400'}`}>{stats.championships}</div>
           </div>
-          <Link href="/shotgun" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
+          <Link href="/shotgun" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors md:order-5">
             <div className="text-slate-400 text-sm">Shotguns</div>
             <div className="text-2xl font-bold text-emerald-400">{shotgunData?.totalShotguns ?? 0}</div>
           </Link>
-          <Link href="/highroller" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
+          <Link href="/highroller" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors md:order-6">
             <div className="text-slate-400 text-sm">High Scorer</div>
             <div className="text-2xl font-bold">{highRollerData?.totalWins ?? 0}</div>
           </Link>

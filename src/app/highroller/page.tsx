@@ -171,7 +171,8 @@ export default function HighRollerPage() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-4">
+        {/* Mobile: swipeable carousel */}
+        <div className="md:hidden flex flex-col gap-4">
           <div
             className="overflow-hidden cursor-grab active:cursor-grabbing"
             style={{ touchAction: 'none' }}
@@ -195,7 +196,6 @@ export default function HighRollerPage() {
                   return acc;
                 }, {} as Record<string, number>);
                 const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
-
                 return (
                   <div key={year} style={{ minWidth: '85%' }} className="bg-slate-900 border border-slate-800 rounded-xl p-6 select-none">
                     <div className="flex items-center justify-between mb-4">
@@ -203,14 +203,8 @@ export default function HighRollerPage() {
                       <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <div className="text-slate-400">Total Weeks</div>
-                        <div className="text-xl font-bold text-white">{yearHighs.length}</div>
-                      </div>
-                      <div>
-                        <div className="text-slate-400">Unique Winners</div>
-                        <div className="text-xl font-bold text-white">{uniqueWinners}</div>
-                      </div>
+                      <div><div className="text-slate-400">Total Weeks</div><div className="text-xl font-bold text-white">{yearHighs.length}</div></div>
+                      <div><div className="text-slate-400">Unique Winners</div><div className="text-xl font-bold text-white">{uniqueWinners}</div></div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-slate-700">
                       <div className="text-slate-400 text-xs">Most Wins</div>
@@ -226,15 +220,46 @@ export default function HighRollerPage() {
               })}
             </div>
           </div>
-
           <div className="flex gap-1.5 justify-center">
             {years.map((_, i) => (
-              <div
-                key={i}
-                className={`rounded-full transition-all duration-300 ${i === topYear ? 'w-4 h-1.5 bg-emerald-400' : 'w-1.5 h-1.5 bg-slate-600'}`}
-              />
+              <div key={i} className={`rounded-full transition-all duration-300 ${i === topYear ? 'w-4 h-1.5 bg-emerald-400' : 'w-1.5 h-1.5 bg-slate-600'}`} />
             ))}
           </div>
+        </div>
+
+        {/* Desktop: grid of cards */}
+        <div className="hidden md:grid md:grid-cols-2 gap-4">
+          {years.map(year => {
+            const yearHighs = weeklyHighs.filter(h => h.year === year);
+            const totalPayout = yearHighs.length * 15;
+            const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
+            const winCounts = yearHighs.reduce((acc, h) => {
+              acc[h.manager] = (acc[h.manager] || 0) + 1;
+              return acc;
+            }, {} as Record<string, number>);
+            const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
+            return (
+              <div key={year} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-2xl font-bold text-white">{year} Season</h3>
+                  <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div><div className="text-slate-400">Total Weeks</div><div className="text-xl font-bold text-white">{yearHighs.length}</div></div>
+                  <div><div className="text-slate-400">Unique Winners</div><div className="text-xl font-bold text-white">{uniqueWinners}</div></div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-slate-700">
+                  <div className="text-slate-400 text-xs">Most Wins</div>
+                  {topWinner && (
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="font-bold text-white">{topWinner[0]}</span>
+                      <span className="text-emerald-400 font-bold">{topWinner[1]} wins</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

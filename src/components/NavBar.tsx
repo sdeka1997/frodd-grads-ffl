@@ -31,7 +31,6 @@ export default function NavBar() {
 
   // Desktop dropdown state
   const [open, setOpen] = useState<DropdownName>(null);
-  const [pos, setPos] = useState({ top: 0, left: 0 });
 
   // Mobile bottom sheet state
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -57,22 +56,6 @@ export default function NavBar() {
     }
   }, []);
 
-  const toggleDropdown = (name: DropdownName, e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    if (open === name) {
-      setOpen(null);
-    } else {
-      const rect = e.currentTarget.getBoundingClientRect();
-      setPos({ top: rect.bottom + 4, left: rect.left });
-      setOpen(name);
-    }
-  };
-
-  useEffect(() => {
-    const close = () => setOpen(null);
-    document.addEventListener('click', close);
-    return () => document.removeEventListener('click', close);
-  }, []);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -212,18 +195,32 @@ export default function NavBar() {
               <Link href="/" className={desktopLinkClass} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
-              <button
-                onClick={(e) => toggleDropdown('history', e)}
-                className={`${desktopLinkClass} flex items-center gap-1`}
-              >
-                League History {chevron(open === 'history')}
-              </button>
-              <button
-                onClick={(e) => toggleDropdown('analytics', e)}
-                className={`${desktopLinkClass} flex items-center gap-1`}
-              >
-                Analytics {chevron(open === 'analytics')}
-              </button>
+              <div className="relative" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
+                <button className={`${desktopLinkClass} flex items-center gap-1`}>
+                  League History {chevron(open === 'history')}
+                </button>
+                {open === 'history' && (
+                  <div className="absolute top-full left-0 mt-1 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
+                    <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
+                    <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
+                    <Link href="/shotgun" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Shotgun</Link>
+                    <Link href="/highroller" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>High Roller</Link>
+                  </div>
+                )}
+              </div>
+              <div className="relative" onMouseEnter={() => setOpen('analytics')} onMouseLeave={() => setOpen(null)}>
+                <button className={`${desktopLinkClass} flex items-center gap-1`}>
+                  Analytics {chevron(open === 'analytics')}
+                </button>
+                {open === 'analytics' && (
+                  <div className="absolute top-full left-0 mt-1 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
+                    <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
+                    <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Playoff Clutchness</Link>
+                    <Link href="/matrix" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
+                    <Link href="/rivalries" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Rivalries</Link>
+                  </div>
+                )}
+              </div>
               <Link href="/allstar" className={desktopLinkClass} onClick={() => setOpen(null)}>
                 All-Star
               </Link>
@@ -231,31 +228,6 @@ export default function NavBar() {
           </div>
         </div>
 
-        {/* Desktop dropdowns */}
-        {open === 'history' && (
-          <div
-            style={{ position: 'fixed', top: pos.top, left: pos.left }}
-            className="w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
-            <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
-            <Link href="/shotgun" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Shotgun</Link>
-            <Link href="/highroller" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>High Roller</Link>
-          </div>
-        )}
-        {open === 'analytics' && (
-          <div
-            style={{ position: 'fixed', top: pos.top, left: pos.left }}
-            className="w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
-            <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Playoff Clutchness</Link>
-            <Link href="/matrix" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
-            <Link href="/rivalries" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Rivalries</Link>
-          </div>
-        )}
       </nav>
 
       {/* Mobile FAB — bottom-left, opens bottom sheet */}
