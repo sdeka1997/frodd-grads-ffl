@@ -55,8 +55,8 @@ export default function HighRollerPage() {
     <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-          <h1 className="text-4xl font-extrabold flex items-center gap-3">
-            <DollarSign className="w-10 h-10 text-emerald-400" />
+          <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
+            <DollarSign className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
             High Roller Leaderboard
           </h1>
           <span className="text-slate-500 text-sm">
@@ -82,22 +82,26 @@ export default function HighRollerPage() {
           </p>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 h-[400px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={highRollerStats}
-              margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-              <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
-              <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
-              <Bar dataKey="totalEarnings" name="Total Earnings" radius={[4, 4, 0, 0]} onClick={handleBarClick} style={{ cursor: 'pointer' }}>
-                {highRollerStats.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={getWinnerColor(entry, highRollerStats)} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6">
+          <div className="overflow-x-auto">
+            <div style={{ minWidth: `${Math.max(500, highRollerStats.length * 65)}px`, height: '360px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={highRollerStats}
+                  margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                  <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+                  <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
+                  <Bar dataKey="totalEarnings" name="Total Earnings" radius={[4, 4, 0, 0]} onClick={handleBarClick} style={{ cursor: 'pointer' }}>
+                    {highRollerStats.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={getWinnerColor(entry, highRollerStats)} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
 
         {tooltip && (
