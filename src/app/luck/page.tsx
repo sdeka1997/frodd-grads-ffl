@@ -55,11 +55,9 @@ export default function LuckPage() {
 
       {/* LUCK INDEX CHART */}
       <section>
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 md:p-6">
-          <div className="overflow-x-auto">
-            <div style={{ minWidth: '500px', height: '500px' }}>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-1 md:p-6 h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 40, right: 10, bottom: 20, left: -30 }}>
+            <ScatterChart margin={{ top: 40, right: 5, bottom: 20, left: -30 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis
                 type="number"
@@ -103,8 +101,6 @@ export default function LuckPage() {
               </Scatter>
             </ScatterChart>
           </ResponsiveContainer>
-            </div>
-          </div>
         </div>
       </section>
 
