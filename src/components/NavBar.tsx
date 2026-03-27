@@ -40,8 +40,9 @@ export default function NavBar() {
   // Bottom sheet drag-to-dismiss
   const [sheetDragY, setSheetDragY] = useState(0);
   const [isDraggingSheet, setIsDraggingSheet] = useState(false);
-  const sheetDragStartY = useRef(0);
+  const sheetRef = useRef<HTMLDivElement>(null);
   const sheetScrollRef = useRef<HTMLDivElement>(null);
+  const currentDragY = useRef(0);
 
   // FAB one-time pulse
   const [fabPulse, setFabPulse] = useState(false);
@@ -93,6 +94,61 @@ export default function NavBar() {
     };
   }, [sidebarOpen]);
 
+  // Native touch handlers — non-passive so we can preventDefault() and stop pull-to-refresh
+  useEffect(() => {
+    const sheet = sheetRef.current;
+    if (!sheet || !sidebarOpen) return;
+
+    let startY = 0;
+    let active = false;
+
+    const onTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+      active = false;
+      currentDragY.current = 0;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      const delta = e.touches[0].clientY - startY;
+      const scrollTop = sheetScrollRef.current?.scrollTop ?? 0;
+      if (!active && delta > 8 && scrollTop === 0) {
+        active = true;
+      }
+      if (active) {
+        e.preventDefault();
+        const y = Math.max(0, delta);
+        currentDragY.current = y;
+        setSheetDragY(y);
+        setIsDraggingSheet(true);
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (active) {
+        setIsDraggingSheet(false);
+        if (currentDragY.current > 80) {
+          setSidebarOpen(false);
+          setSidebarExpanded({ history: true, analytics: true });
+          setSheetDragY(0);
+        } else {
+          setSheetDragY(0);
+        }
+        currentDragY.current = 0;
+      }
+      active = false;
+    };
+
+    sheet.addEventListener('touchstart', onTouchStart, { passive: true });
+    sheet.addEventListener('touchmove', onTouchMove, { passive: false });
+    sheet.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    return () => {
+      sheet.removeEventListener('touchstart', onTouchStart);
+      sheet.removeEventListener('touchmove', onTouchMove);
+      sheet.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [sidebarOpen]);
+
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
@@ -103,31 +159,6 @@ export default function NavBar() {
     setIsDraggingSheet(false);
   };
 
-  const onSheetPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    sheetDragStartY.current = e.clientY;
-  };
-
-  const onSheetPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const delta = e.clientY - sheetDragStartY.current;
-    if (!isDraggingSheet) {
-      // Only activate if pulling down and scroll content is at the top
-      if (delta > 8 && (sheetScrollRef.current?.scrollTop ?? 0) === 0) {
-        setIsDraggingSheet(true);
-        e.currentTarget.setPointerCapture(e.pointerId);
-      }
-      return;
-    }
-    setSheetDragY(Math.max(0, delta));
-  };
-
-  const onSheetPointerUp = () => {
-    setIsDraggingSheet(false);
-    if (sheetDragY > 80) {
-      closeSidebar();
-    } else {
-      setSheetDragY(0);
-    }
-  };
 
   const desktopLinkClass =
     'hover:text-emerald-400 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap';
@@ -247,13 +278,11 @@ export default function NavBar() {
 
       {/* Mobile bottom sheet */}
       <div
+        ref={sheetRef}
         className={`fixed bottom-0 left-0 right-0 max-h-[80vh] bg-slate-900 border-t border-slate-700 rounded-t-2xl z-[9999] md:hidden flex flex-col ${
           isDraggingSheet ? '' : 'transition-transform duration-300 ease-in-out'
         } ${sidebarOpen && sheetDragY === 0 ? 'translate-y-0' : sidebarOpen ? '' : 'translate-y-full'}`}
         style={sidebarOpen && sheetDragY > 0 ? { transform: `translateY(${sheetDragY}px)` } : undefined}
-        onPointerDown={onSheetPointerDown}
-        onPointerMove={onSheetPointerMove}
-        onPointerUp={onSheetPointerUp}
       >
         {/* Drag handle visual */}
         <div className="flex justify-center pt-3 pb-2 shrink-0">
