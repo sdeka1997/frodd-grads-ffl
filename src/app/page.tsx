@@ -5,6 +5,7 @@ import { Medal } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import AllStarCountdown from '@/components/AllStarCountdown';
+import HallOfFameStack from '@/components/HallOfFameStack';
 
 export default function Home() {
   const records = getCumulativeRecords();
@@ -32,28 +33,9 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
           <Trophy className="text-yellow-400 w-8 h-8" /> Hall of Fame
         </h2>
-        {/* Mobile: swipeable carousel */}
-        <div className="md:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory no-scrollbar">
-          <div className="flex gap-4 pb-2 w-max">
-            {hallOfFame.map((manager) => (
-              <div key={manager.manager} className="snap-center shrink-0 w-[calc(100vw-2rem)]">
-                <Link href={`/managers/${manager.manager}`} className="block group">
-                  <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden group-hover:border-emerald-500/50 transition-colors">
-                    <div className="absolute top-0 right-0 p-4">
-                      <Medal className={`w-6 h-6 ${
-                        manager.championships === maxChamps ? 'text-yellow-400' :
-                        manager.championships === maxChamps - 1 ? 'text-slate-300' :
-                        'text-amber-600'
-                      }`} />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">{manager.manager}</h3>
-                    <div className="text-4xl font-black text-emerald-400 mb-2">{manager.championships} <span className="text-sm text-slate-500 font-normal">Rings</span></div>
-                    <p className="text-slate-400 text-sm">{manager.wins}-{manager.losses} Overall Record</p>
-                  </div>
-                </Link>
-              </div>
-            ))}
-          </div>
+        {/* Mobile: swipeable card stack */}
+        <div className="md:hidden py-2">
+          <HallOfFameStack managers={hallOfFame} maxChamps={maxChamps} />
         </div>
 
         {/* Desktop: grid */}
