@@ -64,10 +64,10 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
             <div className="text-slate-400 text-sm">Win Percentage</div>
             <div className="text-2xl font-bold text-emerald-400">{winPct}%</div>
           </div>
-          <Link href="/clutchness" className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors">
+          <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Playoff Record</div>
             <div className="text-2xl font-bold text-emerald-400">{stats.playoff_record}</div>
-          </Link>
+          </div>
           <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
             <div className="text-slate-400 text-sm">Championships</div>
             <div className={`text-2xl font-bold ${stats.championships > 0 ? 'text-yellow-400' : ''}`}>{stats.championships}</div>
