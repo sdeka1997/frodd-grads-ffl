@@ -20,6 +20,10 @@ body {
   100% { box-shadow: 0 0 0 18px rgba(52, 211, 153, 0); }
 }
 
+.fab-glow {
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.35);
+}
+
 .fab-pulse {
   animation: sonar-ring 0.9s ease-out 3;
   animation-delay: 1s;
