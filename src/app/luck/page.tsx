@@ -3,9 +3,11 @@
 import { getLuckIndex } from '@/utils/dataProcessing';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, Cell, ReferenceLine } from 'recharts';
 import { ScatterChart as ScatterIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export default function LuckPage() {
   const luckData = getLuckIndex();
+  const [activeTab, setActiveTab] = useState<'luck' | 'skill'>('luck');
 
   const getQuadrantColor = (x: number, y: number) => {
     if (x >= 0 && y <= 0) return '#34d399'; // Bottom Right: Good & Lucky
@@ -50,9 +52,9 @@ export default function LuckPage() {
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 md:p-6 h-[600px] min-w-[600px]">
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 md:p-6 h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 40, right: 30, bottom: 20, left: 20 }}>
+            <ScatterChart margin={{ top: 40, right: 20, bottom: 20, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis
                 type="number"
@@ -101,80 +103,79 @@ export default function LuckPage() {
 
       {/* LUCK RANKINGS */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-200">Luck & Skill Rankings</h2>
-          <p className="text-slate-400 mt-2">
-            Side-by-side comparison of misery (PA vs Avg) and prowess (PF vs Avg).
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* MISERY INDEX */}
-          <div>
-            <h3 className="text-xl font-bold text-red-400 mb-4 flex items-center gap-2">
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold text-slate-200 mb-4">Luck & Skill Rankings</h2>
+          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-fit">
+            <button
+              onClick={() => setActiveTab('luck')}
+              className={`px-5 py-2.5 text-sm font-medium transition-colors ${
+                activeTab === 'luck'
+                  ? 'bg-red-500/20 text-red-300'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
+            >
               😰 Most Unlucky
-              <span className="text-sm text-slate-400 font-normal">(PA vs Avg)</span>
-            </h3>
-            <div className="space-y-2">
-              {[...luckData].sort((a, b) => b.y - a.y).map((manager, index) => {
-                const getMiseryColor = (paVsAvg: number) => {
-                  if (paVsAvg >= 3) return 'bg-red-500/20 border-red-500/40 text-red-300';
-                  if (paVsAvg >= 1) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
-                  if (paVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
-                  if (paVsAvg >= -2) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
-                  return 'bg-green-600/20 border-green-600/40 text-green-300';
-                };
-
-                return (
-                  <div key={manager.name} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between`}>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">
-                        {index + 1}
-                      </div>
-                      <span className="font-medium text-white">{manager.name}</span>
-                    </div>
-                    <div className="text-xl font-bold">
-                      {manager.y > 0 ? '+' : ''}{manager.y}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* PROWESS INDEX */}
-          <div>
-            <h3 className="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+            </button>
+            <button
+              onClick={() => setActiveTab('skill')}
+              className={`px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
+                activeTab === 'skill'
+                  ? 'bg-emerald-500/20 text-emerald-300'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
+            >
               🎯 Most Skilled
-              <span className="text-sm text-slate-400 font-normal">(PF vs Avg)</span>
-            </h3>
-            <div className="space-y-2">
-              {[...luckData].sort((a, b) => b.x - a.x).map((manager, index) => {
-                const getProwessColor = (pfVsAvg: number) => {
-                  if (pfVsAvg >= 3) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
-                  if (pfVsAvg >= 1) return 'bg-green-500/20 border-green-500/40 text-green-300';
-                  if (pfVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
-                  if (pfVsAvg >= -2) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
-                  return 'bg-red-600/20 border-red-600/40 text-red-300';
-                };
-
-                return (
-                  <div key={manager.name} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between`}>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">
-                        {index + 1}
-                      </div>
-                      <span className="font-medium text-white">{manager.name}</span>
-                    </div>
-                    <div className="text-xl font-bold">
-                      {manager.x > 0 ? '+' : ''}{manager.x}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            </button>
           </div>
         </div>
+
+        {activeTab === 'luck' && (
+          <div className="space-y-2">
+            <p className="text-slate-400 text-sm mb-3">Points Against vs Average — higher means more unlucky</p>
+            {[...luckData].sort((a, b) => b.y - a.y).map((manager, index) => {
+              const getMiseryColor = (paVsAvg: number) => {
+                if (paVsAvg >= 3) return 'bg-red-500/20 border-red-500/40 text-red-300';
+                if (paVsAvg >= 1) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
+                if (paVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
+                if (paVsAvg >= -2) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
+                return 'bg-green-600/20 border-green-600/40 text-green-300';
+              };
+              return (
+                <div key={manager.name} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between`}>
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
+                    <span className="font-medium text-white">{manager.name}</span>
+                  </div>
+                  <div className="text-xl font-bold">{manager.y > 0 ? '+' : ''}{manager.y}</div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {activeTab === 'skill' && (
+          <div className="space-y-2">
+            <p className="text-slate-400 text-sm mb-3">Points For vs Average — higher means more skilled</p>
+            {[...luckData].sort((a, b) => b.x - a.x).map((manager, index) => {
+              const getProwessColor = (pfVsAvg: number) => {
+                if (pfVsAvg >= 3) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
+                if (pfVsAvg >= 1) return 'bg-green-500/20 border-green-500/40 text-green-300';
+                if (pfVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
+                if (pfVsAvg >= -2) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
+                return 'bg-red-600/20 border-red-600/40 text-red-300';
+              };
+              return (
+                <div key={manager.name} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between`}>
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
+                    <span className="font-medium text-white">{manager.name}</span>
+                  </div>
+                  <div className="text-xl font-bold">{manager.x > 0 ? '+' : ''}{manager.x}</div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
     </div>
   );
