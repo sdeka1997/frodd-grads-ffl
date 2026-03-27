@@ -80,11 +80,6 @@ export default function MatrixPage() {
               <span>Even record or no games</span>
             </div>
           </div>
-          <div className="mt-4 p-4 bg-slate-800/50 border border-slate-700 rounded-lg">
-            <p className="text-slate-200 font-medium">
-              <strong>Reading tip:</strong> The record shown is the <span className="text-emerald-400 font-bold">Row Manager</span> vs the <span className="text-blue-400 font-bold">Column Manager</span>.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -129,6 +124,9 @@ export default function MatrixPage() {
               </tbody>
             </table>
           </div>
+          <p className="text-xs text-slate-500 mt-3 px-1">
+            <span className="text-emerald-400/70 font-medium">Row Manager</span> record vs <span className="text-blue-400/70 font-medium">Column Manager</span>.
+          </p>
         </div>
       </section>
 
