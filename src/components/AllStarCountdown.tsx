@@ -34,41 +34,41 @@ export default function AllStarCountdown() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-r from-yellow-900/20 to-orange-900/20 border border-yellow-800/30 rounded-xl p-8">
+    <section className="bg-gradient-to-r from-yellow-900/20 to-orange-900/20 border border-yellow-800/30 rounded-xl p-4 sm:p-8">
       <div className="text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Star className="w-8 h-8 text-yellow-400" />
-          <h2 className="text-3xl font-bold text-yellow-400">All-Star Weekend 2026</h2>
-          <Star className="w-8 h-8 text-yellow-400" />
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <Star className="w-5 h-5 sm:w-8 sm:h-8 text-yellow-400" />
+          <h2 className="text-xl sm:text-3xl font-bold text-yellow-400">All-Star Weekend 2026</h2>
+          <Star className="w-5 h-5 sm:w-8 sm:h-8 text-yellow-400" />
         </div>
 
-        <div className="flex items-center justify-center gap-6 mb-6 text-slate-300">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-blue-400" />
+        <div className="flex items-center justify-center gap-4 sm:gap-6 mb-4 sm:mb-6 text-slate-300 text-sm sm:text-base">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
             <span>New York, NY</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-purple-400" />
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
             <span>April 10-12, 2026</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 max-w-md mx-auto">
-          <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
-            <div className="text-3xl font-bold text-yellow-400">{timeLeft.days}</div>
-            <div className="text-sm text-slate-400 uppercase tracking-wide">Days</div>
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6 sm:max-w-md sm:mx-auto">
+          <div className="bg-slate-900 border border-slate-700 rounded-lg p-2 sm:p-4">
+            <div className="text-xl sm:text-3xl font-bold text-yellow-400">{timeLeft.days}</div>
+            <div className="text-xs sm:text-sm text-slate-400 uppercase tracking-wide">Days</div>
           </div>
-          <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
-            <div className="text-3xl font-bold text-yellow-400">{timeLeft.hours}</div>
-            <div className="text-sm text-slate-400 uppercase tracking-wide">Hours</div>
+          <div className="bg-slate-900 border border-slate-700 rounded-lg p-2 sm:p-4">
+            <div className="text-xl sm:text-3xl font-bold text-yellow-400">{timeLeft.hours}</div>
+            <div className="text-xs sm:text-sm text-slate-400 uppercase tracking-wide">Hours</div>
           </div>
-          <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
-            <div className="text-3xl font-bold text-yellow-400">{timeLeft.minutes}</div>
-            <div className="text-sm text-slate-400 uppercase tracking-wide">Minutes</div>
+          <div className="bg-slate-900 border border-slate-700 rounded-lg p-2 sm:p-4">
+            <div className="text-xl sm:text-3xl font-bold text-yellow-400">{timeLeft.minutes}</div>
+            <div className="text-xs sm:text-sm text-slate-400 uppercase tracking-wide">Mins</div>
           </div>
-          <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
-            <div className="text-3xl font-bold text-yellow-400">{timeLeft.seconds}</div>
-            <div className="text-sm text-slate-400 uppercase tracking-wide">Seconds</div>
+          <div className="bg-slate-900 border border-slate-700 rounded-lg p-2 sm:p-4">
+            <div className="text-xl sm:text-3xl font-bold text-yellow-400">{timeLeft.seconds}</div>
+            <div className="text-xs sm:text-sm text-slate-400 uppercase tracking-wide">Secs</div>
           </div>
         </div>
 
