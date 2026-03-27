@@ -82,8 +82,8 @@ export default function NavBar() {
               onClick={() => setOpen(null)}
             >
               <span className="text-2xl">🏈</span>
-              <span className="hidden sm:inline text-emerald-500">Frodd</span>
-              <span className="hidden sm:inline text-emerald-400">FFL</span>
+              <span className="text-emerald-500">Frodd</span>
+              <span className="text-emerald-400">FFL</span>
             </Link>
 
             {/* Desktop nav links — hidden on mobile */}
