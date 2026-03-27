@@ -102,42 +102,78 @@ export default function LuckPage() {
       {/* LUCK RANKINGS */}
       <section>
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-200">Luck Rankings</h2>
+          <h2 className="text-2xl font-bold text-slate-200">Luck & Skill Rankings</h2>
           <p className="text-slate-400 mt-2">
-            Managers ranked by their position in the luck quadrants.
+            Side-by-side comparison of misery (PA vs Avg) and prowess (PF vs Avg).
           </p>
         </div>
 
-        <div className="grid gap-4">
-          {luckData.map((manager, index) => {
-            const quadrant = manager.x >= 0 && manager.y <= 0 ? 'lucky' :
-                           manager.x >= 0 && manager.y > 0 ? 'unlucky' :
-                           manager.x < 0 && manager.y <= 0 ? 'bad-lucky' : 'cursed';
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* MISERY INDEX */}
+          <div>
+            <h3 className="text-xl font-bold text-red-400 mb-4 flex items-center gap-2">
+              😰 Most Unlucky
+              <span className="text-sm text-slate-400 font-normal">(PA vs Avg)</span>
+            </h3>
+            <div className="space-y-2">
+              {[...luckData].sort((a, b) => b.y - a.y).map((manager, index) => {
+                const getMiseryColor = (paVsAvg: number) => {
+                  if (paVsAvg >= 3) return 'bg-red-500/20 border-red-500/40 text-red-300';
+                  if (paVsAvg >= 1) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
+                  if (paVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
+                  if (paVsAvg >= -2) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
+                  return 'bg-green-600/20 border-green-600/40 text-green-300';
+                };
 
-            const quadrantInfo = {
-              'lucky': { label: 'Good & Lucky', color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-              'unlucky': { label: 'Good & Unlucky', color: 'text-blue-400', bg: 'bg-blue-400/10' },
-              'bad-lucky': { label: 'Bad & Lucky', color: 'text-amber-400', bg: 'bg-amber-400/10' },
-              'cursed': { label: 'Bad & Unlucky', color: 'text-red-400', bg: 'bg-red-400/10' }
-            };
-
-            return (
-              <div key={manager.name} className={`${quadrantInfo[quadrant].bg} border border-slate-800 rounded-lg p-4 flex items-center justify-between`}>
-                <div className="flex items-center gap-4">
-                  <div>
-                    <div className="text-lg font-bold text-white">{manager.name}</div>
-                    <div className={`text-sm ${quadrantInfo[quadrant].color} font-medium`}>
-                      {quadrantInfo[quadrant].label}
+                return (
+                  <div key={manager.name} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between`}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">
+                        {index + 1}
+                      </div>
+                      <span className="font-medium text-white">{manager.name}</span>
+                    </div>
+                    <div className="text-xl font-bold">
+                      {manager.y > 0 ? '+' : ''}{manager.y}
                     </div>
                   </div>
-                </div>
-                <div className="text-right text-sm text-slate-400">
-                  <div>PF vs Avg: {manager.x > 0 ? '+' : ''}{manager.x}</div>
-                  <div>PA vs Avg: {manager.y > 0 ? '+' : ''}{manager.y}</div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </div>
+          </div>
+
+          {/* PROWESS INDEX */}
+          <div>
+            <h3 className="text-xl font-bold text-emerald-400 mb-4 flex items-center gap-2">
+              🎯 Most Skilled
+              <span className="text-sm text-slate-400 font-normal">(PF vs Avg)</span>
+            </h3>
+            <div className="space-y-2">
+              {[...luckData].sort((a, b) => b.x - a.x).map((manager, index) => {
+                const getProwessColor = (pfVsAvg: number) => {
+                  if (pfVsAvg >= 3) return 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300';
+                  if (pfVsAvg >= 1) return 'bg-green-500/20 border-green-500/40 text-green-300';
+                  if (pfVsAvg >= 0) return 'bg-yellow-500/20 border-yellow-500/40 text-yellow-300';
+                  if (pfVsAvg >= -2) return 'bg-orange-500/20 border-orange-500/40 text-orange-300';
+                  return 'bg-red-600/20 border-red-600/40 text-red-300';
+                };
+
+                return (
+                  <div key={manager.name} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between`}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">
+                        {index + 1}
+                      </div>
+                      <span className="font-medium text-white">{manager.name}</span>
+                    </div>
+                    <div className="text-xl font-bold">
+                      {manager.x > 0 ? '+' : ''}{manager.x}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
     </div>

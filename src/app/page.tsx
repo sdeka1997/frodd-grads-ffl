@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div className="space-y-12">
-      <header className="text-center space-y-6 py-12">
+      <header className="text-center space-y-4 pt-12">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
           The <span className="text-emerald-400">Frodd Grads</span> Hub
         </h1>
@@ -24,7 +24,9 @@ export default function Home() {
         </p>
       </header>
 
-      <AllStarCountdown />
+      <div className="-mt-4">
+        <AllStarCountdown />
+      </div>
 
       <section>
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
