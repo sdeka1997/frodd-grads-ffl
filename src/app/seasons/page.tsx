@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { getLeagueData, SeasonTeam } from '@/utils/dataProcessing';
 import { Calendar, Medal, ArrowUpDown, Trash2 } from 'lucide-react';
 import Link from 'next/link';
@@ -14,7 +15,11 @@ const parseFinish = (finish: string | undefined): number => {
 export default function SeasonsPage() {
   const data = getLeagueData();
   const years = Object.keys(data.seasons).sort((a, b) => parseInt(b) - parseInt(a));
-  const [selectedYear, setSelectedYear] = useState<string>(years[0]);
+  const searchParams = useSearchParams();
+  const [selectedYear, setSelectedYear] = useState<string>(() => {
+    const y = searchParams.get('year');
+    return y && years.includes(y) ? y : years[0];
+  });
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>({
     key: 'playoff_finish',
     direction: 'asc'

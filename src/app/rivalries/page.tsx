@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { getCurrentManagers } from '@/utils/dataProcessing';
 import { Swords, Search, Trophy, History, ArrowUpDown } from 'lucide-react';
@@ -9,9 +10,16 @@ import Link from 'next/link';
 export default function RivalriesPage() {
   const allManagers = useMemo(() => getAllH2HManagers(), []);
   const activeManagers = useMemo(() => getCurrentManagers().sort(), []);
-  
-  const [manager1, setManager1] = useState(activeManagers[0] || allManagers[0]);
-  const [manager2, setManager2] = useState(activeManagers[1] || allManagers[1]);
+  const searchParams = useSearchParams();
+
+  const [manager1, setManager1] = useState(() => {
+    const m = searchParams.get('m1');
+    return m && allManagers.includes(m) ? m : (activeManagers[0] || allManagers[0]);
+  });
+  const [manager2, setManager2] = useState(() => {
+    const m = searchParams.get('m2');
+    return m && allManagers.includes(m) ? m : (activeManagers[1] || allManagers[1]);
+  });
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>({
     key: 'winPct',
     direction: 'desc'
