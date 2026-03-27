@@ -4,6 +4,7 @@ import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing'
 import { DollarSign, TrendingUp, Calendar, Crown, Sparkles } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from 'recharts';
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 export default function HighRollerPage() {
   const weeklyHighs = getWeeklyHighScores();
@@ -267,9 +268,10 @@ export default function HighRollerPage() {
         {activeTab === 'winners' && (
           <div className="grid gap-4">
             {weeklyHighs.slice(0, 10).map((high) => (
-              <div
+              <Link
                 key={`${high.year}-${high.week}-${high.manager}`}
-                className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors"
+                href={`/managers/${encodeURIComponent(high.manager)}`}
+                className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
@@ -285,7 +287,7 @@ export default function HighRollerPage() {
                   <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
                   <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
@@ -293,7 +295,7 @@ export default function HighRollerPage() {
         {activeTab === 'breakdown' && (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {highRollerStats.map((stats) => (
-              <div key={stats.manager} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
                   <div className="text-right">
@@ -316,7 +318,7 @@ export default function HighRollerPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

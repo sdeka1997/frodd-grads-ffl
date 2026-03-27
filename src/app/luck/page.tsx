@@ -4,6 +4,7 @@ import { getLuckIndex } from '@/utils/dataProcessing';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, Cell, ReferenceLine } from 'recharts';
 import { ScatterChart as ScatterIcon } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function LuckPage() {
   const luckData = getLuckIndex();
@@ -144,13 +145,13 @@ export default function LuckPage() {
                 return 'bg-green-600/20 border-green-600/40 text-green-300';
               };
               return (
-                <div key={manager.name} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between`}>
+                <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`${getMiseryColor(manager.y)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity`}>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
                     <span className="font-medium text-white">{manager.name}</span>
                   </div>
                   <div className="text-xl font-bold">{manager.y > 0 ? '+' : ''}{manager.y}</div>
-                </div>
+                </Link>
               );
             })}
           </div>
@@ -168,13 +169,13 @@ export default function LuckPage() {
                 return 'bg-red-600/20 border-red-600/40 text-red-300';
               };
               return (
-                <div key={manager.name} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between`}>
+                <Link key={manager.name} href={`/managers/${encodeURIComponent(manager.name)}`} className={`${getProwessColor(manager.x)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity`}>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
                     <span className="font-medium text-white">{manager.name}</span>
                   </div>
                   <div className="text-xl font-bold">{manager.x > 0 ? '+' : ''}{manager.x}</div>
-                </div>
+                </Link>
               );
             })}
           </div>

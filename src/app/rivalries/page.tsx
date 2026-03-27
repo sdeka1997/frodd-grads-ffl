@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { getCurrentManagers } from '@/utils/dataProcessing';
 import { Swords, Search, Trophy, History, ArrowUpDown } from 'lucide-react';
+import Link from 'next/link';
 
 export default function RivalriesPage() {
   const allManagers = useMemo(() => getAllH2HManagers(), []);
@@ -179,7 +180,9 @@ export default function RivalriesPage() {
             <tbody className="divide-y divide-slate-800">
               {tableData.map(d => (
                 <tr key={d.name} className="hover:bg-slate-800/50 transition-colors group">
-                  <td className="px-6 py-4 font-medium text-white group-hover:text-emerald-400 transition-colors">{d.name}</td>
+                  <td className="px-6 py-4 font-medium">
+                    <Link href={`/managers/${encodeURIComponent(d.name)}`} className="text-white hover:text-emerald-400 transition-colors" onClick={e => e.stopPropagation()}>{d.name}</Link>
+                  </td>
                   <td className="px-6 py-4 text-center text-slate-400">{d.total}</td>
                   <td className={`px-6 py-4 text-center font-mono font-bold ${getDominanceColor(d.wins, d.losses)}`}>
                     {d.wins} - {d.losses}
