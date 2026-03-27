@@ -15,6 +15,13 @@ body {
   background: theme('colors.slate.950');
 }
 
+/* Remove browser focus outline on Recharts SVG elements when tapped on mobile */
+.recharts-wrapper:focus,
+.recharts-wrapper svg:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
 @keyframes sonar-ring {
   0%   { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55); }
   100% { box-shadow: 0 0 0 18px rgba(52, 211, 153, 0); }

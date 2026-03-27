@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -71,6 +71,9 @@ export default function NavBar() {
     document.body.style.overflow = sidebarOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [sidebarOpen]);
+
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
   const closeSidebar = () => {
     setSidebarOpen(false);
@@ -217,7 +220,7 @@ export default function NavBar() {
         </div>
 
         <div className="py-2">
-          <Link href="/" className="block px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>
+          <Link href="/" className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/') ? 'text-emerald-400 bg-slate-800/60' : ''}`} onClick={closeSidebar}>
             Dashboard
           </Link>
 
@@ -229,10 +232,14 @@ export default function NavBar() {
           </button>
           {sidebarExpanded.history && (
             <div className="bg-slate-950">
-              <Link href="/managers" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Managers</Link>
-              <Link href="/seasons" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Seasons</Link>
-              <Link href="/shotgun" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Shotgun</Link>
-              <Link href="/highroller" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>High Roller</Link>
+              {[
+                { href: '/managers', label: 'Managers' },
+                { href: '/seasons', label: 'Seasons' },
+                { href: '/shotgun', label: 'Shotgun' },
+                { href: '/highroller', label: 'High Roller' },
+              ].map(({ href, label }) => (
+                <Link key={href} href={href} className={`block px-8 py-2.5 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`} onClick={closeSidebar}>{label}</Link>
+              ))}
             </div>
           )}
 
@@ -244,14 +251,18 @@ export default function NavBar() {
           </button>
           {sidebarExpanded.analytics && (
             <div className="bg-slate-950">
-              <Link href="/luck" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Luck Index</Link>
-              <Link href="/clutchness" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Playoff Clutchness</Link>
-              <Link href="/matrix" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Supremacy Matrix</Link>
-              <Link href="/rivalries" className="block px-8 py-2.5 text-sm text-slate-300 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>Rivalries</Link>
+              {[
+                { href: '/luck', label: 'Luck Index' },
+                { href: '/clutchness', label: 'Playoff Clutchness' },
+                { href: '/matrix', label: 'Supremacy Matrix' },
+                { href: '/rivalries', label: 'Rivalries' },
+              ].map(({ href, label }) => (
+                <Link key={href} href={href} className={`block px-8 py-2.5 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-300'}`} onClick={closeSidebar}>{label}</Link>
+              ))}
             </div>
           )}
 
-          <Link href="/allstar" className="block px-4 py-3 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors" onClick={closeSidebar}>
+          <Link href="/allstar" className={`block px-4 py-3 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`} onClick={closeSidebar}>
             All-Star
           </Link>
         </div>

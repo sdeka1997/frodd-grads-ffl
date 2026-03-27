@@ -46,7 +46,7 @@ export default function ShotgunPage() {
   return (
     <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
           <h1 className="text-4xl font-extrabold flex items-center gap-3">
             <Beer className="w-10 h-10 text-amber-400" />
             The Shotgun Shame Board
