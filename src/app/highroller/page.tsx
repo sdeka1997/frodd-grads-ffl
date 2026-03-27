@@ -23,7 +23,7 @@ export default function HighRollerPage() {
     return () => document.removeEventListener('click', close);
   }, []);
 
-  const handleBarClick = (data: any, _index: number, event: React.MouseEvent) => {
+  const handleBarClick = (data: any, _index: number, event: any) => {
     event.stopPropagation();
     if (tooltip?.manager === data.manager) {
       setTooltip(null);
