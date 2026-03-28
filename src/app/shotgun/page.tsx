@@ -50,7 +50,7 @@ function ShotgunContent() {
   );
 
   return (
-    <div className="space-y-16">
+    <>
       {selectedManager && (
         <ShotgunModal
           manager={selectedManager}
@@ -68,7 +68,7 @@ function ShotgunContent() {
           onClose={() => setSelectedWeek(null)}
         />
       )}
-
+      <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
           <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
@@ -286,6 +286,7 @@ function ShotgunContent() {
         </div>
       </section>
     </div>
+    </>
   );
 }
 

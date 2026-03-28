@@ -135,6 +135,7 @@ export default function AllStarPage() {
 
 
   return (
+    <>
     <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
@@ -333,7 +334,7 @@ export default function AllStarPage() {
           </div>
         </div>
       </section>
-
+    </div>
 
       {/* Photo modal */}
       {modalIndex !== null && (
@@ -399,6 +400,6 @@ export default function AllStarPage() {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 }

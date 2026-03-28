@@ -87,7 +87,7 @@ function SeasonsContent() {
   };
 
   return (
-    <div className="space-y-8">
+    <>
       {selectedTeam && (
         <SeasonModal
           team={selectedTeam}
@@ -97,7 +97,7 @@ function SeasonsContent() {
           onClose={() => setSelectedTeam(null)}
         />
       )}
-
+      <div className="space-y-8">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
         <h1 className="text-4xl font-extrabold flex items-center gap-3">
           <Calendar className="w-10 h-10 text-emerald-400" />
@@ -193,6 +193,7 @@ function SeasonsContent() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

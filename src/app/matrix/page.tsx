@@ -241,14 +241,14 @@ export default function MatrixPage() {
   }).sort((a, b) => b.netDominance - a.netDominance);
 
   return (
-    <div className="space-y-8 md:space-y-16">
+    <>
       {selectedPair && (
         <H2HModal m1={selectedPair.m1} m2={selectedPair.m2} onClose={() => setSelectedPair(null)} />
       )}
       {selectedDominance && (
         <DominanceModal manager={selectedDominance} onClose={() => setSelectedDominance(null)} />
       )}
-
+      <div className="space-y-8 md:space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
           <Grid3X3 className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
@@ -385,5 +385,6 @@ export default function MatrixPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

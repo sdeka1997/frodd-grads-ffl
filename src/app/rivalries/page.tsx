@@ -144,7 +144,7 @@ function RivalriesContent() {
   const playoffGames = games.filter(g => g.isPlayoff);
 
   return (
-    <div className="space-y-16">
+    <>
       {activeModal && (
         <GameLogModal
           games={
@@ -162,7 +162,7 @@ function RivalriesContent() {
           onClose={() => setActiveModal(null)}
         />
       )}
-
+      <div className="space-y-16">
       <header className="border-b border-slate-800 pb-8 text-center md:text-left">
         <h1 className="text-4xl font-extrabold flex items-center justify-center md:justify-start gap-3">
           <Swords className="w-10 h-10 text-red-500" />
@@ -305,6 +305,7 @@ function RivalriesContent() {
         </section>
       )}
     </div>
+    </>
   );
 }
 
