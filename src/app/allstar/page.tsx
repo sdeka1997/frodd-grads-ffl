@@ -128,7 +128,25 @@ export default function AllStarPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {/* Mobile: horizontal scroll chips */}
+        <div className="flex gap-3 overflow-x-auto no-scrollbar md:hidden pb-1">
+          {allStarYears.map((yearData) => (
+            <button
+              key={yearData.year}
+              onClick={() => setSelectedYear(yearData.year)}
+              className={`shrink-0 px-4 py-2 rounded-full border text-sm font-bold transition-all ${
+                selectedYear === yearData.year
+                  ? 'border-yellow-400 bg-yellow-400/10 text-yellow-400'
+                  : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-500'
+              }`}
+            >
+              {yearData.year}
+            </button>
+          ))}
+        </div>
+
+        {/* Desktop: grid of cards */}
+        <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-4">
           {allStarYears.map((yearData) => (
             <button
               key={yearData.year}
