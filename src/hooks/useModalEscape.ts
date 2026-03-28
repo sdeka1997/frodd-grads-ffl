@@ -6,10 +6,15 @@ export function useModalEscape(onClose: () => void) {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+
+    const html = document.documentElement;
+    const scrollY = window.scrollY;
+    html.style.overflow = 'hidden';
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      html.style.overflow = '';
+      window.scrollTo(0, scrollY);
     };
   }, [onClose]);
 }
