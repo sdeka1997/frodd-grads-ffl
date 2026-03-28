@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import React, { useState, useRef, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useModalEscape } from '@/hooks/useModalEscape';
-import { getWeekScores } from '@/utils/weeklyScores';
+import WeekLeaderboardModal from '@/components/WeekLeaderboardModal';
 
 
 function SeasonRecapModal({ year, onClose }: { year: string; onClose: () => void }) {
@@ -59,73 +59,6 @@ function SeasonRecapModal({ year, onClose }: { year: string; onClose: () => void
   );
 }
 
-function WeekLeaderboardModal({ year, week, highRollerManager, onClose }: {
-  year: string;
-  week: number;
-  highRollerManager: string;
-  onClose: () => void;
-}) {
-  const scores = getWeekScores(year, week).sort((a, b) => b.points - a.points);
-
-  useModalEscape(onClose);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/70" />
-      <div
-        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between p-6 border-b border-slate-800">
-          <div>
-            <h2 className="text-xl font-bold text-white">{year} — Week {week}</h2>
-            <p className="text-sm text-slate-400 mt-0.5">Full weekly leaderboard</p>
-          </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="overflow-y-auto flex-1 p-4 space-y-1.5">
-          {scores.map((s, i) => {
-            const isWinner = s.manager === highRollerManager;
-
-            return (
-              <div
-                key={s.manager}
-                className={`flex items-center justify-between rounded-lg px-3 py-2 ${
-                  isWinner ? 'bg-emerald-500/15 border border-emerald-500/30' : 'bg-slate-800/50'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-slate-500 w-4 text-right">{i + 1}</span>
-                  <span className={`text-sm font-medium ${isWinner ? 'text-emerald-300' : 'text-slate-300'}`}>
-                    {s.manager}
-                  </span>
-                  {isWinner && <Crown className="w-3.5 h-3.5 text-emerald-400" />}
-                </div>
-                <span className={`text-sm font-bold font-mono ${isWinner ? 'text-emerald-400' : 'text-white'}`}>
-                  {s.points.toFixed(1)}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-slate-800">
-          <Link
-            href={`/managers/${encodeURIComponent(highRollerManager)}`}
-            className="block text-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
-            onClick={onClose}
-          >
-            See {highRollerManager}&apos;s profile →
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function HighRollerModal({ manager, onClose }: { manager: string; onClose: () => void }) {
   const weeklyHighs = getWeeklyHighScores();
@@ -281,7 +214,8 @@ function HighRollerContent() {
         <WeekLeaderboardModal
           year={selectedWeek.year}
           week={selectedWeek.week}
-          highRollerManager={selectedWeek.manager}
+          highlightedManager={selectedWeek.manager}
+          mode="glory"
           onClose={() => setSelectedWeek(null)}
         />
       )}
