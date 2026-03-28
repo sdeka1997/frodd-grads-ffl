@@ -80,7 +80,7 @@ async function main() {
                     }
                 }
 
-                // Add Stats
+                // Add regular season stats
                 if (!isPostSeason) {
                     statsByOwner[homeOwner].regular_season.pf += m.home.points || 0;
                     if (m.away) {
@@ -88,17 +88,19 @@ async function main() {
                         statsByOwner[awayOwner].regular_season.pf += m.away.points || 0;
                         statsByOwner[awayOwner].regular_season.pa += m.home.points || 0;
                     }
-                } else {
-                    statsByOwner[homeOwner].post_season.pf += m.home.points || 0;
-                    if (m.away) {
-                        statsByOwner[homeOwner].post_season.pa += m.away.points || 0;
-                        statsByOwner[awayOwner].post_season.pf += m.away.points || 0;
-                        statsByOwner[awayOwner].post_season.pa += m.home.points || 0;
-                    }
                 }
 
-                // Add Wins/Losses
+                // Skip BYE weeks and unplayed matchups — post_season PF/PA and wins/losses
+                // should only reflect real, decided matchups (not bye weeks)
                 if (!awayOwner || m.winner === "UNDECIDED") return;
+
+                // Add post season stats (only for real, decided matchups)
+                if (isPostSeason) {
+                    statsByOwner[homeOwner].post_season.pf += m.home.points || 0;
+                    statsByOwner[homeOwner].post_season.pa += m.away.points || 0;
+                    statsByOwner[awayOwner].post_season.pf += m.away.points || 0;
+                    statsByOwner[awayOwner].post_season.pa += m.home.points || 0;
+                }
 
                 const matrix = isPostSeason ? yearH2H.playoffs.matrix : yearH2H.regular.matrix;
                 if (!matrix[homeOwner]) matrix[homeOwner] = {};

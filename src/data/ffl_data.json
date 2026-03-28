@@ -228,7 +228,7 @@
         "post_season": {
           "wins": 1,
           "losses": 1,
-          "pf": 298.26,
+          "pf": 190.92,
           "pa": 201.08,
           "bracket": "sacko"
         },
@@ -249,7 +249,7 @@
         "post_season": {
           "wins": 2,
           "losses": 0,
-          "pf": 386.7,
+          "pf": 279.3,
           "pa": 231.1,
           "bracket": "championship"
         },
@@ -270,7 +270,7 @@
         "post_season": {
           "wins": 2,
           "losses": 0,
-          "pf": 305.08,
+          "pf": 224.08,
           "pa": 191.78,
           "bracket": "consolation"
         },
@@ -312,7 +312,7 @@
         "post_season": {
           "wins": 1,
           "losses": 1,
-          "pf": 365,
+          "pf": 248.7,
           "pa": 233,
           "bracket": "championship"
         },
@@ -354,7 +354,7 @@
         "post_season": {
           "wins": 1,
           "losses": 1,
-          "pf": 338,
+          "pf": 217.54,
           "pa": 235.8,
           "bracket": "consolation"
         },
@@ -375,7 +375,7 @@
         "post_season": {
           "wins": 0,
           "losses": 2,
-          "pf": 310.48,
+          "pf": 177.02,
           "pa": 236.76,
           "bracket": "sacko"
         },
@@ -1414,7 +1414,7 @@
         "post_season": {
           "wins": 1,
           "losses": 0,
-          "pf": 343.64,
+          "pf": 126.15,
           "pa": 108.78,
           "bracket": "consolation"
         },
@@ -1477,7 +1477,7 @@
         "post_season": {
           "wins": 1,
           "losses": 1,
-          "pf": 276.29,
+          "pf": 195.6,
           "pa": 205.35,
           "bracket": "sacko"
         },
@@ -1498,7 +1498,7 @@
         "post_season": {
           "wins": 2,
           "losses": 0,
-          "pf": 390.45,
+          "pf": 262.39,
           "pa": 204.7,
           "bracket": "consolation"
         },
