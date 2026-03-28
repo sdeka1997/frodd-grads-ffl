@@ -28,6 +28,12 @@ export interface SeasonTeam {
     pa: number;
     bracket: string;
   };
+  sacko_season: {
+    wins: number;
+    losses: number;
+    pf: number;
+    pa: number;
+  };
   playoff_finish: string;
   playoff_record: string;
 }
@@ -97,16 +103,18 @@ export const getPlayoffClutchness = () => {
     let totalPlayoffPF = 0;
     let totalPlayoffGames = 0;
 
-    // Only include seasons where the manager had championship playoff games,
+    // Only include seasons where the manager had championship or sacko playoff games,
     // so regular season and playoff PPG are compared on the same set of years
     Object.values(allSeasons).forEach((seasonTeams) => {
       const team = seasonTeams.find(t => t.owner === manager);
       if (!team) return;
-      const playoffGames = team.post_season.wins + team.post_season.losses;
+      const champGames = team.post_season.wins + team.post_season.losses;
+      const sackoGames = team.sacko_season.wins + team.sacko_season.losses;
+      const playoffGames = champGames + sackoGames;
       if (playoffGames > 0) {
         totalRegularPF += team.regular_season.pf;
         totalRegularGames += team.regular_season.wins + team.regular_season.losses;
-        totalPlayoffPF += team.post_season.pf;
+        totalPlayoffPF += team.post_season.pf + team.sacko_season.pf;
         totalPlayoffGames += playoffGames;
       }
     });

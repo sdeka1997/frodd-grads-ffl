@@ -148,6 +148,12 @@
           "pa": 244.94,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
       },
@@ -168,6 +174,12 @@
           "pf": 94.46,
           "pa": 97.4,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
@@ -190,6 +202,12 @@
           "pa": 227.18,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
       },
@@ -210,6 +228,12 @@
           "pf": 97.24,
           "pa": 98.96,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
@@ -232,6 +256,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 1,
+          "pf": 190.92,
+          "pa": 201.08
+        },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
       },
@@ -252,6 +282,12 @@
           "pf": 279.3,
           "pa": 231.1,
           "bracket": "championship"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "1st",
         "playoff_record": "2-0"
@@ -274,6 +310,12 @@
           "pa": 0,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "7th",
         "playoff_record": "0-0"
       },
@@ -294,6 +336,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 119.76,
+          "pa": 84.62
         },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
@@ -316,6 +364,12 @@
           "pa": 233,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "1-1"
       },
@@ -336,6 +390,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 108.68,
+          "pa": 73.92
         },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
@@ -358,6 +418,12 @@
           "pa": 0,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "8th",
         "playoff_record": "0-0"
       },
@@ -378,6 +444,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 2,
+          "pf": 177.02,
+          "pa": 236.76
         },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
@@ -402,6 +474,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
       },
@@ -422,6 +500,12 @@
           "pf": 87.76,
           "pa": 159.59,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "8th",
         "playoff_record": "0-1"
@@ -444,6 +528,12 @@
           "pa": 343.81,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "2-1"
       },
@@ -464,6 +554,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
@@ -486,6 +582,12 @@
           "pa": 136.67,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
       },
@@ -506,6 +608,12 @@
           "pf": 111.67,
           "pa": 144.43,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "7th",
         "playoff_record": "0-1"
@@ -528,6 +636,12 @@
           "pa": 111,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
       },
@@ -548,6 +662,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
@@ -570,6 +690,12 @@
           "pa": 315.88,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "1st",
         "playoff_record": "3-0"
       },
@@ -590,6 +716,12 @@
           "pf": 243.53,
           "pa": 227.69,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
@@ -612,6 +744,12 @@
           "pa": 242.01,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
       },
@@ -632,6 +770,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
@@ -656,6 +800,12 @@
           "pa": 123.97,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "7th",
         "playoff_record": "0-1"
       },
@@ -676,6 +826,12 @@
           "pf": 82.79,
           "pa": 112.79,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
@@ -698,6 +854,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
       },
@@ -718,6 +880,12 @@
           "pf": 261.81,
           "pa": 252.45,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
@@ -740,6 +908,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
       },
@@ -760,6 +934,12 @@
           "pf": 424.22,
           "pa": 275.19,
           "bracket": "championship"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "1st",
         "playoff_record": "3-0"
@@ -782,6 +962,12 @@
           "pa": 322.51,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "2-1"
       },
@@ -802,6 +988,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
@@ -824,6 +1016,12 @@
           "pa": 200.27,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
       },
@@ -844,6 +1042,12 @@
           "pf": 70.71,
           "pa": 115.58,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
@@ -866,6 +1070,12 @@
           "pa": 132.7,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "8th",
         "playoff_record": "0-1"
       },
@@ -886,6 +1096,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
@@ -910,6 +1126,12 @@
           "pa": 235.63,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
       },
@@ -930,6 +1152,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
@@ -952,6 +1180,12 @@
           "pa": 90.81,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "7th",
         "playoff_record": "0-1"
       },
@@ -972,6 +1206,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
@@ -994,6 +1234,12 @@
           "pa": 286.69,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "2-1"
       },
@@ -1014,6 +1260,12 @@
           "pf": 170.31,
           "pa": 168.33,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
@@ -1036,6 +1288,12 @@
           "pa": 140.9,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
       },
@@ -1056,6 +1314,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
@@ -1078,6 +1342,12 @@
           "pa": 253.93,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "1st",
         "playoff_record": "3-0"
       },
@@ -1098,6 +1368,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
@@ -1120,6 +1396,12 @@
           "pa": 107.45,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
       },
@@ -1140,6 +1422,12 @@
           "pf": 95.89,
           "pa": 121.09,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "8th",
         "playoff_record": "0-1"
@@ -1164,6 +1452,12 @@
           "pa": 321.77,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "2-1"
       },
@@ -1184,6 +1478,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 2,
+          "pf": 185.52,
+          "pa": 259.97
         },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
@@ -1206,6 +1506,12 @@
           "pa": 0,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 121.27,
+          "pa": 76.94
+        },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
       },
@@ -1226,6 +1532,12 @@
           "pf": 98.11,
           "pa": 111.33,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "8th",
         "playoff_record": "0-1"
@@ -1248,6 +1560,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 1,
+          "pf": 219.87,
+          "pa": 197.75
+        },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
       },
@@ -1268,6 +1586,12 @@
           "pf": 98.16,
           "pa": 155.72,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "7th",
         "playoff_record": "0-1"
@@ -1290,6 +1614,12 @@
           "pa": 111.89,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
       },
@@ -1310,6 +1640,12 @@
           "pf": 207.26,
           "pa": 206.3,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
@@ -1332,6 +1668,12 @@
           "pa": 204.76,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
       },
@@ -1352,6 +1694,12 @@
           "pf": 331.64,
           "pa": 235.79,
           "bracket": "championship"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "1st",
         "playoff_record": "3-0"
@@ -1374,6 +1722,12 @@
           "pa": 105.17,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
       },
@@ -1394,6 +1748,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 89.17,
+          "pa": 81.17
         },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
@@ -1418,6 +1778,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 126.15,
+          "pa": 108.78
+        },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
       },
@@ -1438,6 +1804,12 @@
           "pf": 72.36,
           "pa": 181.68,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
@@ -1460,6 +1832,12 @@
           "pa": 326.44,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "1st",
         "playoff_record": "3-0"
       },
@@ -1480,6 +1858,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 1,
+          "pf": 195.6,
+          "pa": 205.35
         },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
@@ -1502,6 +1886,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 2,
+          "losses": 0,
+          "pf": 262.39,
+          "pa": 204.7
+        },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
       },
@@ -1522,6 +1912,12 @@
           "pf": 94.29,
           "pa": 95.15,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "8th",
         "playoff_record": "0-1"
@@ -1544,6 +1940,12 @@
           "pa": 132.61,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "7th",
         "playoff_record": "0-1"
       },
@@ -1564,6 +1966,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 3,
+          "pf": 313.19,
+          "pa": 378.5
         },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
@@ -1586,6 +1994,12 @@
           "pa": 315.84,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "2-1"
       },
@@ -1606,6 +2020,12 @@
           "pf": 80.39,
           "pa": 160.51,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
@@ -1628,6 +2048,12 @@
           "pa": 182,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
       },
@@ -1648,6 +2074,12 @@
           "pf": 202.82,
           "pa": 212.52,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
@@ -1672,6 +2104,12 @@
           "pa": 88.2,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "6th",
         "playoff_record": "0-1"
       },
@@ -1692,6 +2130,12 @@
           "pf": 181.66,
           "pa": 213.5,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "3rd",
         "playoff_record": "1-1"
@@ -1714,6 +2158,12 @@
           "pa": 332.22,
           "bracket": "championship"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "2nd",
         "playoff_record": "2-1"
       },
@@ -1734,6 +2184,12 @@
           "pf": 372.9,
           "pa": 297.02,
           "bracket": "championship"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "1st",
         "playoff_record": "3-0"
@@ -1756,6 +2212,12 @@
           "pa": 0,
           "bracket": "sacko"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 1,
+          "pf": 221,
+          "pa": 200.58
+        },
         "playoff_finish": "11th",
         "playoff_record": "0-0"
       },
@@ -1776,6 +2238,12 @@
           "pf": 0,
           "pa": 0,
           "bracket": "sacko"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 2,
+          "pf": 178.28,
+          "pa": 248.22
         },
         "playoff_finish": "12th",
         "playoff_record": "0-0"
@@ -1798,6 +2266,12 @@
           "pa": 134.02,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
         "playoff_finish": "5th",
         "playoff_record": "0-1"
       },
@@ -1818,6 +2292,12 @@
           "pf": 93.36,
           "pa": 119.6,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "8th",
         "playoff_record": "0-1"
@@ -1840,6 +2320,12 @@
           "pa": 0,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 128.44,
+          "pa": 89.88
+        },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
       },
@@ -1860,6 +2346,12 @@
           "pf": 255.48,
           "pa": 227.88,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "4th",
         "playoff_record": "1-1"
@@ -1882,6 +2374,12 @@
           "pa": 0,
           "bracket": "consolation"
         },
+        "sacko_season": {
+          "wins": 1,
+          "losses": 0,
+          "pf": 112.18,
+          "pa": 101.22
+        },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
       },
@@ -1902,6 +2400,12 @@
           "pf": 116.32,
           "pa": 120.6,
           "bracket": "consolation"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
         },
         "playoff_finish": "7th",
         "playoff_record": "0-1"

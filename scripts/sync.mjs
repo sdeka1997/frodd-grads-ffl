@@ -52,6 +52,7 @@ async function main() {
                     teamName: Object.values(data.mappings.teams).find(t => t.managerName === name).teamName,
                     regular_season: { wins: 0, losses: 0, pf: 0, pa: 0 },
                     post_season: { wins: 0, losses: 0, pf: 0, pa: 0, bracket: "none" },
+                    sacko_season: { wins: 0, losses: 0, pf: 0, pa: 0 },
                     playoff_record: { wins: 0, losses: 0 }
                 };
             });
@@ -102,6 +103,15 @@ async function main() {
                     statsByOwner[awayOwner].post_season.pa += m.home.points || 0;
                 }
 
+                // Add sacko season stats (sacko bracket, excluding round robins)
+                const sackoLabels = ["sacko_semifinal", "sacko_final", "9th_place_final_sacko_qf", "10th_place_final_sacko_sf"];
+                if (isPostSeason && sackoLabels.includes(label)) {
+                    statsByOwner[homeOwner].sacko_season.pf += m.home.points || 0;
+                    statsByOwner[homeOwner].sacko_season.pa += m.away.points || 0;
+                    statsByOwner[awayOwner].sacko_season.pf += m.away.points || 0;
+                    statsByOwner[awayOwner].sacko_season.pa += m.home.points || 0;
+                }
+
                 const matrix = isPostSeason ? yearH2H.playoffs.matrix : yearH2H.regular.matrix;
                 if (!matrix[homeOwner]) matrix[homeOwner] = {};
                 if (!matrix[awayOwner]) matrix[awayOwner] = {};
@@ -122,6 +132,9 @@ async function main() {
                             statsByOwner[awayOwner].post_season.losses++;
                             statsByOwner[homeOwner].playoff_record.wins++;
                             statsByOwner[awayOwner].playoff_record.losses++;
+                        } else if (sackoLabels.includes(label)) {
+                            statsByOwner[homeOwner].sacko_season.wins++;
+                            statsByOwner[awayOwner].sacko_season.losses++;
                         }
                     }
                 } else if (m.winner === "AWAY") {
@@ -136,6 +149,9 @@ async function main() {
                             statsByOwner[homeOwner].post_season.losses++;
                             statsByOwner[awayOwner].playoff_record.wins++;
                             statsByOwner[homeOwner].playoff_record.losses++;
+                        } else if (sackoLabels.includes(label)) {
+                            statsByOwner[awayOwner].sacko_season.wins++;
+                            statsByOwner[homeOwner].sacko_season.losses++;
                         }
                     }
                 }
@@ -232,6 +248,12 @@ async function main() {
                         pf: parseFloat(stats.post_season.pf.toFixed(2)),
                         pa: parseFloat(stats.post_season.pa.toFixed(2)),
                         bracket: stats.post_season.bracket
+                    },
+                    sacko_season: {
+                        wins: stats.sacko_season.wins,
+                        losses: stats.sacko_season.losses,
+                        pf: parseFloat(stats.sacko_season.pf.toFixed(2)),
+                        pa: parseFloat(stats.sacko_season.pa.toFixed(2))
                     },
                     playoff_finish: getOrdinal(rank),
                     playoff_record: `${stats.playoff_record.wins}-${stats.playoff_record.losses}`
