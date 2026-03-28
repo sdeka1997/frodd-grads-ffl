@@ -68,7 +68,7 @@ async function main() {
 
                 // Categorize bracket
                 if (isPostSeason && awayOwner) {
-                    const winnersLabels = ["quarterfinal", "semifinal", "championship"];
+                    const winnersLabels = ["quarterfinal", "semifinal", "championship", "3rd_place_final"];
                     if (winnersLabels.includes(label)) {
                         statsByOwner[homeOwner].post_season.bracket = "championship";
                         statsByOwner[awayOwner].post_season.bracket = "championship";
