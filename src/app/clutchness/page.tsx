@@ -15,10 +15,10 @@ export default function ClutchnessPage() {
       <header className="border-b border-slate-800 pb-8">
         <h1 className="text-4xl font-extrabold flex items-center gap-3">
           <BarChart3 className="w-10 h-10 text-blue-400" />
-          Playoff Clutchness
+          High-Stakes Clutchness
         </h1>
         <p className="mt-4 text-slate-400 text-lg">
-          Comparing regular season points per game to playoff points per game. Discover who rises to the occasion when the stakes are highest, and who crumbles under pressure.
+          Comparing regular season points per game to high-stakes postseason PPG — championship bracket and sacko games only. Discover who rises to the occasion when it matters most, and who crumbles under pressure.
         </p>
       </header>
 
@@ -31,14 +31,14 @@ export default function ClutchnessPage() {
               <Trophy className="w-8 h-8 text-emerald-400" />
               <div>
                 <div className="font-bold text-emerald-400">Clutch Performers</div>
-                <div className="text-sm text-slate-300">Score higher in playoffs than regular season</div>
+                <div className="text-sm text-slate-300">Score higher in high-stakes games than regular season</div>
               </div>
             </div>
             <div className="flex items-center gap-4 p-4 bg-red-400/10 border border-red-400/20 rounded-lg">
               <Target className="w-8 h-8 text-red-400" />
               <div>
                 <div className="font-bold text-red-400">Pressure Sensitive</div>
-                <div className="text-sm text-slate-300">Score lower in playoffs than regular season</div>
+                <div className="text-sm text-slate-300">Score lower in high-stakes games than regular season</div>
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@ export default function ClutchnessPage() {
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-200">Performance Differential</h2>
           <p className="text-slate-400 mt-2">
-            Points per game difference between playoff and regular season performance.
+            Points per game difference between high-stakes postseason and regular season performance.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export default function ClutchnessPage() {
                         <div className="bg-slate-950 border border-slate-800 p-3 rounded-lg shadow-2xl text-xs space-y-1">
                           <p className="font-bold text-emerald-400">{payload[0].payload.name}</p>
                           <p className="text-slate-300">Reg Season PPG: {payload[0].payload.regularPPG}</p>
-                          <p className="text-slate-300">Playoff PPG: {payload[0].payload.playoffPPG}</p>
+                          <p className="text-slate-300">High-Stakes PPG: {payload[0].payload.playoffPPG}</p>
                           <p className="pt-1 border-t border-slate-800 font-bold text-white">
                             Differential: {payload[0].payload.differential > 0 ? '+' : ''}{payload[0].payload.differential}
                           </p>
@@ -85,7 +85,7 @@ export default function ClutchnessPage() {
                   }}
                 />
                 <ReferenceLine y={0} stroke="#64748b" />
-                <Bar dataKey="differential" name="Playoff vs Reg Season PPG Diff" radius={[4, 4, 0, 0]}>
+                <Bar dataKey="differential" name="High-Stakes vs Reg Season PPG Diff" radius={[4, 4, 0, 0]}>
                   {clutchData.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
@@ -111,7 +111,7 @@ export default function ClutchnessPage() {
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-slate-200">Clutchness Rankings</h2>
           <p className="text-slate-400 mt-2">
-            All managers ranked by their playoff performance differential.
+            All managers ranked by their high-stakes performance differential.
           </p>
         </div>
 
@@ -149,10 +149,10 @@ export default function ClutchnessPage() {
                         {manager.differential > 0 ? '+' : ''}{manager.differential}
                       </div>
                       <div className="text-sm text-slate-400">
-                        {manager.regularPPG} → {manager.playoffPPG} PPG
+                        {manager.regularPPG} → {manager.playoffPPG} PPG (high-stakes)
                       </div>
                       <div className="text-xs text-slate-500">
-                        {manager.playoffGames} playoff games
+                        {manager.playoffGames} high-stakes games
                       </div>
                     </div>
                   </Link>
