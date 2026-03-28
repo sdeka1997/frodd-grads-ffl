@@ -1,17 +1,175 @@
 "use client";
 
 import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
-import { Beer, TrendingDown, Calendar, Trophy, Zap } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { useState } from 'react';
+import { Beer, TrendingDown, Calendar, Zap, X } from 'lucide-react';
 import Link from 'next/link';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useModalEscape } from '@/hooks/useModalEscape';
+import { getWeekScores } from '@/utils/weeklyScores';
 
-export default function ShotgunPage() {
+
+function WeekLeaderboardModal({ year, week, shotgunManager, onClose }: {
+  year: string;
+  week: number;
+  shotgunManager: string;
+  onClose: () => void;
+}) {
+  const scores = getWeekScores(year, week).sort((a, b) => a.points - b.points);
+
+  useModalEscape(onClose);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div
+        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-slate-800">
+          <div>
+            <h2 className="text-xl font-bold text-white">{year} — Week {week}</h2>
+            <p className="text-sm text-slate-400 mt-0.5">Full weekly leaderboard</p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Scores */}
+        <div className="overflow-y-auto flex-1 p-4 space-y-1.5">
+          {scores.map((s, i) => {
+            const isShotgun = s.manager === shotgunManager;
+
+            return (
+              <div
+                key={s.manager}
+                className={`flex items-center justify-between rounded-lg px-3 py-2 ${
+                  isShotgun ? 'bg-red-500/15 border border-red-500/30' : 'bg-slate-800/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-slate-500 w-4 text-right">{scores.length - i}</span>
+                  <span className={`text-sm font-medium ${isShotgun ? 'text-red-300' : 'text-slate-300'}`}>
+                    {s.manager}
+                  </span>
+                  {isShotgun && <Beer className="w-3.5 h-3.5 text-amber-400" />}
+                </div>
+                <span className={`text-sm font-bold font-mono ${isShotgun ? 'text-red-400' : 'text-white'}`}>
+                  {s.points.toFixed(1)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-slate-800">
+          <Link
+            href={`/managers/${encodeURIComponent(shotgunManager)}`}
+            className="block text-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            onClick={onClose}
+          >
+            See {shotgunManager}&apos;s profile →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ShotgunModal({ manager, onClose }: { manager: string; onClose: () => void }) {
+  const weeklyLows = getWeeklyLowScores();
+  const managerGames = weeklyLows.filter(l => l.manager === manager);
+
+  useModalEscape(onClose);
+
+  const byYear = managerGames.reduce<Record<string, typeof managerGames>>((acc, g) => {
+    if (!acc[g.year]) acc[g.year] = [];
+    acc[g.year].push(g);
+    return acc;
+  }, {});
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div
+        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md max-h-[80vh] flex flex-col shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-6 border-b border-slate-800">
+          <div>
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <Beer className="w-5 h-5 text-amber-400" /> {manager}
+            </h2>
+            <p className="text-sm text-slate-400 mt-0.5">{managerGames.length} shotgun{managerGames.length !== 1 ? 's' : ''} all-time</p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto flex-1 p-4 space-y-4">
+          {Object.keys(byYear).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
+            <div key={year}>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span>{year}</span>
+                <span className="text-red-400">{byYear[year].length} 🍺</span>
+              </div>
+              <div className="space-y-1.5">
+                {byYear[year]
+                  .sort((a, b) => b.week - a.week)
+                  .map((g, i) => (
+                    <div key={i} className="flex items-center justify-between bg-slate-800/50 rounded-lg px-3 py-2">
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                        <span className="text-sm text-slate-300">Week {g.week}</span>
+                      </div>
+                      <span className="text-sm font-bold font-mono text-red-400">{g.points}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-4 border-t border-slate-800">
+          <Link
+            href={`/managers/${encodeURIComponent(manager)}`}
+            className="block text-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+          >
+            View Full Profile →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ShotgunContent() {
   const weeklyLows = getWeeklyLowScores();
   const shotgunStats = getShotgunStats();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [activeBar, setActiveBar] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'shame' | 'breakdown'>('shame');
+  const [selectedManager, setSelectedManager] = useState<string | null>(null);
+  const [selectedWeek, setSelectedWeek] = useState<{ year: string; week: number; manager: string } | null>(null);
+
+  // Auto-open manager modal when navigating from another page, then clean up the URL
+  useEffect(() => {
+    const manager = searchParams.get('manager');
+    if (!manager) return;
+    const timer = setTimeout(() => {
+      setSelectedManager(manager);
+      router.replace('/shotgun', { scroll: false });
+    }, 400);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getShameColor = (index: number) => {
     if (index === 0) return '#dc2626';
@@ -20,8 +178,46 @@ export default function ShotgunPage() {
     return '#64748b';
   };
 
+  const ManagerTile = ({ stats }: { stats: typeof shotgunStats[number] }) => (
+    <button
+      onClick={() => setSelectedManager(stats.manager)}
+      className="bg-slate-900 border border-slate-800 rounded-xl p-6 block w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+        <div className="flex items-center gap-1 text-red-400">
+          <Beer className="w-5 h-5" />
+          <span className="text-2xl font-bold">{stats.totalShotguns}</span>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+          <div key={year} className="flex items-center justify-between text-sm">
+            <span className="text-slate-400">{year}:</span>
+            <div className="flex items-center gap-3">
+              <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
+              <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </button>
+  );
+
   return (
     <div className="space-y-16">
+      {selectedManager && (
+        <ShotgunModal manager={selectedManager} onClose={() => setSelectedManager(null)} />
+      )}
+      {selectedWeek && (
+        <WeekLeaderboardModal
+          year={selectedWeek.year}
+          week={selectedWeek.week}
+          shotgunManager={selectedWeek.manager}
+          onClose={() => setSelectedWeek(null)}
+        />
+      )}
+
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
           <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
@@ -142,10 +338,10 @@ export default function ShotgunPage() {
           {activeTab === 'shame' && (
             <div className="grid gap-3">
               {weeklyLows.slice(0, 10).map((low) => (
-                <Link
+                <button
                   key={`${low.year}-${low.week}-${low.manager}`}
-                  href={`/managers/${encodeURIComponent(low.manager)}`}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
+                  onClick={() => setSelectedWeek({ year: low.year, week: low.week, manager: low.manager })}
+                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
@@ -161,33 +357,14 @@ export default function ShotgunPage() {
                     <div className="text-2xl font-bold text-red-400">{low.points}</div>
                     <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           )}
           {activeTab === 'breakdown' && (
             <div className="grid gap-4">
               {shotgunStats.map((stats) => (
-                <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                    <div className="flex items-center gap-1 text-red-400">
-                      <Beer className="w-5 h-5" />
-                      <span className="text-2xl font-bold">{stats.totalShotguns}</span>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                      <div key={year} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-400">{year}:</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
-                          <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Link>
+                <ManagerTile key={stats.manager} stats={stats} />
               ))}
             </div>
           )}
@@ -199,10 +376,10 @@ export default function ShotgunPage() {
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">🍺 Recent Shame</h2>
             <div className="grid gap-3">
               {weeklyLows.slice(0, 10).map((low) => (
-                <Link
+                <button
                   key={`${low.year}-${low.week}-${low.manager}`}
-                  href={`/managers/${encodeURIComponent(low.manager)}`}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
+                  onClick={() => setSelectedWeek({ year: low.year, week: low.week, manager: low.manager })}
+                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
@@ -218,7 +395,7 @@ export default function ShotgunPage() {
                     <div className="text-2xl font-bold text-red-400">{low.points}</div>
                     <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -226,14 +403,12 @@ export default function ShotgunPage() {
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2"><Zap className="text-amber-400 w-6 h-6" /> Year by Year</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
               {(() => {
-                // Balance columns by total number of season rows
                 const leftCol: typeof shotgunStats = [];
                 const rightCol: typeof shotgunStats = [];
                 let leftHeight = 0;
                 let rightHeight = 0;
 
                 shotgunStats.forEach(stats => {
-                  // Weight is base height (title/total) + number of season rows
                   const weight = 2 + Object.keys(stats.seasons).length;
                   if (leftHeight <= rightHeight) {
                     leftCol.push(stats);
@@ -247,52 +422,10 @@ export default function ShotgunPage() {
                 return (
                   <>
                     <div className="space-y-4">
-                      {leftCol.map((stats) => (
-                        <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                          <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                            <div className="flex items-center gap-1 text-red-400">
-                              <Beer className="w-5 h-5" />
-                              <span className="text-2xl font-bold">{stats.totalShotguns}</span>
-                            </div>
-                          </div>
-                          <div className="space-y-3">
-                            {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                              <div key={year} className="flex items-center justify-between text-sm">
-                                <span className="text-slate-400">{year}:</span>
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
-                                  <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </Link>
-                      ))}
+                      {leftCol.map((stats) => <ManagerTile key={stats.manager} stats={stats} />)}
                     </div>
                     <div className="space-y-4">
-                      {rightCol.map((stats) => (
-                        <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                          <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                            <div className="flex items-center gap-1 text-red-400">
-                              <Beer className="w-5 h-5" />
-                              <span className="text-2xl font-bold">{stats.totalShotguns}</span>
-                            </div>
-                          </div>
-                          <div className="space-y-3">
-                            {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                              <div key={year} className="flex items-center justify-between text-sm">
-                                <span className="text-slate-400">{year}:</span>
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
-                                  <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </Link>
-                      ))}
+                      {rightCol.map((stats) => <ManagerTile key={stats.manager} stats={stats} />)}
                     </div>
                   </>
                 );
@@ -302,5 +435,13 @@ export default function ShotgunPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function ShotgunPage() {
+  return (
+    <Suspense>
+      <ShotgunContent />
+    </Suspense>
   );
 }

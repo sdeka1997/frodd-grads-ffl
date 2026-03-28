@@ -81,6 +81,27 @@ export const getCurrentManagers = (): string[] => {
   return season2025.map(t => t.owner);
 };
 
+export const getManagerScoringByYear = (managerName: string) => {
+  const allSeasons = getLeagueData().seasons;
+
+  return Object.entries(allSeasons)
+    .sort(([a], [b]) => parseInt(b) - parseInt(a))
+    .map(([year, teams]) => {
+      const manager = teams.find(t => t.owner === managerName);
+      if (!manager) return null;
+
+      const leagueAvgPF = teams.reduce((sum, t) => sum + t.regular_season.pf_pg, 0) / teams.length;
+      const leagueAvgPA = teams.reduce((sum, t) => sum + t.regular_season.pa_pg, 0) / teams.length;
+
+      return {
+        year,
+        pfVsAvg: parseFloat((manager.regular_season.pf_pg - leagueAvgPF).toFixed(2)),
+        paVsAvg: parseFloat((manager.regular_season.pa_pg - leagueAvgPA).toFixed(2)),
+      };
+    })
+    .filter(Boolean) as { year: string; pfVsAvg: number; paVsAvg: number }[];
+};
+
 // Advanced analytics helpers
 export const getLuckIndex = () => {
   const currentManagers = getCurrentManagers();

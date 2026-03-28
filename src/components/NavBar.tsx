@@ -196,8 +196,7 @@ export default function NavBar() {
                   <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
                     <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
                     <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
-                    <Link href="/shotgun" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Shotgun</Link>
-                    <Link href="/highroller" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>High Roller</Link>
+                    <Link href="/rivalries" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Rivalries</Link>
                   </div>
                 )}
               </div>
@@ -210,7 +209,8 @@ export default function NavBar() {
                     <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
                     <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Clutchness</Link>
                     <Link href="/matrix" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
-                    <Link href="/rivalries" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Rivalries</Link>
+                    <Link href="/shotgun" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Shotgun</Link>
+                    <Link href="/highroller" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>High Roller</Link>
                   </div>
                 )}
               </div>
@@ -272,8 +272,7 @@ export default function NavBar() {
               {[
                 { href: '/managers', label: 'Managers' },
                 { href: '/seasons', label: 'Seasons' },
-                { href: '/shotgun', label: 'Shotgun' },
-                { href: '/highroller', label: 'High Roller' },
+                { href: '/rivalries', label: 'Rivalries' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
@@ -297,7 +296,8 @@ export default function NavBar() {
                 { href: '/luck', label: 'Luck Index' },
                 { href: '/clutchness', label: 'Clutchness' },
                 { href: '/matrix', label: 'Supremacy Matrix' },
-                { href: '/rivalries', label: 'Rivalries' },
+                { href: '/shotgun', label: 'Shotgun' },
+                { href: '/highroller', label: 'High Roller' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}

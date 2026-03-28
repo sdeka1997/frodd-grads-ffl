@@ -36,6 +36,7 @@ body {
   animation-delay: 1s;
 }
 
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

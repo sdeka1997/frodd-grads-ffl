@@ -1,15 +1,195 @@
 "use client";
 
 import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing';
-import { DollarSign, TrendingUp, Calendar, Crown, Sparkles } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import React, { useState, useRef } from 'react';
+import { DollarSign, TrendingUp, Calendar, Crown, Sparkles, X } from 'lucide-react';
 import Link from 'next/link';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useModalEscape } from '@/hooks/useModalEscape';
+import { getWeekScores } from '@/utils/weeklyScores';
 
-export default function HighRollerPage() {
+
+function SeasonRecapModal({ year, onClose }: { year: string; onClose: () => void }) {
+  const weeklyHighs = getWeeklyHighScores().filter(h => h.year === year).sort((a, b) => a.week - b.week);
+
+  useModalEscape(onClose);
+
+  const totalPayout = weeklyHighs.length * 15;
+  const winCounts = weeklyHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div
+        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md max-h-[80vh] flex flex-col shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-6 border-b border-slate-800">
+          <div>
+            <h2 className="text-xl font-bold text-white">{year} Season</h2>
+            <p className="text-sm text-slate-400 mt-0.5">{weeklyHighs.length} weeks · {Object.keys(winCounts).length} unique winners · <span className="text-emerald-400 font-medium">${totalPayout} paid out</span></p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto flex-1 p-4 space-y-1.5">
+          {weeklyHighs.map((h, i) => (
+            <div key={i} className="flex items-center justify-between bg-slate-800/50 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-slate-500 w-12 shrink-0">Week {h.week}</span>
+                <div className="flex items-center gap-2">
+                  <Crown className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span className="text-sm font-medium text-white">{h.manager}</span>
+                  {winCounts[h.manager] > 1 && (
+                    <span className="text-xs text-slate-500">×{winCounts[h.manager]}</span>
+                  )}
+                </div>
+              </div>
+              <div className="text-right">
+                <span className="text-sm font-bold font-mono text-emerald-400">{h.points.toFixed(1)}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WeekLeaderboardModal({ year, week, highRollerManager, onClose }: {
+  year: string;
+  week: number;
+  highRollerManager: string;
+  onClose: () => void;
+}) {
+  const scores = getWeekScores(year, week).sort((a, b) => b.points - a.points);
+
+  useModalEscape(onClose);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div
+        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-sm max-h-[80vh] flex flex-col shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-6 border-b border-slate-800">
+          <div>
+            <h2 className="text-xl font-bold text-white">{year} — Week {week}</h2>
+            <p className="text-sm text-slate-400 mt-0.5">Full weekly leaderboard</p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto flex-1 p-4 space-y-1.5">
+          {scores.map((s, i) => {
+            const isWinner = s.manager === highRollerManager;
+
+            return (
+              <div
+                key={s.manager}
+                className={`flex items-center justify-between rounded-lg px-3 py-2 ${
+                  isWinner ? 'bg-emerald-500/15 border border-emerald-500/30' : 'bg-slate-800/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-slate-500 w-4 text-right">{i + 1}</span>
+                  <span className={`text-sm font-medium ${isWinner ? 'text-emerald-300' : 'text-slate-300'}`}>
+                    {s.manager}
+                  </span>
+                  {isWinner && <Crown className="w-3.5 h-3.5 text-emerald-400" />}
+                </div>
+                <span className={`text-sm font-bold font-mono ${isWinner ? 'text-emerald-400' : 'text-white'}`}>
+                  {s.points.toFixed(1)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-slate-800">
+          <Link
+            href={`/managers/${encodeURIComponent(highRollerManager)}`}
+            className="block text-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            onClick={onClose}
+          >
+            See {highRollerManager}&apos;s profile →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HighRollerModal({ manager, onClose }: { manager: string; onClose: () => void }) {
+  const weeklyHighs = getWeeklyHighScores();
+  const managerGames = weeklyHighs.filter(h => h.manager === manager);
+
+  useModalEscape(onClose);
+
+  const byYear = managerGames.reduce<Record<string, typeof managerGames>>((acc, g) => {
+    if (!acc[g.year]) acc[g.year] = [];
+    acc[g.year].push(g);
+    return acc;
+  }, {});
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div
+        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md max-h-[80vh] flex flex-col shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between p-6 border-b border-slate-800">
+          <div>
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <Crown className="w-5 h-5 text-emerald-400" /> {manager}
+            </h2>
+            <p className="text-sm text-slate-400 mt-0.5">{managerGames.length} high score{managerGames.length !== 1 ? 's' : ''} all-time</p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="overflow-y-auto flex-1 p-4 space-y-4">
+          {Object.keys(byYear).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
+            <div key={year}>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span>{year}</span>
+                <span className="text-emerald-400">{byYear[year].length} 👑</span>
+              </div>
+              <div className="space-y-1.5">
+                {byYear[year]
+                  .sort((a, b) => b.week - a.week)
+                  .map((g, i) => (
+                    <div key={i} className="flex items-center justify-between bg-slate-800/50 rounded-lg px-3 py-2">
+                      <div className="flex items-center gap-3">
+                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                        <span className="text-sm text-slate-300">Week {g.week}</span>
+                      </div>
+                      <span className="text-sm font-bold font-mono text-emerald-400">{g.points}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HighRollerContent() {
   const weeklyHighs = getWeeklyHighScores();
   const highRollerStats = getHighRollerStats();
-
+  const searchParams = useSearchParams();
 
   const years = ['2025', '2024'];
   const [topYear, setTopYear] = useState(0);
@@ -29,41 +209,96 @@ export default function HighRollerPage() {
   const onYearPointerUp = () => {
     if (!isDraggingYear) return;
     setIsDraggingYear(false);
-    if (yearDragX < -60 && topYear < years.length - 1) {
-      setTopYear(i => i + 1);
-    } else if (yearDragX > 60 && topYear > 0) {
-      setTopYear(i => i - 1);
-    }
+    if (yearDragX < -60 && topYear < years.length - 1) setTopYear(i => i + 1);
+    else if (yearDragX > 60 && topYear > 0) setTopYear(i => i - 1);
     setYearDragX(0);
   };
 
   const [activeBar, setActiveBar] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'winners' | 'breakdown'>('winners');
+  const [selectedWeek, setSelectedWeek] = useState<{ year: string; week: number; manager: string } | null>(null);
+  const [selectedManager, setSelectedManager] = useState<string | null>(null);
+  const [selectedSeasonYear, setSelectedSeasonYear] = useState<string | null>(null);
+  const router = useRouter();
+
+  // Auto-open manager modal when navigating from another page, then clean up the URL
+  useEffect(() => {
+    const manager = searchParams.get('manager');
+    if (!manager) return;
+    const timer = setTimeout(() => {
+      setSelectedManager(manager);
+      router.replace('/highroller', { scroll: false });
+    }, 400);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getWinnerColor = (manager: any, stats: any[]) => {
     const earnings = manager.totalEarnings;
     const sortedEarnings = [...new Set(stats.map(s => s.totalEarnings))].sort((a, b) => b - a);
     const rank = sortedEarnings.indexOf(earnings);
-
-    if (rank === 0) return '#10b981'; // Most dominant - emerald
-    if (rank === 1) return '#06d6a0'; // Second - teal
-    if (rank === 2) return '#ffd166'; // Third - gold
-    return '#64748b'; // Others - slate
+    if (rank === 0) return '#10b981';
+    if (rank === 1) return '#06d6a0';
+    if (rank === 2) return '#ffd166';
+    return '#64748b';
   };
 
   const formatCurrency = (amount: number) => `$${amount}`;
 
+  const ManagerTile = ({ stats }: { stats: typeof highRollerStats[number] }) => (
+    <button
+      onClick={() => setSelectedManager(stats.manager)}
+      className="bg-slate-900 border border-slate-800 rounded-xl p-6 w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+        <div className="text-right">
+          <div className="flex items-center gap-1 text-emerald-400">
+            <Crown className="w-5 h-5" />
+            <span className="text-2xl font-bold">{stats.totalWins}</span>
+          </div>
+          <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
+        </div>
+      </div>
+      <div className="space-y-3">
+        {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+          <div key={year} className="flex items-center justify-between text-sm">
+            <span className="text-slate-400">{year}:</span>
+            <div className="flex items-center gap-3">
+              <span className="text-white font-bold">{seasonStats.wins} wins</span>
+              <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
+              <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </button>
+  );
+
   return (
     <div className="space-y-16">
+      {selectedWeek && (
+        <WeekLeaderboardModal
+          year={selectedWeek.year}
+          week={selectedWeek.week}
+          highRollerManager={selectedWeek.manager}
+          onClose={() => setSelectedWeek(null)}
+        />
+      )}
+      {selectedManager && (
+        <HighRollerModal manager={selectedManager} onClose={() => setSelectedManager(null)} />
+      )}
+      {selectedSeasonYear && (
+        <SeasonRecapModal year={selectedSeasonYear} onClose={() => setSelectedSeasonYear(null)} />
+      )}
+
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
           <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
             <DollarSign className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
             High Roller Leaderboard
           </h1>
-          <span className="text-slate-500 text-sm">
-            Established 2024
-          </span>
+          <span className="text-slate-500 text-sm">Established 2024</span>
         </div>
         <p className="mt-4 text-slate-400 text-lg">
           Weekly high scores: Manager with the highest score each week gets money from the pot.
@@ -79,18 +314,13 @@ export default function HighRollerPage() {
           <h2 className="text-3xl font-bold flex items-center gap-2">
             <TrendingUp className="text-emerald-400" /> Money Leaders
           </h2>
-          <p className="text-slate-400 mt-2">
-            Total weekly high scores and earnings since the rule started.
-          </p>
+          <p className="text-slate-400 mt-2">Total weekly high scores and earnings since the rule started.</p>
         </div>
 
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 overflow-x-auto" onClick={() => setActiveBar(null)}>
           <div style={{ minWidth: `${Math.max(500, highRollerStats.length * 65)}px`, height: '360px' }}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={highRollerStats}
-                margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
-              >
+              <BarChart data={highRollerStats} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
                 <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
                 <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
@@ -118,10 +348,7 @@ export default function HighRollerPage() {
                       fill={getWinnerColor(entry, highRollerStats)}
                       onMouseEnter={() => { if (window.innerWidth > 768) setActiveBar(entry.manager); }}
                       onMouseLeave={() => { if (window.innerWidth > 768) setActiveBar(null); }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveBar(entry.manager === activeBar ? null : entry.manager);
-                      }}
+                      onClick={(e) => { e.stopPropagation(); setActiveBar(entry.manager === activeBar ? null : entry.manager); }}
                       className="cursor-pointer"
                     />
                   ))}
@@ -132,18 +359,9 @@ export default function HighRollerPage() {
         </div>
 
         <div className="mt-6 flex gap-6 text-xs font-bold uppercase tracking-widest justify-center md:justify-start">
-          <span className="flex items-center gap-2 text-emerald-500">
-            <Crown className="w-4 h-4" />
-            Money King
-          </span>
-          <span className="flex items-center gap-2 text-teal-400">
-            <Sparkles className="w-4 h-4" />
-            High Roller
-          </span>
-          <span className="flex items-center gap-2 text-yellow-400">
-            <DollarSign className="w-4 h-4" />
-            Big Earner
-          </span>
+          <span className="flex items-center gap-2 text-emerald-500"><Crown className="w-4 h-4" /> Money King</span>
+          <span className="flex items-center gap-2 text-teal-400"><Sparkles className="w-4 h-4" /> High Roller</span>
+          <span className="flex items-center gap-2 text-yellow-400"><DollarSign className="w-4 h-4" /> Big Earner</span>
         </div>
       </section>
 
@@ -153,9 +371,7 @@ export default function HighRollerPage() {
           <h2 className="text-3xl font-bold flex items-center gap-2">
             <Sparkles className="text-blue-400" /> Season Summary
           </h2>
-          <p className="text-slate-400 mt-2">
-            Total money distributed each season.
-          </p>
+          <p className="text-slate-400 mt-2">Total money distributed each season.</p>
         </div>
 
         {/* Mobile: swipeable carousel */}
@@ -178,13 +394,10 @@ export default function HighRollerPage() {
                 const yearHighs = weeklyHighs.filter(h => h.year === year);
                 const totalPayout = yearHighs.length * 15;
                 const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
-                const winCounts = yearHighs.reduce((acc, h) => {
-                  acc[h.manager] = (acc[h.manager] || 0) + 1;
-                  return acc;
-                }, {} as Record<string, number>);
+                const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
                 const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
                 return (
-                  <div key={year} style={{ minWidth: '85%' }} className="bg-slate-900 border border-slate-800 rounded-xl p-6 select-none">
+                  <button key={year} style={{ minWidth: '85%' }} onClick={() => setSelectedSeasonYear(year)} className="bg-slate-900 border border-slate-800 rounded-xl p-6 select-none w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-bold text-white">{year} Season</h3>
                       <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
@@ -202,7 +415,7 @@ export default function HighRollerPage() {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -220,13 +433,10 @@ export default function HighRollerPage() {
             const yearHighs = weeklyHighs.filter(h => h.year === year);
             const totalPayout = yearHighs.length * 15;
             const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
-            const winCounts = yearHighs.reduce((acc, h) => {
-              acc[h.manager] = (acc[h.manager] || 0) + 1;
-              return acc;
-            }, {} as Record<string, number>);
+            const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
             const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
             return (
-              <div key={year} className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <button key={year} onClick={() => setSelectedSeasonYear(year)} className="bg-slate-900 border border-slate-800 rounded-xl p-6 w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-2xl font-bold text-white">{year} Season</h3>
                   <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
@@ -244,7 +454,7 @@ export default function HighRollerPage() {
                     </div>
                   )}
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -257,21 +467,13 @@ export default function HighRollerPage() {
           <div className="flex border border-slate-700 rounded-lg overflow-hidden w-full mb-4">
             <button
               onClick={() => setActiveTab('winners')}
-              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${
-                activeTab === 'winners'
-                  ? 'bg-emerald-500/20 text-emerald-300'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${activeTab === 'winners' ? 'bg-emerald-500/20 text-emerald-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'}`}
             >
               👑 Recent Winners
             </button>
             <button
               onClick={() => setActiveTab('breakdown')}
-              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
-                activeTab === 'breakdown'
-                  ? 'bg-green-500/20 text-green-300'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-              }`}
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${activeTab === 'breakdown' ? 'bg-green-500/20 text-green-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'}`}
             >
               💰 Year by Year
             </button>
@@ -279,10 +481,10 @@ export default function HighRollerPage() {
           {activeTab === 'winners' && (
             <div className="grid gap-3">
               {weeklyHighs.slice(0, 10).map((high) => (
-                <Link
+                <button
                   key={`${high.year}-${high.week}-${high.manager}`}
-                  href={`/managers/${encodeURIComponent(high.manager)}`}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
+                  onClick={() => setSelectedWeek({ year: high.year, week: high.week, manager: high.manager })}
+                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
@@ -298,38 +500,13 @@ export default function HighRollerPage() {
                     <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
                     <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           )}
           {activeTab === 'breakdown' && (
             <div className="grid gap-4">
-              {highRollerStats.map((stats) => (
-                <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                    <div className="text-right">
-                      <div className="flex items-center gap-1 text-emerald-400">
-                        <Crown className="w-5 h-5" />
-                        <span className="text-2xl font-bold">{stats.totalWins}</span>
-                      </div>
-                      <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                      <div key={year} className="flex items-center justify-between text-sm">
-                        <span className="text-slate-400">{year}:</span>
-                        <div className="flex items-center gap-3">
-                          <span className="text-white font-bold">{seasonStats.wins} wins</span>
-                          <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
-                          <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </Link>
-              ))}
+              {highRollerStats.map((stats) => <ManagerTile key={stats.manager} stats={stats} />)}
             </div>
           )}
         </div>
@@ -340,10 +517,10 @@ export default function HighRollerPage() {
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">👑 Recent Winners</h2>
             <div className="grid gap-3">
               {weeklyHighs.slice(0, 10).map((high) => (
-                <Link
+                <button
                   key={`${high.year}-${high.week}-${high.manager}`}
-                  href={`/managers/${encodeURIComponent(high.manager)}`}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
+                  onClick={() => setSelectedWeek({ year: high.year, week: high.week, manager: high.manager })}
+                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
@@ -359,7 +536,7 @@ export default function HighRollerPage() {
                     <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
                     <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -367,82 +544,19 @@ export default function HighRollerPage() {
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2"><DollarSign className="text-green-400 w-6 h-6" /> Year by Year</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
               {(() => {
-                // Balance columns by total number of season rows
                 const leftCol: typeof highRollerStats = [];
                 const rightCol: typeof highRollerStats = [];
                 let leftHeight = 0;
                 let rightHeight = 0;
-
                 highRollerStats.forEach(stats => {
-                  // Weight is base height (title/total/earnings) + number of season rows
                   const weight = 3 + Object.keys(stats.seasons).length;
-                  if (leftHeight <= rightHeight) {
-                    leftCol.push(stats);
-                    leftHeight += weight;
-                  } else {
-                    rightCol.push(stats);
-                    rightHeight += weight;
-                  }
+                  if (leftHeight <= rightHeight) { leftCol.push(stats); leftHeight += weight; }
+                  else { rightCol.push(stats); rightHeight += weight; }
                 });
-
                 return (
                   <>
-                    <div className="space-y-4">
-                      {leftCol.map((stats) => (
-                        <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                          <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                            <div className="text-right">
-                              <div className="flex items-center gap-1 text-emerald-400">
-                                <Crown className="w-5 h-5" />
-                                <span className="text-2xl font-bold">{stats.totalWins}</span>
-                              </div>
-                              <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
-                            </div>
-                          </div>
-                          <div className="space-y-3">
-                            {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                              <div key={year} className="flex items-center justify-between text-sm">
-                                <span className="text-slate-400">{year}:</span>
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white font-bold">{seasonStats.wins} wins</span>
-                                  <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
-                                  <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="space-y-4">
-                      {rightCol.map((stats) => (
-                        <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
-                          <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-                            <div className="text-right">
-                              <div className="flex items-center gap-1 text-emerald-400">
-                                <Crown className="w-5 h-5" />
-                                <span className="text-2xl font-bold">{stats.totalWins}</span>
-                              </div>
-                              <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
-                            </div>
-                          </div>
-                          <div className="space-y-3">
-                            {Object.entries(stats.seasons).map(([year, seasonStats]) => (
-                              <div key={year} className="flex items-center justify-between text-sm">
-                                <span className="text-slate-400">{year}:</span>
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white font-bold">{seasonStats.wins} wins</span>
-                                  <span className="text-green-400 font-bold">{formatCurrency(seasonStats.earnings)}</span>
-                                  <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
+                    <div className="space-y-4">{leftCol.map(s => <ManagerTile key={s.manager} stats={s} />)}</div>
+                    <div className="space-y-4">{rightCol.map(s => <ManagerTile key={s.manager} stats={s} />)}</div>
                   </>
                 );
               })()}
@@ -451,5 +565,13 @@ export default function HighRollerPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function HighRollerPage() {
+  return (
+    <Suspense>
+      <HighRollerContent />
+    </Suspense>
   );
 }

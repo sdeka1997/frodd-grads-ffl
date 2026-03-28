@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useModalEscape } from '@/hooks/useModalEscape';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { getLeagueData, SeasonTeam } from '@/utils/dataProcessing';
-import { Calendar, Medal, ArrowUpDown, Trash2 } from 'lucide-react';
+import { getTeamWeeklyResults, type WeeklyResult } from '@/utils/weeklyResults';
+import { Calendar, Medal, ArrowUpDown, Trash2, X } from 'lucide-react';
 import Link from 'next/link';
 
 const parseFinish = (finish: string | undefined): number => {
@@ -11,6 +13,105 @@ const parseFinish = (finish: string | undefined): number => {
   const match = finish.match(/\d+/);
   return match ? parseInt(match[0]) : 999;
 };
+
+function SeasonModal({ team, year, onClose }: { team: SeasonTeam; year: string; onClose: () => void }) {
+  const results = getTeamWeeklyResults(year, team.owner);
+  const regularResults = results.filter(r => !r.isPlayoff);
+  const playoffResults = results.filter(r => r.isPlayoff);
+
+  useModalEscape(onClose);
+
+  const ResultRow = ({ r }: { r: WeeklyResult }) => (
+    <div className={`flex items-center justify-between rounded-lg px-3 py-2 ${
+      r.isPlayoff ? 'bg-yellow-400/5 border border-yellow-400/10' : 'bg-slate-800/50'
+    }`}>
+      <div className="flex items-center gap-3">
+        {r.result !== 'BYE' ? (
+          <span className={`text-xs font-bold w-5 ${r.result === 'W' ? 'text-emerald-400' : 'text-red-400'}`}>
+            {r.result}
+          </span>
+        ) : (
+          <span className="text-xs font-bold w-5 text-slate-500">—</span>
+        )}
+        <span className={`text-sm ${r.isPlayoff ? 'text-yellow-400' : 'text-slate-300'}`}>
+          {r.displayLabel}
+        </span>
+        {r.result !== 'BYE' && (
+          <span className="text-xs text-slate-500">vs {r.opponent}</span>
+        )}
+      </div>
+      {r.result !== 'BYE' ? (
+        <div className="text-sm font-mono text-right">
+          <span className={`font-bold ${r.result === 'W' ? 'text-white' : 'text-slate-400'}`}>
+            {r.teamPoints.toFixed(1)}
+          </span>
+          <span className="text-slate-600 mx-1">–</span>
+          <span className="text-slate-500">{r.oppPoints.toFixed(1)}</span>
+        </div>
+      ) : (
+        <span className="text-xs text-slate-600">BYE</span>
+      )}
+    </div>
+  );
+
+  const wins = regularResults.filter(r => r.result === 'W').length;
+  const losses = regularResults.filter(r => r.result === 'L').length;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/70" />
+      <div
+        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg max-h-[85vh] flex flex-col shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-slate-800">
+          <div>
+            <h2 className="text-xl font-bold text-white">{team.team}</h2>
+            <p className="text-sm text-slate-400 mt-0.5">
+              {team.owner} · {year} · {wins}–{losses}
+              {team.playoff_finish && <span className="ml-2 text-slate-500">· {team.playoff_finish}</span>}
+            </p>
+          </div>
+          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Results */}
+        <div className="overflow-y-auto flex-1 p-4 space-y-4">
+          {/* Regular season */}
+          <div>
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Regular Season</div>
+            <div className="space-y-1.5">
+              {regularResults.map((r, i) => <ResultRow key={i} r={r} />)}
+            </div>
+          </div>
+
+          {/* Playoffs */}
+          {playoffResults.length > 0 && (
+            <div>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Playoffs</div>
+              <div className="space-y-1.5">
+                {playoffResults.map((r, i) => <ResultRow key={i} r={r} />)}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-slate-800">
+          <Link
+            href={`/managers/${encodeURIComponent(team.owner)}`}
+            className="block text-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+          >
+            View {team.owner}'s Profile →
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SeasonsContent() {
   const data = getLeagueData();
@@ -25,6 +126,22 @@ function SeasonsContent() {
     key: 'playoff_finish',
     direction: 'asc'
   });
+  const [selectedTeam, setSelectedTeam] = useState<SeasonTeam | null>(null);
+
+  // Auto-open a team modal when navigating from the manager profile, then clean up the URL
+  useEffect(() => {
+    const owner = searchParams.get('owner');
+    if (!owner) return;
+    const timer = setTimeout(() => {
+      const team = data.seasons[selectedYear]?.find(t => t.owner === owner);
+      if (team) {
+        setSelectedTeam(team);
+        router.replace(`/seasons?year=${selectedYear}`, { scroll: false });
+      }
+    }, 400);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const seasonData = data.seasons[selectedYear];
 
@@ -34,18 +151,13 @@ function SeasonsContent() {
     let direction = sortConfig?.direction || 'asc';
 
     if (!sortConfig) {
-      // Default sorting: Playoff Finish -> Wins -> PF
       const aFinish = parseFinish(a.playoff_finish);
       const bFinish = parseFinish(b.playoff_finish);
       if (aFinish !== bFinish) return aFinish - bFinish;
-      
       const aWins = a.regular_season.wins;
       const bWins = b.regular_season.wins;
       if (aWins !== bWins) return bWins - aWins;
-      
-      const aPF = a.regular_season.pf;
-      const bPF = b.regular_season.pf;
-      return bPF - aPF;
+      return b.regular_season.pf - a.regular_season.pf;
     }
 
     const key = sortConfig.key;
@@ -91,13 +203,16 @@ function SeasonsContent() {
 
   return (
     <div className="space-y-8">
+      {selectedTeam && (
+        <SeasonModal team={selectedTeam} year={selectedYear} onClose={() => setSelectedTeam(null)} />
+      )}
+
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
         <h1 className="text-4xl font-extrabold flex items-center gap-3">
           <Calendar className="w-10 h-10 text-emerald-400" />
           Season History
         </h1>
-        
-        <select 
+        <select
           value={selectedYear}
           onChange={(e) => {
             setSelectedYear(e.target.value);
@@ -139,11 +254,15 @@ function SeasonsContent() {
             </thead>
             <tbody>
               {sortedSeason.map((team, index) => (
-                <tr key={index} className="border-b border-slate-800/50 hover:bg-slate-800/50 transition-colors group">
+                <tr
+                  key={index}
+                  onClick={() => setSelectedTeam(team)}
+                  className="border-b border-slate-800/50 hover:bg-slate-800/50 transition-colors group cursor-pointer"
+                >
                   <td className="px-6 py-4">
                     {team.playoff_finish ? (
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                        team.playoff_finish.includes('1st') ? 'bg-yellow-400/10 text-yellow-400 border border-yellow-400/20' : 
+                        team.playoff_finish.includes('1st') ? 'bg-yellow-400/10 text-yellow-400 border border-yellow-400/20' :
                         team.playoff_finish.includes('2nd') ? 'bg-slate-300/10 text-slate-300 border border-slate-300/20' :
                         team.playoff_finish.includes('3rd') ? 'bg-amber-600/10 text-amber-600 border border-amber-600/20' :
                         team.playoff_finish.includes('12th') ? 'bg-red-500/10 text-red-400 border border-red-400/20' :
@@ -159,7 +278,11 @@ function SeasonsContent() {
                   </td>
                   <td className="px-6 py-4 font-semibold text-white group-hover:text-emerald-400 transition-colors">{team.team}</td>
                   <td className="px-6 py-4">
-                    <Link href={`/managers/${team.owner}`} className="hover:underline decoration-emerald-500 underline-offset-4">
+                    <Link
+                      href={`/managers/${team.owner}`}
+                      className="hover:underline decoration-emerald-500 underline-offset-4"
+                      onClick={e => e.stopPropagation()}
+                    >
                       {team.owner}
                     </Link>
                   </td>
@@ -167,10 +290,10 @@ function SeasonsContent() {
                     {`${team.regular_season.wins}-${team.regular_season.losses}`}
                   </td>
                   <td className="px-6 py-4 text-right">
-                    {team.regular_season.pf.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                    {team.regular_season.pf.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </td>
                   <td className="px-6 py-4 text-right text-slate-400">
-                    {team.regular_season.pa.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                    {team.regular_season.pa.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </td>
                 </tr>
               ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Upload, Star, Calendar, MapPin, Users, Heart } from 'lucide-react';
 
 interface YearData {
@@ -27,7 +27,7 @@ const allStarYears: YearData[] = [
       'Sacko: Bunny Hop 5K',
       'Barcelona Wine Bar'
     ],
-    photos: ['/allstar/2025_sacko.HEIC', '/allstar/2025.HEIC', '/allstar/2025_1.png']
+    photos: ['/allstar/2025_sacko.jpg', '/allstar/2025.jpg', '/allstar/2025_1.png']
   },
   {
     year: '2024',
@@ -37,7 +37,7 @@ const allStarYears: YearData[] = [
       'Sacko: Mime',
       'Oishii'
     ],
-    photos: ['/allstar/2024_sacko.JPG', '/allstar/2024.HEIC', '/allstar/2024_1.JPG', '/allstar/2024_3.HEIC']
+    photos: ['/allstar/2024_sacko.JPG', '/allstar/2024.jpg', '/allstar/2024_1.JPG', '/allstar/2024_3.jpg']
   },
   {
     year: '2023',
@@ -63,14 +63,20 @@ const allStarYears: YearData[] = [
 
 export default function AllStarPage() {
   const [selectedYear, setSelectedYear] = useState<string>('2025');
-  const [modalPhoto, setModalPhoto] = useState<string | null>(null);
+  const [modalIndex, setModalIndex] = useState<number | null>(null);
 
-  const getCurrentPhotos = () => {
-    const yearData = allStarYears.find(y => y.year === selectedYear);
-    return yearData?.photos || [];
-  };
+  const currentPhotos = allStarYears.find(y => y.year === selectedYear)?.photos || [];
 
-  const currentPhotos = getCurrentPhotos();
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModalIndex(null);
+      if (e.key === 'ArrowRight' && modalIndex !== null) setModalIndex(i => Math.min((i ?? 0) + 1, currentPhotos.length - 1));
+      if (e.key === 'ArrowLeft' && modalIndex !== null) setModalIndex(i => Math.max((i ?? 0) - 1, 0));
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalIndex, currentPhotos.length]);
+
 
   return (
     <div className="space-y-16">
@@ -191,7 +197,7 @@ export default function AllStarPage() {
                   }
 
                   // 2024 football photo needs better centering
-                  if (selectedYear === '2024' && photo.includes('2024.HEIC')) {
+                  if (selectedYear === '2024' && photo.includes('2024.jpg')) {
                     imageClass += " object-center scale-110";
                   }
 
@@ -209,7 +215,7 @@ export default function AllStarPage() {
                     <div
                       key={index}
                       className="aspect-square relative overflow-hidden rounded-lg bg-slate-800 border border-slate-700 group cursor-pointer"
-                      onClick={() => setModalPhoto(photo)}
+                      onClick={() => setModalIndex(index)}
                     >
                       <img
                         src={photo}
@@ -232,26 +238,67 @@ export default function AllStarPage() {
 
 
       {/* Photo modal */}
-      {modalPhoto && (
+      {modalIndex !== null && (
         <div
           className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4"
-          onClick={() => setModalPhoto(null)}
+          onClick={() => setModalIndex(null)}
         >
+          {/* Close */}
           <button
             className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
-            onClick={() => setModalPhoto(null)}
+            onClick={() => setModalIndex(null)}
             aria-label="Close"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+
+          {/* Prev */}
+          {modalIndex > 0 && (
+            <button
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2 bg-black/40 rounded-full"
+              onClick={e => { e.stopPropagation(); setModalIndex(i => Math.max((i ?? 1) - 1, 0)); }}
+              aria-label="Previous"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+
+          {/* Next */}
+          {modalIndex < currentPhotos.length - 1 && (
+            <button
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2 bg-black/40 rounded-full"
+              onClick={e => { e.stopPropagation(); setModalIndex(i => Math.min((i ?? 0) + 1, currentPhotos.length - 1)); }}
+              aria-label="Next"
+            >
+              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
+
           <img
-            src={modalPhoto}
-            alt="Full size photo"
+            src={currentPhotos[modalIndex]}
+            alt={`${selectedYear} All-Star Weekend - Photo ${modalIndex + 1}`}
             className="max-w-full max-h-full object-contain rounded-lg"
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
           />
+
+          {/* Dots */}
+          {currentPhotos.length > 1 && (
+            <div className="absolute bottom-4 flex gap-2">
+              {currentPhotos.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={e => { e.stopPropagation(); setModalIndex(i); }}
+                  className={`rounded-full transition-all ${i === modalIndex ? 'w-4 h-2 bg-white' : 'w-2 h-2 bg-white/40'}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
