@@ -66,9 +66,10 @@ async function main() {
                 const isPostSeason = m.isPlayoff;
                 const label = m.label || "";
 
+                const winnersLabels = ["quarterfinal", "semifinal", "championship", "3rd_place_final"];
+
                 // Categorize bracket
                 if (isPostSeason && awayOwner) {
-                    const winnersLabels = ["quarterfinal", "semifinal", "championship", "3rd_place_final"];
                     if (winnersLabels.includes(label)) {
                         statsByOwner[homeOwner].post_season.bracket = "championship";
                         statsByOwner[awayOwner].post_season.bracket = "championship";
@@ -95,8 +96,8 @@ async function main() {
                 // should only reflect real, decided matchups (not bye weeks)
                 if (!awayOwner || m.winner === "UNDECIDED") return;
 
-                // Add post season stats (championship bracket only)
-                if (isPostSeason && statsByOwner[homeOwner].post_season.bracket === "championship") {
+                // Add post season stats (money games only)
+                if (isPostSeason && winnersLabels.includes(label)) {
                     statsByOwner[homeOwner].post_season.pf += m.home.points || 0;
                     statsByOwner[homeOwner].post_season.pa += m.away.points || 0;
                     statsByOwner[awayOwner].post_season.pf += m.away.points || 0;
@@ -127,7 +128,7 @@ async function main() {
                         statsByOwner[homeOwner].regular_season.wins++;
                         statsByOwner[awayOwner].regular_season.losses++;
                     } else {
-                        if (statsByOwner[homeOwner].post_season.bracket === "championship") {
+                        if (winnersLabels.includes(label)) {
                             statsByOwner[homeOwner].post_season.wins++;
                             statsByOwner[awayOwner].post_season.losses++;
                             statsByOwner[homeOwner].playoff_record.wins++;
@@ -144,7 +145,7 @@ async function main() {
                         statsByOwner[awayOwner].regular_season.wins++;
                         statsByOwner[homeOwner].regular_season.losses++;
                     } else {
-                        if (statsByOwner[awayOwner].post_season.bracket === "championship") {
+                        if (winnersLabels.includes(label)) {
                             statsByOwner[awayOwner].post_season.wins++;
                             statsByOwner[homeOwner].post_season.losses++;
                             statsByOwner[awayOwner].playoff_record.wins++;
