@@ -7,13 +7,18 @@ export function useModalEscape(onClose: () => void) {
     };
     window.addEventListener('keydown', handleKeyDown);
 
-    const html = document.documentElement;
+    // Lock scroll without touching html overflow (which breaks fixed positioning in Safari).
+    // The body-fixed technique keeps <html> clean so position:fixed still anchors to viewport.
     const scrollY = window.scrollY;
-    html.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      html.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       window.scrollTo(0, scrollY);
     };
   }, [onClose]);

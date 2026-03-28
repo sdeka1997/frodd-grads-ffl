@@ -25,9 +25,9 @@ export default function CollapsibleLegend({ title, children }: CollapsibleLegend
       <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
         <button
           onClick={() => setOpen(o => !o)}
-          className="w-full flex items-center justify-between p-6 text-left md:cursor-default"
+          className="w-full flex items-center justify-between px-4 py-3 md:p-6 text-left md:cursor-default"
         >
-          <h2 className="text-xl md:text-2xl font-bold text-slate-200">{title}</h2>
+          <h2 className="text-base md:text-2xl font-semibold md:font-bold text-slate-200">{title}</h2>
           <ChevronDown
             className={`w-5 h-5 text-slate-500 transition-transform duration-200 md:hidden ${open ? 'rotate-180' : ''}`}
           />
