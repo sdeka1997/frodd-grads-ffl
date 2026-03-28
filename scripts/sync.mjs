@@ -66,7 +66,7 @@ async function main() {
                 const isPostSeason = m.isPlayoff;
                 const label = m.label || "";
 
-                const winnersLabels = ["quarterfinal", "semifinal", "championship", "3rd_place_final"];
+                const winnersLabels = ["quarterfinal", "semifinal", "championship"];
 
                 // Categorize bracket
                 if (isPostSeason && awayOwner) {
