@@ -11,6 +11,7 @@ export default function ShotgunPage() {
   const shotgunStats = getShotgunStats();
 
   const [activeBar, setActiveBar] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'shame' | 'breakdown'>('shame');
 
   const getShameColor = (index: number) => {
     if (index === 0) return '#dc2626';
@@ -114,7 +115,86 @@ export default function ShotgunPage() {
 
       {/* RECENT SHAME / SEASONAL BREAKDOWN */}
       <section>
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+        {/* Mobile: tab toggle */}
+        <div className="md:hidden">
+          <div className="flex border border-slate-700 rounded-lg overflow-hidden w-full mb-4">
+            <button
+              onClick={() => setActiveTab('shame')}
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors ${
+                activeTab === 'shame'
+                  ? 'bg-amber-500/20 text-amber-300'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              🍺 Recent Shame
+            </button>
+            <button
+              onClick={() => setActiveTab('breakdown')}
+              className={`flex-1 px-5 py-2.5 text-sm font-medium transition-colors border-l border-slate-700 ${
+                activeTab === 'breakdown'
+                  ? 'bg-red-500/20 text-red-300'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+              }`}
+            >
+              ⚡ Year by Year
+            </button>
+          </div>
+          {activeTab === 'shame' && (
+            <div className="grid gap-3">
+              {weeklyLows.slice(0, 10).map((low) => (
+                <Link
+                  key={`${low.year}-${low.week}-${low.manager}`}
+                  href={`/managers/${encodeURIComponent(low.manager)}`}
+                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
+                      <Calendar className="w-4 h-4" />
+                      {low.year} Week {low.week}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Beer className="w-5 h-5 text-amber-400" />
+                      <span className="text-lg font-bold text-white">{low.manager}</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-red-400">{low.points}</div>
+                    <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+          {activeTab === 'breakdown' && (
+            <div className="grid gap-4">
+              {shotgunStats.map((stats) => (
+                <Link key={stats.manager} href={`/managers/${encodeURIComponent(stats.manager)}`} className="bg-slate-900 border border-slate-800 rounded-xl p-6 block hover:border-slate-700 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
+                    <div className="flex items-center gap-1 text-red-400">
+                      <Beer className="w-5 h-5" />
+                      <span className="text-2xl font-bold">{stats.totalShotguns}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    {Object.entries(stats.seasons).map(([year, seasonStats]) => (
+                      <div key={year} className="flex items-center justify-between text-sm">
+                        <span className="text-slate-400">{year}:</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-white font-bold">{seasonStats.shotguns} beers</span>
+                          <span className="text-slate-500">({seasonStats.avgScore} avg)</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Desktop: side by side */}
+        <div className="hidden md:grid lg:grid-cols-3 md:grid-cols-2 gap-8">
           <div>
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">🍺 Recent Shame</h2>
             <div className="grid gap-3">
