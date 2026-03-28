@@ -148,7 +148,11 @@ async function main() {
                     if (isWinners) {
                         if (p === 1) { // Main Winners Bracket
                             if (m.r === 1) label = "quarterfinal";
-                            else if (m.r === 2) label = "semifinal";
+                            else if (m.r === 2) {
+                                // Games fed by losers of round 1 are 5th place semis, not true semis
+                                const fromLosers = (m.t1_from && m.t1_from.l) || (m.t2_from && m.t2_from.l);
+                                label = fromLosers ? "5th_place_semifinal" : "semifinal";
+                            }
                             else if (m.r === 3) {
                                 label = "championship";
                                 if (m.w) finalRanks[m.w] = 1;
@@ -178,7 +182,7 @@ async function main() {
                         }
                     } else { // Losers Bracket (Toilet Bowl)
                         if (m.r === 1) {
-                            label = "toilet_bowl_r1";
+                            label = "sacko_semifinal";
                         } else if (m.r === 2) {
                             if (p === 1) { // 11th/12th
                                 label = "sacko_final";

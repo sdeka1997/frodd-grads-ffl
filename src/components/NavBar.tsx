@@ -16,7 +16,6 @@ const PAGE_NAMES: Record<string, string> = {
   '/matrix': 'Supremacy Matrix',
   '/rivalries': 'Rivalries',
   '/allstar': 'All-Star',
-  '/analytics': 'Analytics',
 };
 
 function getPageName(path: string): string | null {

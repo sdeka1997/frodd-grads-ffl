@@ -1458,7 +1458,7 @@
         "manager": "Ro K",
         "points": 108.78
       },
-      "label": "9th_place_final"
+      "label": "9th_place_final_sacko_qf"
     },
     {
       "period": 15,
@@ -1474,7 +1474,7 @@
         "manager": "Manuj",
         "points": 96.38
       },
-      "label": "sacko_ladder_r1"
+      "label": "sacko_semifinal"
     },
     {
       "period": 16,
@@ -1550,7 +1550,8 @@
         "points": 95.94
       },
       "away": null,
-      "label": "sacko_ladder_bye"
+      "label": "sacko_bye",
+      "isBye": true
     },
     {
       "period": 16,
@@ -1562,7 +1563,8 @@
         "points": 80.69
       },
       "away": null,
-      "label": "sacko_ladder_bye"
+      "label": "sacko_bye",
+      "isBye": true
     },
     {
       "period": 16,
@@ -1578,7 +1580,7 @@
         "manager": "Palanki",
         "points": 153.13
       },
-      "label": "10th_place_final"
+      "label": "10th_place_final_sacko_sf"
     },
     {
       "period": 17,
@@ -1654,7 +1656,8 @@
         "points": 121.55
       },
       "away": null,
-      "label": "sacko_ladder_bye"
+      "label": "sacko_bye",
+      "isBye": true
     },
     {
       "period": 17,
@@ -1666,7 +1669,8 @@
         "points": 128.06
       },
       "away": null,
-      "label": "sacko_ladder_bye"
+      "label": "sacko_bye",
+      "isBye": true
     },
     {
       "period": 17,

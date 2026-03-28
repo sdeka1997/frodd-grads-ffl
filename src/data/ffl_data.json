@@ -8,7 +8,7 @@
       "pf_vs_avg": 1.45,
       "pa_vs_avg": 1.36,
       "championships": 0,
-      "playoff_record": "7-6"
+      "playoff_record": "5-5"
     },
     {
       "manager": "Arun",
@@ -26,7 +26,7 @@
       "pf_vs_avg": -3.68,
       "pa_vs_avg": -2.44,
       "championships": 0,
-      "playoff_record": "1-2"
+      "playoff_record": "1-1"
     },
     {
       "manager": "Asad",
@@ -44,7 +44,7 @@
       "pf_vs_avg": -2.06,
       "pa_vs_avg": -0.9,
       "championships": 0,
-      "playoff_record": "1-3"
+      "playoff_record": "1-2"
     },
     {
       "manager": "Palanki",
@@ -53,7 +53,7 @@
       "pf_vs_avg": 3.87,
       "pa_vs_avg": 2.22,
       "championships": 1,
-      "playoff_record": "5-4"
+      "playoff_record": "5-3"
     },
     {
       "manager": "Ameesh",
@@ -62,7 +62,7 @@
       "pf_vs_avg": -0.51,
       "pa_vs_avg": -1.28,
       "championships": 1,
-      "playoff_record": "5-4"
+      "playoff_record": "4-4"
     },
     {
       "manager": "Voldemort",
@@ -80,7 +80,7 @@
       "pf_vs_avg": 4.03,
       "pa_vs_avg": 4.51,
       "championships": 0,
-      "playoff_record": "2-5"
+      "playoff_record": "2-3"
     },
     {
       "manager": "Sai",
@@ -89,7 +89,7 @@
       "pf_vs_avg": 1.71,
       "pa_vs_avg": 1.45,
       "championships": 2,
-      "playoff_record": "12-3"
+      "playoff_record": "10-3"
     },
     {
       "manager": "Swapnav",
@@ -98,7 +98,7 @@
       "pf_vs_avg": 2.76,
       "pa_vs_avg": 0.12,
       "championships": 1,
-      "playoff_record": "6-4"
+      "playoff_record": "4-4"
     },
     {
       "manager": "Ro B",
@@ -107,7 +107,7 @@
       "pf_vs_avg": -1.19,
       "pa_vs_avg": -2.18,
       "championships": 0,
-      "playoff_record": "2-7"
+      "playoff_record": "2-5"
     },
     {
       "manager": "Smeet",
@@ -116,7 +116,7 @@
       "pf_vs_avg": -5.34,
       "pa_vs_avg": 1.27,
       "championships": 0,
-      "playoff_record": "3-3"
+      "playoff_record": "1-3"
     },
     {
       "manager": "Shrey",
@@ -125,7 +125,7 @@
       "pf_vs_avg": 4.33,
       "pa_vs_avg": -3.05,
       "championships": 0,
-      "playoff_record": "0-5"
+      "playoff_record": "0-4"
     }
   ],
   "seasons": {
@@ -142,14 +142,14 @@
           "pa_pg": 104.22
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 333,
-          "pa": 342.9,
-          "bracket": "championship"
+          "pf": 209.74,
+          "pa": 244.94,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Arun",
@@ -164,9 +164,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 256.62,
-          "pa": 343.52,
+          "losses": 1,
+          "pf": 94.46,
+          "pa": 97.4,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
@@ -185,13 +185,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 301.1,
-          "pa": 350.44,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 203.14,
+          "pa": 227.18,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Asad",
@@ -205,10 +205,10 @@
           "pa_pg": 111.28
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 343.36,
-          "pa": 261.12,
+          "pf": 97.24,
+          "pa": 98.96,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
@@ -226,10 +226,10 @@
           "pa_pg": 108.85
         },
         "post_season": {
-          "wins": 1,
-          "losses": 1,
-          "pf": 190.92,
-          "pa": 201.08,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -268,10 +268,10 @@
           "pa_pg": 109.86
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 0,
-          "pf": 224.08,
-          "pa": 191.78,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
@@ -289,13 +289,13 @@
           "pa_pg": 104.35
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 358.34,
-          "pa": 260.86,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
-        "playoff_finish": "9th",
+        "playoff_finish": "N/A",
         "playoff_record": "0-0"
       },
       {
@@ -331,13 +331,13 @@
           "pa_pg": 95.06
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 259.16,
-          "pa": 300.78,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
-        "playoff_finish": "10th",
+        "playoff_finish": "N/A",
         "playoff_record": "0-0"
       },
       {
@@ -352,10 +352,10 @@
           "pa_pg": 98.74
         },
         "post_season": {
-          "wins": 1,
-          "losses": 1,
-          "pf": 217.54,
-          "pa": 235.8,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
@@ -374,9 +374,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 2,
-          "pf": 177.02,
-          "pa": 236.76,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "12th",
@@ -396,10 +396,10 @@
           "pa_pg": 104.27
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 296.48,
-          "pa": 310.67,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -418,9 +418,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 279.58,
-          "pa": 427.35,
+          "losses": 1,
+          "pf": 87.76,
+          "pa": 159.59,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
@@ -459,10 +459,10 @@
           "pa_pg": 99.94
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 321.43,
-          "pa": 261.92,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "9th",
@@ -480,10 +480,10 @@
           "pa_pg": 109.59
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 314.41,
-          "pa": 338.22,
+          "wins": 0,
+          "losses": 1,
+          "pf": 116.74,
+          "pa": 136.67,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
@@ -501,10 +501,10 @@
           "pa_pg": 99.22
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 355.3,
-          "pa": 335.16,
+          "wins": 0,
+          "losses": 1,
+          "pf": 111.67,
+          "pa": 144.43,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
@@ -522,10 +522,10 @@
           "pa_pg": 102.71
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 333.23,
-          "pa": 309.76,
+          "pf": 107.55,
+          "pa": 111,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
@@ -543,13 +543,13 @@
           "pa_pg": 113.48
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 279.64,
-          "pa": 283.87,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
-        "playoff_finish": "10th",
+        "playoff_finish": "12th",
         "playoff_record": "0-0"
       },
       {
@@ -585,14 +585,14 @@
           "pa_pg": 109.26
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 395.5,
-          "pa": 354.63,
-          "bracket": "championship"
+          "pf": 243.53,
+          "pa": 227.69,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Ro B",
@@ -607,13 +607,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 342.56,
-          "pa": 393.98,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 215.62,
+          "pa": 242.01,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Smeet",
@@ -627,13 +627,13 @@
           "pa_pg": 112.16
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 219.23,
-          "pa": 260.32,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
-        "playoff_finish": "12th",
+        "playoff_finish": "10th",
         "playoff_record": "0-0"
       }
     ],
@@ -650,10 +650,10 @@
           "pa_pg": 104.72
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 303.07,
-          "pa": 337.24,
+          "wins": 0,
+          "losses": 1,
+          "pf": 94.73,
+          "pa": 123.97,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
@@ -671,10 +671,10 @@
           "pa_pg": 109.18
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 274.11,
-          "pa": 308.64,
+          "wins": 0,
+          "losses": 1,
+          "pf": 82.79,
+          "pa": 112.79,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
@@ -692,10 +692,10 @@
           "pa_pg": 105.49
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 231.15,
-          "pa": 326.87,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -714,13 +714,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 382.11,
-          "pa": 376.23,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 261.81,
+          "pa": 252.45,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Palanki",
@@ -734,10 +734,10 @@
           "pa_pg": 115.92
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 272.51,
-          "pa": 244.18,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "12th",
@@ -797,10 +797,10 @@
           "pa_pg": 116.95
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 304.35,
-          "pa": 259.66,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "9th",
@@ -818,14 +818,14 @@
           "pa_pg": 108.75
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 337.91,
-          "pa": 320.57,
-          "bracket": "championship"
+          "pf": 214.13,
+          "pa": 200.27,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Swapnav",
@@ -839,10 +839,10 @@
           "pa_pg": 98.7
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 264.39,
-          "pa": 270.41,
+          "pf": 70.71,
+          "pa": 115.58,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
@@ -861,9 +861,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 247.03,
-          "pa": 338.87,
+          "losses": 1,
+          "pf": 70.25,
+          "pa": 132.7,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
@@ -881,10 +881,10 @@
           "pa_pg": 101.98
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 295.11,
-          "pa": 272.41,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "10th",
@@ -905,13 +905,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 317.01,
-          "pa": 372.04,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 229.9,
+          "pa": 235.63,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Arun",
@@ -925,10 +925,10 @@
           "pa_pg": 96.59
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 311.79,
-          "pa": 302.41,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "10th",
@@ -946,10 +946,10 @@
           "pa_pg": 104.01
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 278.23,
-          "pa": 291.52,
+          "wins": 0,
+          "losses": 1,
+          "pf": 68.23,
+          "pa": 90.81,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
@@ -967,10 +967,10 @@
           "pa_pg": 106.75
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 292.71,
-          "pa": 268.78,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "12th",
@@ -1009,14 +1009,14 @@
           "pa_pg": 95.72
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 306.72,
-          "pa": 255.44,
-          "bracket": "championship"
+          "pf": 170.31,
+          "pa": 168.33,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Shrey",
@@ -1030,10 +1030,10 @@
           "pa_pg": 108.04
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 344.29,
-          "pa": 345.42,
+          "pf": 128.77,
+          "pa": 140.9,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
@@ -1051,10 +1051,10 @@
           "pa_pg": 108.06
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 286.55,
-          "pa": 344.32,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -1093,10 +1093,10 @@
           "pa_pg": 97.47
         },
         "post_season": {
-          "wins": 2,
-          "losses": 1,
-          "pf": 308.73,
-          "pa": 284.27,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "9th",
@@ -1114,10 +1114,10 @@
           "pa_pg": 108.98
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 267.35,
-          "pa": 288.82,
+          "wins": 0,
+          "losses": 1,
+          "pf": 88.11,
+          "pa": 107.45,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
@@ -1136,9 +1136,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 321.88,
-          "pa": 365.24,
+          "losses": 1,
+          "pf": 95.89,
+          "pa": 121.09,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
@@ -1179,10 +1179,10 @@
           "pa_pg": 107.21
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 309.74,
-          "pa": 331.83,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "12th",
@@ -1200,13 +1200,13 @@
           "pa_pg": 106.08
         },
         "post_season": {
-          "wins": 3,
+          "wins": 0,
           "losses": 0,
-          "pf": 333.68,
-          "pa": 258.78,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
-        "playoff_finish": "9th",
+        "playoff_finish": "N/A",
         "playoff_record": "0-0"
       },
       {
@@ -1222,9 +1222,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 253.73,
-          "pa": 342.15,
+          "losses": 1,
+          "pf": 98.11,
+          "pa": 111.33,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
@@ -1242,10 +1242,10 @@
           "pa_pg": 99.25
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 291.73,
-          "pa": 321.97,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -1263,10 +1263,10 @@
           "pa_pg": 99.07
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 311.75,
-          "pa": 336.63,
+          "wins": 0,
+          "losses": 1,
+          "pf": 98.16,
+          "pa": 155.72,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
@@ -1284,10 +1284,10 @@
           "pa_pg": 94.58
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 297.4,
-          "pa": 311.64,
+          "wins": 0,
+          "losses": 1,
+          "pf": 85.06,
+          "pa": 111.89,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
@@ -1306,13 +1306,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 330.76,
-          "pa": 345.74,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 207.26,
+          "pa": 206.3,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Sai",
@@ -1326,14 +1326,14 @@
           "pa_pg": 105.09
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 356.66,
-          "pa": 328.26,
-          "bracket": "championship"
+          "pf": 217.22,
+          "pa": 204.76,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Swapnav",
@@ -1368,10 +1368,10 @@
           "pa_pg": 92.87
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 293.5,
-          "pa": 300.28,
+          "pf": 68.46,
+          "pa": 105.17,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
@@ -1389,13 +1389,13 @@
           "pa_pg": 104.2
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 271.01,
-          "pa": 293.58,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
-        "playoff_finish": "10th",
+        "playoff_finish": "N/A",
         "playoff_record": "0-0"
       }
     ],
@@ -1412,11 +1412,11 @@
           "pa_pg": 110.77
         },
         "post_season": {
-          "wins": 1,
+          "wins": 0,
           "losses": 0,
-          "pf": 126.15,
-          "pa": 108.78,
-          "bracket": "consolation"
+          "pf": 0,
+          "pa": 0,
+          "bracket": "sacko"
         },
         "playoff_finish": "9th",
         "playoff_record": "0-0"
@@ -1433,10 +1433,10 @@
           "pa_pg": 92.47
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 238.26,
-          "pa": 385.74,
+          "wins": 0,
+          "losses": 1,
+          "pf": 72.36,
+          "pa": 181.68,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
@@ -1475,10 +1475,10 @@
           "pa_pg": 108.53
         },
         "post_season": {
-          "wins": 1,
-          "losses": 1,
-          "pf": 195.6,
-          "pa": 205.35,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -1496,11 +1496,11 @@
           "pa_pg": 107.31
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 0,
-          "pf": 262.39,
-          "pa": 204.7,
-          "bracket": "consolation"
+          "pf": 0,
+          "pa": 0,
+          "bracket": "sacko"
         },
         "playoff_finish": "10th",
         "playoff_record": "0-0"
@@ -1518,9 +1518,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 355.25,
-          "pa": 380.94,
+          "losses": 1,
+          "pf": 94.29,
+          "pa": 95.15,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
@@ -1538,10 +1538,10 @@
           "pa_pg": 102.58
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 333.55,
-          "pa": 361.49,
+          "wins": 0,
+          "losses": 1,
+          "pf": 112.55,
+          "pa": 132.61,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
@@ -1560,9 +1560,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 313.19,
-          "pa": 378.5,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "12th",
@@ -1601,10 +1601,10 @@
           "pa_pg": 105.18
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 349.24,
-          "pa": 358.49,
+          "pf": 80.39,
+          "pa": 160.51,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
@@ -1623,13 +1623,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 363.52,
-          "pa": 304.16,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 287.44,
+          "pa": 182,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Smeet",
@@ -1643,14 +1643,14 @@
           "pa_pg": 106.39
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 324.98,
-          "pa": 288.6,
-          "bracket": "championship"
+          "pf": 202.82,
+          "pa": 212.52,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       }
     ],
     "2025": [
@@ -1666,14 +1666,14 @@
           "pa_pg": 108.91
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 268.06,
-          "pa": 276.38,
+          "wins": 0,
+          "losses": 1,
+          "pf": 78.6,
+          "pa": 88.2,
           "bracket": "consolation"
         },
         "playoff_finish": "6th",
-        "playoff_record": "1-1"
+        "playoff_record": "0-1"
       },
       {
         "owner": "Nikhil",
@@ -1687,14 +1687,14 @@
           "pa_pg": 100.84
         },
         "post_season": {
-          "wins": 2,
+          "wins": 1,
           "losses": 1,
-          "pf": 262.68,
-          "pa": 292.98,
-          "bracket": "championship"
+          "pf": 181.66,
+          "pa": 213.5,
+          "bracket": "consolation"
         },
         "playoff_finish": "3rd",
-        "playoff_record": "2-1"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Asad",
@@ -1750,10 +1750,10 @@
           "pa_pg": 103.2
         },
         "post_season": {
-          "wins": 1,
-          "losses": 1,
-          "pf": 221,
-          "pa": 200.58,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "11th",
@@ -1772,9 +1772,9 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 2,
-          "pf": 178.28,
-          "pa": 248.22,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "sacko"
         },
         "playoff_finish": "12th",
@@ -1792,14 +1792,14 @@
           "pa_pg": 99.22
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 1,
-          "pf": 294.5,
-          "pa": 294.32,
+          "pf": 96.46,
+          "pa": 134.02,
           "bracket": "consolation"
         },
         "playoff_finish": "5th",
-        "playoff_record": "1-1"
+        "playoff_record": "0-1"
       },
       {
         "owner": "Ro K",
@@ -1814,13 +1814,13 @@
         },
         "post_season": {
           "wins": 0,
-          "losses": 3,
-          "pf": 280.96,
-          "pa": 310.84,
+          "losses": 1,
+          "pf": 93.36,
+          "pa": 119.6,
           "bracket": "consolation"
         },
         "playoff_finish": "8th",
-        "playoff_record": "0-2"
+        "playoff_record": "0-1"
       },
       {
         "owner": "Manuj",
@@ -1834,13 +1834,13 @@
           "pa_pg": 104.38
         },
         "post_season": {
-          "wins": 1,
-          "losses": 1,
-          "pf": 230.22,
-          "pa": 202.38,
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
-        "playoff_finish": "10th",
+        "playoff_finish": "9th",
         "playoff_record": "0-0"
       },
       {
@@ -1856,13 +1856,13 @@
         },
         "post_season": {
           "wins": 1,
-          "losses": 2,
-          "pf": 334.96,
-          "pa": 308.9,
-          "bracket": "championship"
+          "losses": 1,
+          "pf": 255.48,
+          "pa": 227.88,
+          "bracket": "consolation"
         },
         "playoff_finish": "4th",
-        "playoff_record": "1-2"
+        "playoff_record": "1-1"
       },
       {
         "owner": "Sai",
@@ -1876,13 +1876,13 @@
           "pa_pg": 105.96
         },
         "post_season": {
-          "wins": 2,
+          "wins": 0,
           "losses": 0,
-          "pf": 224.68,
-          "pa": 203,
+          "pf": 0,
+          "pa": 0,
           "bracket": "consolation"
         },
-        "playoff_finish": "9th",
+        "playoff_finish": "10th",
         "playoff_record": "0-0"
       },
       {
@@ -1897,14 +1897,14 @@
           "pa_pg": 90.32
         },
         "post_season": {
-          "wins": 1,
-          "losses": 2,
-          "pf": 297.7,
-          "pa": 337.36,
+          "wins": 0,
+          "losses": 1,
+          "pf": 116.32,
+          "pa": 120.6,
           "bracket": "consolation"
         },
         "playoff_finish": "7th",
-        "playoff_record": "0-2"
+        "playoff_record": "0-1"
       }
     ]
   }

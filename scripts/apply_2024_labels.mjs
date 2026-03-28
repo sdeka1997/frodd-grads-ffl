@@ -7,26 +7,22 @@ const labels2024 = {
         { managers: ["Ro B", "Arun"], label: "quarterfinal" },
         { managers: ["Asad", "Shrey"], label: "quarterfinal" },
         { managers: ["Smeet", "Ameesh"], label: "quarterfinal" },
-        { managers: ["Nikhil", "Ro K"], label: "9th_place_final" },
-        { managers: ["Palanki", "Manuj"], label: "sacko_ladder_r1" }
+        { managers: ["Nikhil", "Ro K"], label: "9th_place_final_sacko_qf" },
+        { managers: ["Palanki", "Manuj"], label: "sacko_semifinal" }
     ],
     16: [
         { managers: ["Sai", "Ro B"], label: "semifinal" },
         { managers: ["Asad", "Smeet"], label: "semifinal" },
         { managers: ["Swapnav", "Ameesh"], label: "5th_place_semifinal" },
         { managers: ["Arun", "Shrey"], label: "5th_place_semifinal" },
-        { managers: ["Ro K", "Palanki"], label: "10th_place_final" },
-        { managers: ["Nikhil"], label: "sacko_ladder_bye" },
-        { managers: ["Manuj"], label: "sacko_ladder_bye" }
+        { managers: ["Ro K", "Palanki"], label: "10th_place_final_sacko_sf" }
     ],
     17: [
         { managers: ["Asad", "Sai"], label: "championship" },
         { managers: ["Smeet", "Ro B"], label: "3rd_place_final" },
         { managers: ["Swapnav", "Arun"], label: "5th_place_final" },
         { managers: ["Shrey", "Ameesh"], label: "7th_place_final" },
-        { managers: ["Manuj", "Ro K"], label: "sacko_final" },
-        { managers: ["Nikhil"], label: "sacko_ladder_bye" },
-        { managers: ["Palanki"], label: "sacko_ladder_bye" }
+        { managers: ["Manuj", "Ro K"], label: "sacko_final" }
     ]
 };
 

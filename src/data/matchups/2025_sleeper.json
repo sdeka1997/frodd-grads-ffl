@@ -1531,7 +1531,7 @@
     {
       "period": 15,
       "isPlayoff": true,
-      "label": "toilet_bowl_r1",
+      "label": "sacko_semifinal",
       "winner": "AWAY",
       "home": {
         "teamId": 5,
@@ -1547,7 +1547,7 @@
     {
       "period": 15,
       "isPlayoff": true,
-      "label": "toilet_bowl_r1",
+      "label": "sacko_semifinal",
       "winner": "AWAY",
       "home": {
         "teamId": 6,
@@ -1595,7 +1595,7 @@
     {
       "period": 16,
       "isPlayoff": true,
-      "label": "semifinal",
+      "label": "5th_place_semifinal",
       "winner": "HOME",
       "home": {
         "teamId": 1,
@@ -1611,7 +1611,7 @@
     {
       "period": 16,
       "isPlayoff": true,
-      "label": "semifinal",
+      "label": "5th_place_semifinal",
       "winner": "HOME",
       "home": {
         "teamId": 7,

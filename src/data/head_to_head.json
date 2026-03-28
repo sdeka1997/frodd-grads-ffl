@@ -1239,21 +1239,21 @@
             "Swapnav": "0-1",
             "Sai": "0-1"
           },
-          "Palanki": {
-            "Arun": "1-1",
-            "Smeet": "0-1"
-          },
           "Arun": {
-            "Palanki": "1-1",
-            "Asad": "0-1"
+            "Asad": "0-1",
+            "Palanki": "0-1"
           },
           "Asad": {
-            "Smeet": "2-0",
+            "Arun": "1-0",
+            "Smeet": "1-0"
+          },
+          "Palanki": {
+            "Smeet": "0-1",
             "Arun": "1-0"
           },
           "Smeet": {
-            "Asad": "0-2",
-            "Palanki": "1-0"
+            "Palanki": "1-0",
+            "Asad": "0-1"
           }
         }
       }

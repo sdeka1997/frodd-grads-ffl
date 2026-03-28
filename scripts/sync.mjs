@@ -67,7 +67,7 @@ async function main() {
 
                 // Categorize bracket
                 if (isPostSeason && awayOwner) {
-                    const winnersLabels = ["quarterfinal", "semifinal", "championship", "3rd_place_final"];
+                    const winnersLabels = ["quarterfinal", "semifinal", "championship"];
                     if (winnersLabels.includes(label)) {
                         statsByOwner[homeOwner].post_season.bracket = "championship";
                         statsByOwner[awayOwner].post_season.bracket = "championship";
@@ -94,8 +94,8 @@ async function main() {
                 // should only reflect real, decided matchups (not bye weeks)
                 if (!awayOwner || m.winner === "UNDECIDED") return;
 
-                // Add post season stats (only for real, decided matchups)
-                if (isPostSeason) {
+                // Add post season stats (championship bracket only)
+                if (isPostSeason && statsByOwner[homeOwner].post_season.bracket === "championship") {
                     statsByOwner[homeOwner].post_season.pf += m.home.points || 0;
                     statsByOwner[homeOwner].post_season.pa += m.away.points || 0;
                     statsByOwner[awayOwner].post_season.pf += m.away.points || 0;
@@ -117,9 +117,9 @@ async function main() {
                         statsByOwner[homeOwner].regular_season.wins++;
                         statsByOwner[awayOwner].regular_season.losses++;
                     } else {
-                        statsByOwner[homeOwner].post_season.wins++;
-                        statsByOwner[awayOwner].post_season.losses++;
                         if (statsByOwner[homeOwner].post_season.bracket === "championship") {
+                            statsByOwner[homeOwner].post_season.wins++;
+                            statsByOwner[awayOwner].post_season.losses++;
                             statsByOwner[homeOwner].playoff_record.wins++;
                             statsByOwner[awayOwner].playoff_record.losses++;
                         }
@@ -131,9 +131,9 @@ async function main() {
                         statsByOwner[awayOwner].regular_season.wins++;
                         statsByOwner[homeOwner].regular_season.losses++;
                     } else {
-                        statsByOwner[awayOwner].post_season.wins++;
-                        statsByOwner[homeOwner].post_season.losses++;
                         if (statsByOwner[awayOwner].post_season.bracket === "championship") {
+                            statsByOwner[awayOwner].post_season.wins++;
+                            statsByOwner[homeOwner].post_season.losses++;
                             statsByOwner[awayOwner].playoff_record.wins++;
                             statsByOwner[homeOwner].playoff_record.losses++;
                         }
@@ -177,8 +177,8 @@ async function main() {
                 else if (label === "3rd_place_final") { finalStandings[winner] = 3; finalStandings[loser] = 4; }
                 else if (label === "5th_place_final") { finalStandings[winner] = 5; finalStandings[loser] = 6; }
                 else if (label === "7th_place_final") { finalStandings[winner] = 7; finalStandings[loser] = 8; }
-                else if (label === "9th_place_final") { finalStandings[winner] = 9; finalStandings[loser] = 10; }
-                else if (label === "10th_place_final") { finalStandings[winner] = 10; finalStandings[loser] = 11; }
+                else if (label === "9th_place_final_sacko_qf") { finalStandings[winner] = 9; finalStandings[loser] = 10; }
+                else if (label === "10th_place_final_sacko_sf") { finalStandings[winner] = 10; finalStandings[loser] = 11; }
                 else if (label === "sacko_final") { finalStandings[winner] = 11; finalStandings[loser] = 12; }
             });
 

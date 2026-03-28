@@ -6,8 +6,6 @@ const labels2023 = {
         { managers: ["Nikhil", "Ameesh"], label: "quarterfinal" },
         { managers: ["Ro B", "Swapnav"], label: "quarterfinal" },
         { managers: ["Manuj", "Ro K"], label: "quarterfinal" },
-        { managers: ["Palanki", "Arun"], label: "sacko_ladder_bye" },
-        { managers: ["Asad", "Smeet"], label: "sacko_ladder_bye" }
     ],
     16: [
         { managers: ["Nikhil", "Sai"], label: "semifinal" },

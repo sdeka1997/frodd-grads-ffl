@@ -1447,34 +1447,54 @@
     {
       "period": 15,
       "isPlayoff": true,
-      "winner": "AWAY",
+      "winner": "UNDECIDED",
       "home": {
         "teamId": 6,
         "manager": "Palanki",
         "points": 71.86
       },
-      "away": {
-        "teamId": 2,
-        "manager": "Arun",
-        "points": 124.22
-      },
-      "label": "sacko_ladder_bye"
+      "away": null,
+      "label": "sacko_bye",
+      "isBye": true
     },
     {
       "period": 15,
       "isPlayoff": true,
-      "winner": "HOME",
+      "winner": "UNDECIDED",
+      "home": {
+        "teamId": 2,
+        "manager": "Arun",
+        "points": 124.22
+      },
+      "away": null,
+      "label": "sacko_bye",
+      "isBye": true
+    },
+    {
+      "period": 15,
+      "isPlayoff": true,
+      "winner": "UNDECIDED",
       "home": {
         "teamId": 4,
         "manager": "Asad",
         "points": 85.83
       },
-      "away": {
+      "away": null,
+      "label": "sacko_bye",
+      "isBye": true
+    },
+    {
+      "period": 15,
+      "isPlayoff": true,
+      "winner": "UNDECIDED",
+      "home": {
         "teamId": 13,
         "manager": "Smeet",
         "points": 77.91
       },
-      "label": "sacko_ladder_bye"
+      "away": null,
+      "label": "sacko_bye",
+      "isBye": true
     },
     {
       "period": 16,
