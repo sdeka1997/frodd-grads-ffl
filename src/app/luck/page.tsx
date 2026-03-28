@@ -278,7 +278,6 @@ export default function LuckPage() {
           </div>
           {activeTab === 'luck' && (
             <div>
-              <h3 className="text-lg font-bold text-red-300 mb-1">😰 Most Unlucky</h3>
               <p className="text-slate-400 text-sm mb-3">Points Against vs Average — higher means more unlucky</p>
               <div className="space-y-2">
                 {[...luckData].sort((a, b) => b.y - a.y).map((manager, index) => (
@@ -289,7 +288,6 @@ export default function LuckPage() {
           )}
           {activeTab === 'skill' && (
             <div>
-              <h3 className="text-lg font-bold text-emerald-300 mb-1">🎯 Most Skilled</h3>
               <p className="text-slate-400 text-sm mb-3">Points For vs Average — higher means more skilled</p>
               <div className="space-y-2">
                 {[...luckData].sort((a, b) => b.x - a.x).map((manager, index) => (

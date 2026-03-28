@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Upload, Star, Calendar, MapPin, Users, Heart } from 'lucide-react';
 
 interface Photo {
@@ -86,6 +86,40 @@ const allStarYears: YearData[] = [
 export default function AllStarPage() {
   const [selectedYear, setSelectedYear] = useState<string>('2025');
   const [modalIndex, setModalIndex] = useState<number | null>(null);
+
+  // Mobile photo carousel state
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const [photoDragX, setPhotoDragX] = useState(0);
+  const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
+  const photoStartX = useRef(0);
+  const photoDragActive = useRef(false);
+  const wasPhotoDragging = useRef(false);
+
+  // Reset photo index when year changes
+  useEffect(() => { setPhotoIndex(0); }, [selectedYear]);
+
+  const onPhotoPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    photoStartX.current = e.clientX;
+    photoDragActive.current = false;
+  };
+  const onPhotoPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const dx = e.clientX - photoStartX.current;
+    if (!photoDragActive.current && Math.abs(dx) > 8) {
+      photoDragActive.current = true;
+      setIsDraggingPhoto(true);
+    }
+    if (photoDragActive.current) setPhotoDragX(dx);
+  };
+  const onPhotoPointerUp = () => {
+    wasPhotoDragging.current = photoDragActive.current;
+    if (photoDragActive.current) {
+      setIsDraggingPhoto(false);
+      if (photoDragX < -60 && photoIndex < currentPhotos.length - 1) setPhotoIndex(i => i + 1);
+      else if (photoDragX > 60 && photoIndex > 0) setPhotoIndex(i => i - 1);
+      setPhotoDragX(0);
+    }
+    photoDragActive.current = false;
+  };
 
   const currentPhotos = allStarYears.find(y => y.year === selectedYear)?.photos || [];
 
@@ -178,26 +212,30 @@ export default function AllStarPage() {
               {selectedYear} All-Star Weekend
             </h2>
 
-            {/* Event Details - Horizontal */}
-            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 text-center md:text-left">
-              <div className="flex items-center justify-center md:justify-start gap-2 text-slate-300">
-                <MapPin className="w-5 h-5 text-blue-400" />
-                <span className="font-medium">Location:</span>
-                <span>{allStarYears.find(y => y.year === selectedYear)?.location}</span>
-              </div>
-              <div className="flex items-center justify-center md:justify-start gap-2 text-slate-300">
-                <Calendar className="w-5 h-5 text-purple-400" />
-                <span className="font-medium">Dates:</span>
-                <span>{allStarYears.find(y => y.year === selectedYear)?.dates}</span>
-              </div>
-              <div className="flex items-center justify-center md:justify-start gap-2 text-slate-300">
-                <Heart className="w-5 h-5 text-red-400" />
-                <span className="font-medium">Sacko:</span>
-                <span>
-                  {allStarYears.find(y => y.year === selectedYear)?.highlights?.find(h => h.startsWith('Sacko:'))?.replace('Sacko: ', '') || 'TBD'}
-                </span>
-              </div>
-            </div>
+            {/* Event Details - always one row */}
+            {(() => {
+              const yd = allStarYears.find(y => y.year === selectedYear);
+              const sacko = yd?.highlights?.find(h => h.startsWith('Sacko:'))?.replace('Sacko: ', '') || 'TBD';
+              return (
+                <div className="flex flex-wrap items-center gap-4 md:gap-8 text-slate-300">
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
+                    <span className="hidden md:inline font-medium text-sm">Location:&nbsp;</span>
+                    <span className="text-sm">{yd?.location}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4 text-purple-400 shrink-0" />
+                    <span className="hidden md:inline font-medium text-sm">Dates:&nbsp;</span>
+                    <span className="text-sm">{yd?.dates}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Heart className="w-4 h-4 text-red-400 shrink-0" />
+                    <span className="hidden md:inline font-medium text-sm">Sacko:&nbsp;</span>
+                    <span className="text-sm">{sacko}</span>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           {/* Separator Line */}
@@ -226,14 +264,52 @@ export default function AllStarPage() {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center max-w-fit mx-auto">
-                {currentPhotos.map((photo, index) => {
-                  const imageClass = [
-                    "w-full h-full object-cover hover:scale-105 transition-transform duration-300",
-                    photo.extraClass ?? '',
-                  ].join(' ').trim();
+              <>
+                {/* Mobile: swipeable single photo */}
+                <div className="md:hidden flex flex-col gap-3">
+                  <div
+                    className="overflow-hidden rounded-lg cursor-grab active:cursor-grabbing"
+                    style={{ touchAction: 'none' }}
+                    onPointerDown={onPhotoPointerDown}
+                    onPointerMove={onPhotoPointerMove}
+                    onPointerUp={onPhotoPointerUp}
+                  >
+                    <div
+                      className="flex"
+                      style={{
+                        transform: `translateX(calc(-${photoIndex * 100}% + ${photoDragX}px))`,
+                        transition: isDraggingPhoto ? 'none' : 'transform 0.3s ease',
+                      }}
+                    >
+                      {currentPhotos.map((photo, index) => (
+                        <div
+                          key={index}
+                          className="aspect-square relative overflow-hidden bg-slate-800 border border-slate-700 shrink-0 w-full"
+                          style={{ minWidth: '100%' }}
+                          onClick={() => { if (wasPhotoDragging.current) { wasPhotoDragging.current = false; return; } setModalIndex(index); }}
+                        >
+                          <img
+                            src={photo.src}
+                            alt={`${selectedYear} All-Star Weekend - Photo ${index + 1}`}
+                            className={['w-full h-full object-cover', photo.extraClass ?? ''].join(' ').trim()}
+                            draggable={false}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {currentPhotos.length > 1 && (
+                    <div className="flex gap-1.5 justify-center">
+                      {currentPhotos.map((_, i) => (
+                        <div key={i} className={`rounded-full transition-all duration-300 ${i === photoIndex ? 'w-4 h-1.5 bg-yellow-400' : 'w-1.5 h-1.5 bg-slate-600'}`} />
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-                  return (
+                {/* Desktop: photo grid */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center max-w-fit mx-auto">
+                  {currentPhotos.map((photo, index) => (
                     <div
                       key={index}
                       className="aspect-square relative overflow-hidden rounded-lg bg-slate-800 border border-slate-700 group cursor-pointer"
@@ -242,7 +318,7 @@ export default function AllStarPage() {
                       <img
                         src={photo.src}
                         alt={`${selectedYear} All-Star Weekend - Photo ${index + 1}`}
-                        className={imageClass}
+                        className={['w-full h-full object-cover hover:scale-105 transition-transform duration-300', photo.extraClass ?? ''].join(' ').trim()}
                       />
                       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <svg className="w-8 h-8 text-white opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,9 +326,9 @@ export default function AllStarPage() {
                         </svg>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>

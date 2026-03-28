@@ -68,22 +68,30 @@ function HighRollerContent() {
   const [yearDragX, setYearDragX] = useState(0);
   const [isDraggingYear, setIsDraggingYear] = useState(false);
   const yearStartX = useRef(0);
+  const yearDragActive = useRef(false);
+  const wasDragging = useRef(false);
 
   const onYearPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId);
     yearStartX.current = e.clientX;
-    setIsDraggingYear(true);
+    yearDragActive.current = false;
   };
   const onYearPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingYear) return;
-    setYearDragX(e.clientX - yearStartX.current);
+    const dx = e.clientX - yearStartX.current;
+    if (!yearDragActive.current && Math.abs(dx) > 8) {
+      yearDragActive.current = true;
+      setIsDraggingYear(true);
+    }
+    if (yearDragActive.current) setYearDragX(dx);
   };
   const onYearPointerUp = () => {
-    if (!isDraggingYear) return;
-    setIsDraggingYear(false);
-    if (yearDragX < -60 && topYear < years.length - 1) setTopYear(i => i + 1);
-    else if (yearDragX > 60 && topYear > 0) setTopYear(i => i - 1);
-    setYearDragX(0);
+    wasDragging.current = yearDragActive.current;
+    if (yearDragActive.current) {
+      setIsDraggingYear(false);
+      if (yearDragX < -60 && topYear < years.length - 1) setTopYear(i => i + 1);
+      else if (yearDragX > 60 && topYear > 0) setTopYear(i => i - 1);
+      setYearDragX(0);
+    }
+    yearDragActive.current = false;
   };
 
   const [activeBar, setActiveBar] = useState<string | null>(null);
@@ -262,7 +270,7 @@ function HighRollerContent() {
                 const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
                 const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
                 return (
-                  <button key={year} style={{ minWidth: '85%' }} onClick={() => setSelectedSeasonYear(year)} className="bg-slate-900 border border-slate-800 rounded-xl p-6 select-none w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
+                  <button key={year} style={{ minWidth: '85%' }} onClick={() => { if (wasDragging.current) { wasDragging.current = false; return; } setSelectedSeasonYear(year); }} className="bg-slate-900 border border-slate-800 rounded-xl p-6 select-none w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-bold text-white">{year} Season</h3>
                       <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
