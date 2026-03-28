@@ -3,12 +3,17 @@
 import { useState, useEffect } from 'react';
 import { Upload, Star, Calendar, MapPin, Users, Heart } from 'lucide-react';
 
+interface Photo {
+  src: string;
+  extraClass?: string;
+}
+
 interface YearData {
   year: string;
   location?: string;
   dates?: string;
   highlights?: string[];
-  photos?: string[];
+  photos?: Photo[];
 }
 
 const allStarYears: YearData[] = [
@@ -27,7 +32,11 @@ const allStarYears: YearData[] = [
       'Sacko: Bunny Hop 5K',
       'Barcelona Wine Bar'
     ],
-    photos: ['/allstar/2025_sacko.jpg', '/allstar/2025.jpg', '/allstar/2025_1.png']
+    photos: [
+      { src: '/allstar/2025_sacko.jpg' },
+      { src: '/allstar/2025.jpg' },
+      { src: '/allstar/2025_1.png' },
+    ]
   },
   {
     year: '2024',
@@ -37,7 +46,12 @@ const allStarYears: YearData[] = [
       'Sacko: Mime',
       'Oishii'
     ],
-    photos: ['/allstar/2024_sacko.JPG', '/allstar/2024.jpg', '/allstar/2024_1.JPG', '/allstar/2024_3.jpg']
+    photos: [
+      { src: '/allstar/2024_sacko.JPG', extraClass: 'scale-110' },
+      { src: '/allstar/2024.jpg',        extraClass: 'object-center scale-110' },
+      { src: '/allstar/2024_1.JPG',      extraClass: 'scale-110' },
+      { src: '/allstar/2024_3.jpg' },
+    ]
   },
   {
     year: '2023',
@@ -47,7 +61,11 @@ const allStarYears: YearData[] = [
       'Sacko: Comedy Club',
       'Heist'
     ],
-    photos: ['/allstar/2023_sacko.JPG', '/allstar/2023.JPG', '/allstar/2023_1.JPG']
+    photos: [
+      { src: '/allstar/2023_sacko.JPG' },
+      { src: '/allstar/2023.JPG',  extraClass: 'scale-125' },
+      { src: '/allstar/2023_1.JPG' },
+    ]
   },
   {
     year: '2022',
@@ -57,7 +75,11 @@ const allStarYears: YearData[] = [
       'Sacko: Box',
       'Diplo @ Noto'
     ],
-    photos: ['/allstar/2022_sacko.JPG', '/allstar/2022.JPG', '/allstar/2022_1.JPG']
+    photos: [
+      { src: '/allstar/2022_sacko.JPG' },
+      { src: '/allstar/2022.JPG' },
+      { src: '/allstar/2022_1.JPG' },
+    ]
   }
 ];
 
@@ -188,28 +210,10 @@ export default function AllStarPage() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-items-center max-w-fit mx-auto">
                 {currentPhotos.map((photo, index) => {
-                  // Special styling for specific photos that need adjustment
-                  let imageClass = "w-full h-full object-cover hover:scale-105 transition-transform duration-300";
-
-                  // 2023 football field photo needs more zoom
-                  if (selectedYear === '2023' && photo.includes('2023.JPG')) {
-                    imageClass += " scale-125";
-                  }
-
-                  // 2024 football photo needs better centering
-                  if (selectedYear === '2024' && photo.includes('2024.jpg')) {
-                    imageClass += " object-center scale-110";
-                  }
-
-                  // 2024 basketball photo needs slight zoom
-                  if (selectedYear === '2024' && photo.includes('2024_1.JPG')) {
-                    imageClass += " scale-110";
-                  }
-
-                  // 2024 sacko photo (now JPG instead of HEIC)
-                  if (selectedYear === '2024' && photo.includes('2024_sacko.JPG')) {
-                    imageClass += " scale-110";
-                  }
+                  const imageClass = [
+                    "w-full h-full object-cover hover:scale-105 transition-transform duration-300",
+                    photo.extraClass ?? '',
+                  ].join(' ').trim();
 
                   return (
                     <div
@@ -218,7 +222,7 @@ export default function AllStarPage() {
                       onClick={() => setModalIndex(index)}
                     >
                       <img
-                        src={photo}
+                        src={photo.src}
                         alt={`${selectedYear} All-Star Weekend - Photo ${index + 1}`}
                         className={imageClass}
                       />
@@ -281,7 +285,7 @@ export default function AllStarPage() {
           )}
 
           <img
-            src={currentPhotos[modalIndex]}
+            src={currentPhotos[modalIndex].src}
             alt={`${selectedYear} All-Star Weekend - Photo ${modalIndex + 1}`}
             className="max-w-full max-h-full object-contain rounded-lg"
             onClick={e => e.stopPropagation()}
