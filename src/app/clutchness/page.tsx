@@ -67,6 +67,7 @@ export default function ClutchnessPage() {
                 <Tooltip
                   active={activeBar !== null}
                   cursor={false}
+                  isAnimationActive={false}
                   content={({ active, payload }) => {
                     if (active && payload && payload.length > 0 && payload[0].payload.name === activeBar) {
                       return (
