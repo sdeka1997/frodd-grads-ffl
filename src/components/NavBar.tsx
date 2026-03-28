@@ -169,14 +169,8 @@ export default function NavBar() {
                 onClick={() => setOpen(null)}
               >
                 <span className="text-2xl">🏈</span>
-                {pageName ? (
-                  <span className="text-slate-100">{pageName}</span>
-                ) : (
-                  <>
-                    <span className="text-emerald-500">Frodd</span>
-                    <span className="text-emerald-400">FFL</span>
-                  </>
-                )}
+                <span className="text-emerald-500">Frodd</span>
+                <span className="text-emerald-400">FFL</span>
               </Link>
             </div>
 
