@@ -22,7 +22,7 @@ export default function ManagerStatBoxes({
         <ShotgunModal
           manager={manager}
           footerHref="/shotgun"
-          footerLabel="See everyone's shotguns →"
+          footerLabel="See all shotguns →"
           onClose={() => setShotgunOpen(false)}
         />
       )}
