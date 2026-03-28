@@ -2,46 +2,21 @@
 
 import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
 import { Beer, TrendingDown, Calendar, Trophy, Zap } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Cell } from 'recharts';
-import { useState, useEffect } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function ShotgunPage() {
   const weeklyLows = getWeeklyLowScores();
   const shotgunStats = getShotgunStats();
 
-  const [tooltip, setTooltip] = useState<{
-    manager: string;
-    shotguns: number;
-    x: number;
-    y: number;
-  } | null>(null);
-
-  useEffect(() => {
-    const close = () => setTooltip(null);
-    document.addEventListener('click', close);
-    return () => document.removeEventListener('click', close);
-  }, []);
+  const [activeBar, setActiveBar] = useState<string | null>(null);
 
   const getShameColor = (index: number) => {
     if (index === 0) return '#dc2626';
     if (index === 1) return '#ea580c';
     if (index === 2) return '#d97706';
     return '#64748b';
-  };
-
-  const handleBarClick = (data: any, _index: number, event: any) => {
-    event.stopPropagation();
-    if (tooltip?.manager === data.manager) {
-      setTooltip(null);
-      return;
-    }
-    setTooltip({
-      manager: data.manager,
-      shotguns: data.totalShotguns,
-      x: event.clientX,
-      y: event.clientY,
-    });
   };
 
   return (
@@ -75,37 +50,50 @@ export default function ShotgunPage() {
           </p>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6">
-          <div className="overflow-x-auto">
-            <div style={{ minWidth: `${Math.max(500, shotgunStats.length * 65)}px`, height: '360px' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={shotgunStats}
-                  margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                  <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
-                  <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
-                  <Bar dataKey="totalShotguns" name="Total Shotguns" radius={[4, 4, 0, 0]} onClick={handleBarClick} style={{ cursor: 'pointer' }}>
-                    {shotgunStats.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={getShameColor(index)} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 overflow-x-auto" onClick={() => setActiveBar(null)}>
+          <div style={{ minWidth: `${Math.max(500, shotgunStats.length * 65)}px`, height: '360px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={shotgunStats}
+                margin={{ top: 20, right: 20, left: -10, bottom: 5 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+                <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
+                <Tooltip
+                  active={activeBar !== null}
+                  cursor={false}
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length > 0 && payload[0].payload.manager === activeBar) {
+                      return (
+                        <div className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 shadow-xl text-sm space-y-1">
+                          <div className="font-bold text-white">{payload[0].payload.manager}</div>
+                          <div className="text-slate-300">{payload[0].payload.totalShotguns} Shotguns 🍺</div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Bar dataKey="totalShotguns" name="Total Shotguns" radius={[4, 4, 0, 0]}>
+                  {shotgunStats.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={getShameColor(index)}
+                      onMouseEnter={() => { if (window.innerWidth > 768) setActiveBar(entry.manager); }}
+                      onMouseLeave={() => { if (window.innerWidth > 768) setActiveBar(null); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveBar(entry.manager === activeBar ? null : entry.manager);
+                      }}
+                      className="cursor-pointer"
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
-
-        {tooltip && (
-          <div
-            style={{ position: 'fixed', left: tooltip.x, top: tooltip.y - 12, transform: 'translate(-50%, -100%)', pointerEvents: 'none' }}
-            className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 z-50 shadow-xl text-sm"
-          >
-            <div className="font-bold text-white">{tooltip.manager}</div>
-            <div className="text-slate-300">{tooltip.shotguns} Shotguns 🍺</div>
-          </div>
-        )}
 
         <div className="mt-6 flex gap-6 text-xs font-bold uppercase tracking-widest justify-center md:justify-start">
           <span className="flex items-center gap-2 text-red-600">
