@@ -249,7 +249,8 @@ export default function MatrixPage() {
         <DominanceModal manager={selectedDominance} onClose={() => setSelectedDominance(null)} />
       )}
 
-      <header className="border-b border-slate-800 pb-4">
+      <div className="space-y-8 -mb-8">
+      <header className="border-b border-slate-800 pb-8">
         <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
           <Grid3X3 className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
           Supremacy Matrix
@@ -276,6 +277,7 @@ export default function MatrixPage() {
           </div>
         </div>
       </CollapsibleLegend>
+      </div>
 
       {/* SUPREMACY MATRIX */}
       <section>

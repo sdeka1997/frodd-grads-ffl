@@ -165,7 +165,8 @@ export default function LuckPage() {
         />
       )}
 
-      <header className="border-b border-slate-800 pb-4">
+      <div className="space-y-8 -mb-8">
+      <header className="border-b border-slate-800 pb-8">
         <h1 className="text-4xl font-extrabold flex items-center gap-3">
           <ScatterIcon className="w-10 h-10 text-purple-400" />
           Luck Index
@@ -196,6 +197,7 @@ export default function LuckPage() {
           </div>
         </div>
       </CollapsibleLegend>
+      </div>
 
       {/* LUCK INDEX CHART */}
       <section>
