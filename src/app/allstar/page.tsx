@@ -133,18 +133,18 @@ export default function AllStarPage() {
             </h2>
 
             {/* Event Details - Horizontal */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+            <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 text-slate-300">
                 <MapPin className="w-5 h-5 text-blue-400" />
                 <span className="font-medium">Location:</span>
                 <span>{allStarYears.find(y => y.year === selectedYear)?.location}</span>
               </div>
-              <div className="flex items-center justify-center gap-2 text-slate-300">
+              <div className="flex items-center justify-center md:justify-start gap-2 text-slate-300">
                 <Calendar className="w-5 h-5 text-purple-400" />
                 <span className="font-medium">Dates:</span>
                 <span>{allStarYears.find(y => y.year === selectedYear)?.dates}</span>
               </div>
-              <div className="flex items-center justify-center md:justify-end gap-2 text-slate-300">
+              <div className="flex items-center justify-center md:justify-start gap-2 text-slate-300">
                 <Heart className="w-5 h-5 text-red-400" />
                 <span className="font-medium">Sacko:</span>
                 <span>
