@@ -154,7 +154,7 @@ export default function LuckPage() {
   );
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8 md:space-y-16">
       {selectedManager && (
         <LuckModal
           managerName={selectedManager.name}
@@ -165,7 +165,6 @@ export default function LuckPage() {
         />
       )}
 
-      <div className="space-y-8 -mb-8">
       <header className="border-b border-slate-800 pb-8">
         <h1 className="text-4xl font-extrabold flex items-center gap-3">
           <ScatterIcon className="w-10 h-10 text-purple-400" />
@@ -197,7 +196,6 @@ export default function LuckPage() {
           </div>
         </div>
       </CollapsibleLegend>
-      </div>
 
       {/* LUCK INDEX CHART */}
       <section>

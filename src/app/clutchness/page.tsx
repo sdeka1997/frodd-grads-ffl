@@ -111,7 +111,7 @@ export default function ClutchnessPage() {
   const [selectedManager, setSelectedManager] = useState<string | null>(null);
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8 md:space-y-16">
       {selectedManager && (
         <HighStakesModal
           managerName={selectedManager}
@@ -120,7 +120,6 @@ export default function ClutchnessPage() {
         />
       )}
 
-      <div className="space-y-8 -mb-8">
       <header className="border-b border-slate-800 pb-8">
         <h1 className="text-4xl font-extrabold flex items-center gap-3">
           <BarChart3 className="w-10 h-10 text-blue-400" />
@@ -150,7 +149,6 @@ export default function ClutchnessPage() {
           </div>
         </div>
       </CollapsibleLegend>
-      </div>
 
       {/* CLUTCHNESS CHART */}
       <section>
