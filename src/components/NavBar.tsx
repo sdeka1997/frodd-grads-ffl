@@ -12,7 +12,7 @@ const PAGE_NAMES: Record<string, string> = {
   '/shotgun': 'Shotgun',
   '/highroller': 'High Roller',
   '/luck': 'Luck Index',
-  '/clutchness': 'Playoff Clutchness',
+  '/clutchness': 'Clutchness',
   '/matrix': 'Supremacy Matrix',
   '/rivalries': 'Rivalries',
   '/allstar': 'All-Star',
@@ -208,7 +208,7 @@ export default function NavBar() {
                 {open === 'analytics' && (
                   <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
                     <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
-                    <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Playoff Clutchness</Link>
+                    <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Clutchness</Link>
                     <Link href="/matrix" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
                     <Link href="/rivalries" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Rivalries</Link>
                   </div>
@@ -295,7 +295,7 @@ export default function NavBar() {
             <div className="bg-slate-950/60">
               {[
                 { href: '/luck', label: 'Luck Index' },
-                { href: '/clutchness', label: 'Playoff Clutchness' },
+                { href: '/clutchness', label: 'Clutchness' },
                 { href: '/matrix', label: 'Supremacy Matrix' },
                 { href: '/rivalries', label: 'Rivalries' },
               ].map(({ href, label }) => (
