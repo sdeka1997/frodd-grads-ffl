@@ -1,10 +1,11 @@
 import { getManagerStats, getManagerHistory, getShotgunStats, getHighRollerStats, getPlayoffClutchness } from '@/utils/dataProcessing';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { notFound } from 'next/navigation';
-import { Trophy, Activity, History, Swords, TrendingUp, TrendingDown, Grid3X3 } from 'lucide-react';
+import { Trophy, Activity, Swords, TrendingUp, TrendingDown, Grid3X3 } from 'lucide-react';
 import Link from 'next/link';
 import CenteredBar from '@/components/CenteredBar';
 import ManagerStatBoxes from '@/components/ManagerStatBoxes';
+import TeamHistorySection from '@/components/TeamHistorySection';
 
 export default async function ManagerProfile({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
@@ -185,27 +186,7 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           )}
         </div>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <History className="text-blue-400" /> Team History
-          </h2>
-          <div className="space-y-4">
-            {history.reverse().map((h) => (
-              <Link key={h.year} href={`/seasons?year=${h.year}&owner=${encodeURIComponent(decodedId)}`} className="bg-slate-900 p-4 rounded-lg border border-slate-800 flex justify-between items-center hover:border-slate-700 transition-colors">
-                <div>
-                  <span className="text-emerald-400 font-bold mr-3">{h.year}</span>
-                  <span className="font-medium text-lg">{h.team.team}</span>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-semibold">{h.team.playoff_finish || 'Missed Playoffs'}</div>
-                  <div className="text-xs text-slate-400">
-                    {`${h.team.regular_season.wins}-${h.team.regular_season.losses}`}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <TeamHistorySection history={[...history].reverse()} />
       </div>
     </div>
   );

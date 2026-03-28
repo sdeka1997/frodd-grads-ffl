@@ -1,106 +1,20 @@
 "use client";
 
 import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
-import { Beer, TrendingDown, Calendar, Zap, X } from 'lucide-react';
-import Link from 'next/link';
+import { Beer, TrendingDown, Calendar, Zap } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { useModalEscape } from '@/hooks/useModalEscape';
+import { useState } from 'react';
 import WeekLeaderboardModal from '@/components/WeekLeaderboardModal';
-
-
-
-function ShotgunModal({ manager, onClose }: { manager: string; onClose: () => void }) {
-  const weeklyLows = getWeeklyLowScores();
-  const managerGames = weeklyLows.filter(l => l.manager === manager);
-
-  useModalEscape(onClose);
-
-  const byYear = managerGames.reduce<Record<string, typeof managerGames>>((acc, g) => {
-    if (!acc[g.year]) acc[g.year] = [];
-    acc[g.year].push(g);
-    return acc;
-  }, {});
-
-  return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/70" />
-      <div
-        className="relative bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md max-h-[80vh] flex flex-col shadow-2xl"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between p-6 border-b border-slate-800">
-          <div>
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Beer className="w-5 h-5 text-amber-400" /> {manager}
-            </h2>
-            <p className="text-sm text-slate-400 mt-0.5">{managerGames.length} shotgun{managerGames.length !== 1 ? 's' : ''} all-time</p>
-          </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        <div className="overflow-y-auto flex-1 p-4 space-y-4">
-          {Object.keys(byYear).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
-            <div key={year}>
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center justify-between">
-                <span>{year}</span>
-                <span className="text-red-400">{byYear[year].length} 🍺</span>
-              </div>
-              <div className="space-y-1.5">
-                {byYear[year]
-                  .sort((a, b) => b.week - a.week)
-                  .map((g, i) => (
-                    <div key={i} className="flex items-center justify-between bg-slate-800/50 rounded-lg px-3 py-2">
-                      <div className="flex items-center gap-3">
-                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
-                        <span className="text-sm text-slate-300">Week {g.week}</span>
-                      </div>
-                      <span className="text-sm font-bold font-mono text-red-400">{g.points}</span>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="p-4 border-t border-slate-800">
-          <Link
-            href={`/managers/${encodeURIComponent(manager)}`}
-            className="block text-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
-          >
-            View Full Profile →
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
+import ShotgunModal from '@/components/ShotgunModal';
 
 function ShotgunContent() {
   const weeklyLows = getWeeklyLowScores();
   const shotgunStats = getShotgunStats();
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   const [activeBar, setActiveBar] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'shame' | 'breakdown'>('shame');
   const [selectedManager, setSelectedManager] = useState<string | null>(null);
   const [selectedWeek, setSelectedWeek] = useState<{ year: string; week: number; manager: string } | null>(null);
-
-  // Auto-open manager modal when navigating from another page, then clean up the URL
-  useEffect(() => {
-    const manager = searchParams.get('manager');
-    if (!manager) return;
-    const timer = setTimeout(() => {
-      setSelectedManager(manager);
-      router.replace('/shotgun', { scroll: false });
-    }, 400);
-    return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const getShameColor = (index: number) => {
     if (index === 0) return '#dc2626';
@@ -138,7 +52,12 @@ function ShotgunContent() {
   return (
     <div className="space-y-16">
       {selectedManager && (
-        <ShotgunModal manager={selectedManager} onClose={() => setSelectedManager(null)} />
+        <ShotgunModal
+          manager={selectedManager}
+          footerHref={`/managers/${encodeURIComponent(selectedManager)}`}
+          footerLabel="View Full Profile →"
+          onClose={() => setSelectedManager(null)}
+        />
       )}
       {selectedWeek && (
         <WeekLeaderboardModal
@@ -371,9 +290,5 @@ function ShotgunContent() {
 }
 
 export default function ShotgunPage() {
-  return (
-    <Suspense>
-      <ShotgunContent />
-    </Suspense>
-  );
+  return <ShotgunContent />;
 }

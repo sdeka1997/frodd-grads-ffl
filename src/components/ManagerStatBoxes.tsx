@@ -1,4 +1,8 @@
-import Link from 'next/link';
+"use client";
+
+import { useState } from 'react';
+import ShotgunModal from '@/components/ShotgunModal';
+import HighRollerModal from '@/components/HighRollerModal';
 
 export default function ManagerStatBoxes({
   manager,
@@ -9,23 +13,43 @@ export default function ManagerStatBoxes({
   shotgunCount: number;
   highRollerCount: number;
 }) {
+  const [shotgunOpen, setShotgunOpen] = useState(false);
+  const [highRollerOpen, setHighRollerOpen] = useState(false);
+
   return (
     <>
-      <Link
-        href={`/shotgun?manager=${encodeURIComponent(manager)}`}
-        className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors text-left md:order-5 block"
+      {shotgunOpen && (
+        <ShotgunModal
+          manager={manager}
+          footerHref="/shotgun"
+          footerLabel="See everyone's shotguns →"
+          onClose={() => setShotgunOpen(false)}
+        />
+      )}
+      {highRollerOpen && (
+        <HighRollerModal
+          manager={manager}
+          footerHref="/highroller"
+          footerLabel="See all high rollers →"
+          onClose={() => setHighRollerOpen(false)}
+        />
+      )}
+
+      <button
+        onClick={() => setShotgunOpen(true)}
+        className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors text-left md:order-5 w-full cursor-pointer"
       >
         <div className="text-slate-400 text-sm">Shotguns</div>
         <div className="text-2xl font-bold text-emerald-400">{shotgunCount}</div>
-      </Link>
+      </button>
 
-      <Link
-        href={`/highroller?manager=${encodeURIComponent(manager)}`}
-        className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors text-left md:order-6 block"
+      <button
+        onClick={() => setHighRollerOpen(true)}
+        className="bg-slate-900 p-4 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors text-left md:order-6 w-full cursor-pointer"
       >
         <div className="text-slate-400 text-sm">High Scorer</div>
         <div className="text-2xl font-bold">{highRollerCount}</div>
-      </Link>
+      </button>
     </>
   );
 }
