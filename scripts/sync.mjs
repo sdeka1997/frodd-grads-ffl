@@ -177,7 +177,7 @@ async function main() {
                 else if (label === "3rd_place_final") { finalStandings[winner] = 3; finalStandings[loser] = 4; }
                 else if (label === "5th_place_final") { finalStandings[winner] = 5; finalStandings[loser] = 6; }
                 else if (label === "7th_place_final") { finalStandings[winner] = 7; finalStandings[loser] = 8; }
-                else if (label === "9th_place_final_sacko_qf") { finalStandings[winner] = 9; finalStandings[loser] = 10; }
+                else if (label === "9th_place_final" || label === "9th_place_final_sacko_qf") { finalStandings[winner] = 9; finalStandings[loser] = 10; }
                 else if (label === "10th_place_final_sacko_sf") { finalStandings[winner] = 10; finalStandings[loser] = 11; }
                 else if (label === "sacko_final") { finalStandings[winner] = 11; finalStandings[loser] = 12; }
             });
