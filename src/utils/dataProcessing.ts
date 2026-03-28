@@ -97,19 +97,17 @@ export const getPlayoffClutchness = () => {
     let totalPlayoffPF = 0;
     let totalPlayoffGames = 0;
 
-    // Aggregate across all seasons for this manager
+    // Only include seasons where the manager had championship playoff games,
+    // so regular season and playoff PPG are compared on the same set of years
     Object.values(allSeasons).forEach((seasonTeams) => {
       const team = seasonTeams.find(t => t.owner === manager);
-      if (team) {
-        // Regular season
+      if (!team) return;
+      const playoffGames = team.post_season.wins + team.post_season.losses;
+      if (playoffGames > 0) {
         totalRegularPF += team.regular_season.pf;
         totalRegularGames += team.regular_season.wins + team.regular_season.losses;
-
-        // Playoffs (only if they made playoffs)
-        if (team.post_season.wins + team.post_season.losses > 0) {
-          totalPlayoffPF += team.post_season.pf;
-          totalPlayoffGames += team.post_season.wins + team.post_season.losses;
-        }
+        totalPlayoffPF += team.post_season.pf;
+        totalPlayoffGames += playoffGames;
       }
     });
 
