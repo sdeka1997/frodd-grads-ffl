@@ -104,7 +104,7 @@ const STACK_STYLE = [
 const SWIPE_THRESHOLD = 75;
 const FLY_DISTANCE = 600;
 
-function MobileScheduleDeck({ currentKey, cardBg }: { currentKey: string | null; cardBg: string }) {
+function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
   const n = schedule2026.length;
   const [topIndex, setTopIndex] = useState(0);
   const [dragX, setDragX] = useState(0);
@@ -140,7 +140,9 @@ function MobileScheduleDeck({ currentKey, cardBg }: { currentKey: string | null;
     }
   };
 
-  const visibleDays = Array.from({ length: n }, (_, i) => schedule2026[(topIndex + i) % n]);
+  const visibleDays = Array.from({ length: Math.min(3, n) }, (_, i) =>
+    schedule2026[(topIndex + i) % n]
+  );
 
   return (
     <div className="md:hidden flex flex-col items-center gap-5">
@@ -179,12 +181,28 @@ function MobileScheduleDeck({ currentKey, cardBg }: { currentKey: string | null;
               }}
               {...(isTop ? { onPointerDown, onPointerMove, onPointerUp } : {})}
             >
-              <ScheduleCard
-                day={day}
-                currentKey={currentKey}
-                cardBg={cardBg}
-                className={`h-full overflow-y-auto ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}
-              />
+              <div className={`bg-slate-900 border border-slate-800 border-l-4 ${day.accent} rounded-xl p-5 h-full ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
+                <div className={`font-bold text-base ${day.headColor}`}>{day.day}</div>
+                <div className="text-slate-500 text-xs mb-4">{day.date}</div>
+                <div className="space-y-3">
+                  {day.events.map((ev, i) => {
+                    const evKey = `${day.day}-${ev.time}`;
+                    const isCurrent = currentKey === evKey;
+                    return (
+                      <div
+                        key={`${ev.time}-${i}`}
+                        className={`flex gap-3 items-start rounded-lg ${isCurrent ? 'bg-white/5 px-2 py-1.5 -mx-2' : ''}`}
+                      >
+                        <span className="font-mono text-xs text-slate-500 w-10 shrink-0 pt-0.5">{ev.time}</span>
+                        <div>
+                          <div className={`text-sm font-medium leading-snug ${ev.star ? 'text-yellow-300' : 'text-slate-200'}`}>{ev.text}</div>
+                          {ev.sub && <div className="text-xs text-slate-500 mt-0.5">{ev.sub}</div>}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           );
         })}
@@ -218,7 +236,7 @@ export default function AllStarSchedule({ cardBg = 'bg-slate-800/50 border-slate
 
   return (
     <>
-      <MobileScheduleDeck currentKey={currentKey} cardBg={cardBg} />
+      <MobileScheduleDeck currentKey={currentKey} />
       <div className="hidden md:grid md:grid-cols-3 gap-4">
         {schedule2026.map(day => (
           <ScheduleCard key={day.day} day={day} currentKey={currentKey} cardBg={cardBg} />

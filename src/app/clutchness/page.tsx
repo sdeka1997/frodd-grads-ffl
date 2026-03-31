@@ -121,8 +121,8 @@ export default function ClutchnessPage() {
       )}
       <div className="space-y-8 md:space-y-16">
       <header className="border-b border-slate-800 pb-8">
-        <h1 className="text-4xl font-extrabold flex items-center gap-3">
-          <BarChart3 className="w-10 h-10 text-blue-400" />
+        <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
+          <BarChart3 className="w-8 h-8 md:w-10 md:h-10 text-blue-400" />
           High-Stakes Clutchness
         </h1>
         <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
