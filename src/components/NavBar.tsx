@@ -131,12 +131,10 @@ export default function NavBar() {
 
   useEffect(() => {
     if (window.innerWidth >= 768) return;
-    // scroll={false} on links prevents Next.js from resetting scroll,
-    // so we own it — scroll header to just below the sticky navbar
-    const header = document.querySelector('main header') as HTMLElement | null;
-    if (!header) return;
-    const top = header.getBoundingClientRect().top + window.scrollY - 64;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+    const h1 = document.querySelector('main h1');
+    if (!h1) return;
+    const top = h1.getBoundingClientRect().top + window.scrollY - 64;
+    window.scrollTo(0, Math.max(0, top));
   }, [pathname]);
 
   if (pathname === '/') return null;
