@@ -131,15 +131,12 @@ export default function NavBar() {
 
   useEffect(() => {
     if (window.innerWidth >= 768) return;
-    // Wait for Next.js scroll restoration to finish, then scroll to header
-    const timer = setTimeout(() => {
-      const header = document.querySelector('main header') as HTMLElement | null;
-      if (!header) return;
-      header.scrollIntoView({ behavior: 'instant', block: 'start' });
-      // Nudge back up by navbar height so header isn't hidden behind it
-      window.scrollBy({ top: -64, behavior: 'instant' });
-    }, 300);
-    return () => clearTimeout(timer);
+    // scroll={false} on links prevents Next.js from resetting scroll,
+    // so we own it — scroll header to just below the sticky navbar
+    const header = document.querySelector('main header') as HTMLElement | null;
+    if (!header) return;
+    const top = header.getBoundingClientRect().top + window.scrollY - 64;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
   }, [pathname]);
 
   if (pathname === '/') return null;
@@ -269,7 +266,7 @@ export default function NavBar() {
 
         {/* Scrollable links */}
         <div ref={sheetScrollRef} className="overflow-y-auto overscroll-contain py-1 pb-8">
-          <Link href="/dashboard"
+          <Link href="/dashboard" scroll={false}
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/dashboard') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
           >Dashboard</Link>
@@ -289,7 +286,7 @@ export default function NavBar() {
                 { href: '/seasons', label: 'Seasons' },
                 { href: '/rivalries', label: 'Rivalries' },
               ].map(({ href, label }) => (
-                <Link key={href} href={href}
+                <Link key={href} href={href} scroll={false}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
                   onClick={closeSidebar}
                 >{label}</Link>
@@ -314,7 +311,7 @@ export default function NavBar() {
                 { href: '/shotgun', label: 'Shotgun' },
                 { href: '/highroller', label: 'High Roller' },
               ].map(({ href, label }) => (
-                <Link key={href} href={href}
+                <Link key={href} href={href} scroll={false}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
                   onClick={closeSidebar}
                 >{label}</Link>
@@ -324,7 +321,7 @@ export default function NavBar() {
 
           <div className="border-t border-slate-800" />
 
-          <Link href="/allstar"
+          <Link href="/allstar" scroll={false}
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
           >All-Star</Link>

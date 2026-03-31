@@ -199,8 +199,8 @@ export default function AllStarPage() {
       {/* SELECTED YEAR DETAILS */}
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-8">
-          <div className="mb-8">
-            <h2 className="text-xl md:text-3xl font-bold flex items-center justify-center md:justify-start gap-2 mb-6">
+          <div className="mb-4">
+            <h2 className="text-xl md:text-3xl font-bold flex items-center justify-center md:justify-start gap-2 mb-3">
               <Star className="text-yellow-400 shrink-0" />
               {selectedYear} All-Star Weekend
             </h2>
@@ -232,7 +232,7 @@ export default function AllStarPage() {
           </div>
 
           {/* Separator Line */}
-          <div className="pt-4">
+          <div className="pt-1">
             <div className="border-t border-slate-700"></div>
           </div>
 
