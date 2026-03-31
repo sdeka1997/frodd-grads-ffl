@@ -171,7 +171,7 @@ function HighRollerContent() {
             <DollarSign className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
             High Roller Leaderboard
           </h1>
-          <span className="text-slate-500 text-sm">Established 2024</span>
+          <span className="text-slate-500 text-xs md:text-lg md:text-slate-400">Established 2024</span>
         </div>
         <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
           Weekly high scores: Manager with the highest score each week gets money from the pot.

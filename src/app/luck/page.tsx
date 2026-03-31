@@ -7,6 +7,7 @@ import { ScatterChart as ScatterIcon, X } from 'lucide-react';
 import { useState } from 'react';
 import { useModalEscape } from '@/hooks/useModalEscape';
 import Link from 'next/link';
+import CollapsibleLegend from '@/components/CollapsibleLegend';
 
 function LuckModal({ managerName, pfVsAvg, paVsAvg, focus, onClose }: {
   managerName: string;
@@ -174,26 +175,6 @@ export default function LuckPage() {
         </p>
       </header>
 
-      {/* QUADRANT LEGEND */}
-      <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-emerald-400 shrink-0"></div>
-          <span className="text-emerald-400 font-medium">BR:</span><span>Good &amp; Lucky</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-blue-400 shrink-0"></div>
-          <span className="text-blue-400 font-medium">TR:</span><span>Good &amp; Unlucky</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-amber-400 shrink-0"></div>
-          <span className="text-amber-400 font-medium">BL:</span><span>Bad &amp; Lucky</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-red-400 shrink-0"></div>
-          <span className="text-red-400 font-medium">TL:</span><span>Bad &amp; Unlucky</span>
-        </div>
-      </div>
-
       {/* LUCK INDEX CHART */}
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-1 md:p-6 h-[500px]">
@@ -244,6 +225,48 @@ export default function LuckPage() {
           </ResponsiveContainer>
         </div>
       </section>
+
+      {/* QUADRANT LEGEND */}
+      <div className="md:hidden flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-emerald-400 shrink-0"></div>
+          <span>Good &amp; Lucky</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-blue-400 shrink-0"></div>
+          <span>Good &amp; Unlucky</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-amber-400 shrink-0"></div>
+          <span>Bad &amp; Lucky</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-red-400 shrink-0"></div>
+          <span>Bad &amp; Unlucky</span>
+        </div>
+      </div>
+      <div className="hidden md:block">
+        <CollapsibleLegend title="Quadrant Analysis">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-3 p-3 bg-emerald-400/10 border border-emerald-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-emerald-400 shrink-0"></div>
+              <span><span className="text-emerald-400 font-medium">Bottom Right:</span> Good &amp; Lucky (Score High, Low PA)</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-blue-400/10 border border-blue-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-blue-400 shrink-0"></div>
+              <span><span className="text-blue-400 font-medium">Top Right:</span> Good &amp; Unlucky (Score High, High PA)</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-amber-400/10 border border-amber-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-amber-400 shrink-0"></div>
+              <span><span className="text-amber-400 font-medium">Bottom Left:</span> Bad &amp; Lucky (Score Low, Low PA)</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-red-400/10 border border-red-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-red-400 shrink-0"></div>
+              <span><span className="text-red-400 font-medium">Top Left:</span> Bad &amp; Unlucky (Score Low, High PA)</span>
+            </div>
+          </div>
+        </CollapsibleLegend>
+      </div>
 
       {/* LUCK RANKINGS */}
       <section>

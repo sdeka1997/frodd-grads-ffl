@@ -75,7 +75,7 @@ function ShotgunContent() {
             <Beer className="w-8 h-8 md:w-10 md:h-10 text-amber-400" />
             Shotgun Shame Board
           </h1>
-          <span className="text-slate-500 text-sm">
+          <span className="text-slate-500 text-xs md:text-lg md:text-slate-400">
             Established 2023 Week 2
           </span>
         </div>
