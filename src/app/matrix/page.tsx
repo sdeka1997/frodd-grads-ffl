@@ -7,7 +7,6 @@ import { getCurrentManagers } from '@/utils/dataProcessing';
 import { getLifetimeH2H } from '@/utils/h2hProcessing';
 import { getH2HGameLog, type H2HGame } from '@/utils/h2hGameLog';
 import { Grid3X3, Trophy, Target, Users, X, TrendingUp, TrendingDown } from 'lucide-react';
-import CollapsibleLegend from '@/components/CollapsibleLegend';
 
 function DominanceModal({ manager, onClose }: { manager: string; onClose: () => void }) {
   useModalEscape(onClose);
@@ -260,22 +259,20 @@ export default function MatrixPage() {
       </header>
 
       {/* MATRIX LEGEND */}
-      <CollapsibleLegend title="How to Read the Matrix">
-        <div className="grid md:grid-cols-3 gap-4 text-sm">
-          <div className="flex items-center gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-            <div className="w-4 h-4 bg-emerald-500/20 shrink-0"></div>
-            <span>Winning record against opponent</span>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-            <div className="w-4 h-4 bg-red-500/20 shrink-0"></div>
-            <span>Losing record against opponent</span>
-          </div>
-          <div className="flex items-center gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
-            <div className="w-4 h-4 bg-slate-900 shrink-0"></div>
-            <span>Even record or no games</span>
-          </div>
+      <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-emerald-500/20 border border-emerald-500/30 shrink-0 rounded-sm"></div>
+          <span>Winning record</span>
         </div>
-      </CollapsibleLegend>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-red-500/20 border border-red-500/30 shrink-0 rounded-sm"></div>
+          <span>Losing record</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 bg-slate-800 border border-slate-700 shrink-0 rounded-sm"></div>
+          <span>Even / no games</span>
+        </div>
+      </div>
 
       {/* SUPREMACY MATRIX */}
       <section>
