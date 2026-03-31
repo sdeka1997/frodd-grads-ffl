@@ -23,7 +23,7 @@ export default function LandingPage() {
 
           <Link
             href="/dashboard"
-            className="self-start inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
+            className="self-start hidden md:inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
           >
             <Star className="w-5 h-5" />
             Enter Site

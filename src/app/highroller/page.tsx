@@ -173,7 +173,7 @@ function HighRollerContent() {
           </h1>
           <span className="text-slate-500 text-sm">Established 2024</span>
         </div>
-        <p className="mt-4 text-slate-400 text-lg">
+        <p className="mt-4 text-slate-400 text-lg hidden md:block">
           Weekly high scores: Manager with the highest score each week gets money from the pot.
           <span className="block mt-2 text-emerald-400 font-medium">
             💰 Score big, get paid.

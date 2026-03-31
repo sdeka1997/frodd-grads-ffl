@@ -79,7 +79,7 @@ function ShotgunContent() {
             Established 2023 Week 2
           </span>
         </div>
-        <p className="mt-4 text-slate-400 text-lg">
+        <p className="mt-4 text-slate-400 text-lg hidden md:block">
           Weekly low scores: Manager with the lowest score each week has to shotgun a beer.
           <span className="block mt-2 text-amber-400 font-medium">
             🍺 Embrace the shame, embrace the beer.

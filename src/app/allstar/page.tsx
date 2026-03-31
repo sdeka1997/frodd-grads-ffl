@@ -148,7 +148,7 @@ export default function AllStarPage() {
             Established 2022
           </span>
         </div>
-        <p className="mt-4 text-slate-400 text-lg">
+        <p className="mt-4 text-slate-400 text-lg hidden md:block">
           The league gets together in the Sacko's city for an epic weekend of friendly competition and unforgettable memories.
         </p>
       </header>
