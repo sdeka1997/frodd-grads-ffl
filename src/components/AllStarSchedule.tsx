@@ -24,7 +24,7 @@ export const schedule2026 = [
     events: [
       { time: '12PM', text: 'Football',       sub: 'Sternberg Park',       star: false },
       { time: '2PM',  text: 'Lunch',          sub: "L'Industrie",          star: false },
-      { time: '3PM',  text: 'Sacko',          sub: 'Union Square Station', star: true  },
+      { time: '3PM',  text: 'Sacko',          sub: 'Union Square',         star: true  },
       { time: '4PM',  text: 'Rooftop DJ Set', sub: 'The Italic',           star: false },
       { time: '7PM',  text: 'Dinner',         sub: 'Manhattan',            star: false },
       { time: '9PM',  text: 'Beer Olympics',  sub: 'Airbnb',               star: false },
