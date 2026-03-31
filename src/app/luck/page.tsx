@@ -256,7 +256,7 @@ export default function LuckPage() {
       </section>
 
       {/* QUADRANT LEGEND */}
-      <div className="md:hidden flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
+      <div className="md:hidden grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-slate-400">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-emerald-400 shrink-0"></div>
           <span>Good &amp; Lucky</span>

@@ -195,7 +195,7 @@ function HighRollerContent() {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={highRollerStats} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
-                <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} />
+                <XAxis dataKey="manager" stroke="#94a3b8" tick={{ fill: '#94a3b8' }} interval={0} />
                 <YAxis stroke="#94a3b8" tick={{ fill: '#94a3b8' }} width={35} />
                 <Tooltip
                   active={activeBar !== null}
