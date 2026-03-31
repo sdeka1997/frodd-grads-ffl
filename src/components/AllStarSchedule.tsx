@@ -64,13 +64,14 @@ export function getCurrentEventKey(now: Date): string | null {
   return key;
 }
 
-function ScheduleCard({ day, currentKey, cardBg }: {
+function ScheduleCard({ day, currentKey, cardBg, className = '' }: {
   day: typeof schedule2026[0];
   currentKey: string | null;
   cardBg: string;
+  className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-l-4 ${cardBg} ${day.accent} p-5`}>
+    <div className={`rounded-xl border border-l-4 ${cardBg} ${day.accent} p-5 ${className}`}>
       <div className={`font-bold text-base ${day.headColor}`}>{day.day}</div>
       <div className="text-slate-500 text-xs mb-4">{day.date}</div>
       <div className="space-y-3">
@@ -178,9 +179,12 @@ function MobileScheduleDeck({ currentKey, cardBg }: { currentKey: string | null;
               }}
               {...(isTop ? { onPointerDown, onPointerMove, onPointerUp } : {})}
             >
-              <div className={`h-full overflow-y-auto rounded-xl ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
-                <ScheduleCard day={day} currentKey={currentKey} cardBg={cardBg} />
-              </div>
+              <ScheduleCard
+                day={day}
+                currentKey={currentKey}
+                cardBg={cardBg}
+                className={`h-full overflow-y-auto ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}
+              />
             </div>
           );
         })}
