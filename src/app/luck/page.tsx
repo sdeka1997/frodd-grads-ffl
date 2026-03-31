@@ -175,8 +175,37 @@ export default function LuckPage() {
         </p>
       </header>
 
+      <div className="hidden md:block">
+        <CollapsibleLegend title="Quadrant Analysis">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="flex items-center gap-3 p-3 bg-emerald-400/10 border border-emerald-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-emerald-400 shrink-0"></div>
+              <span><span className="text-emerald-400 font-medium">Bottom Right:</span> Good &amp; Lucky (Score High, Low PA)</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-blue-400/10 border border-blue-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-blue-400 shrink-0"></div>
+              <span><span className="text-blue-400 font-medium">Top Right:</span> Good &amp; Unlucky (Score High, High PA)</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-amber-400/10 border border-amber-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-amber-400 shrink-0"></div>
+              <span><span className="text-amber-400 font-medium">Bottom Left:</span> Bad &amp; Lucky (Score Low, Low PA)</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-red-400/10 border border-red-400/20 rounded-lg">
+              <div className="w-4 h-4 rounded bg-red-400 shrink-0"></div>
+              <span><span className="text-red-400 font-medium">Top Left:</span> Bad &amp; Unlucky (Score Low, High PA)</span>
+            </div>
+          </div>
+        </CollapsibleLegend>
+      </div>
+
       {/* LUCK INDEX CHART */}
       <section>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-200">Luck vs. Skill Scatter</h2>
+          <p className="text-slate-400 mt-2">
+            Each dot is a manager's all-time average. X-axis: Points For vs league average. Y-axis: Points Against vs league average.
+          </p>
+        </div>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-1 md:p-6 h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 40, right: 5, bottom: 20, left: -30 }}>
@@ -245,29 +274,6 @@ export default function LuckPage() {
           <span>Bad &amp; Unlucky</span>
         </div>
       </div>
-      <div className="hidden md:block">
-        <CollapsibleLegend title="Quadrant Analysis">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div className="flex items-center gap-3 p-3 bg-emerald-400/10 border border-emerald-400/20 rounded-lg">
-              <div className="w-4 h-4 rounded bg-emerald-400 shrink-0"></div>
-              <span><span className="text-emerald-400 font-medium">Bottom Right:</span> Good &amp; Lucky (Score High, Low PA)</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-blue-400/10 border border-blue-400/20 rounded-lg">
-              <div className="w-4 h-4 rounded bg-blue-400 shrink-0"></div>
-              <span><span className="text-blue-400 font-medium">Top Right:</span> Good &amp; Unlucky (Score High, High PA)</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-amber-400/10 border border-amber-400/20 rounded-lg">
-              <div className="w-4 h-4 rounded bg-amber-400 shrink-0"></div>
-              <span><span className="text-amber-400 font-medium">Bottom Left:</span> Bad &amp; Lucky (Score Low, Low PA)</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-red-400/10 border border-red-400/20 rounded-lg">
-              <div className="w-4 h-4 rounded bg-red-400 shrink-0"></div>
-              <span><span className="text-red-400 font-medium">Top Left:</span> Bad &amp; Unlucky (Score Low, High PA)</span>
-            </div>
-          </div>
-        </CollapsibleLegend>
-      </div>
-
       {/* LUCK RANKINGS */}
       <section>
         <h2 className="text-2xl font-bold text-slate-200 mb-6">Luck & Skill Rankings</h2>

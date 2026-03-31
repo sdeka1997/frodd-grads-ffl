@@ -130,6 +130,27 @@ export default function ClutchnessPage() {
         </p>
       </header>
 
+      <div className="hidden md:block">
+        <CollapsibleLegend title="Performance Categories">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-center gap-4 p-4 bg-emerald-400/10 border border-emerald-400/20 rounded-lg">
+              <Trophy className="w-8 h-8 text-emerald-400 shrink-0" />
+              <div>
+                <div className="font-bold text-emerald-400">Clutch Performers</div>
+                <div className="text-sm text-slate-300">Score higher in high-stakes games than regular season</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 bg-red-400/10 border border-red-400/20 rounded-lg">
+              <Target className="w-8 h-8 text-red-400 shrink-0" />
+              <div>
+                <div className="font-bold text-red-400">Pressure Sensitive</div>
+                <div className="text-sm text-slate-300">Score lower in high-stakes games than regular season</div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleLegend>
+      </div>
+
       {/* CLUTCHNESS CHART */}
       <section>
         <div className="mb-6">
@@ -191,7 +212,7 @@ export default function ClutchnessPage() {
         </div>
       </section>
 
-      {/* CLUTCHNESS LEGEND */}
+      {/* CLUTCHNESS LEGEND - mobile only, below chart */}
       <div className="md:hidden flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
         <div className="flex items-center gap-1.5">
           <Trophy className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -203,26 +224,6 @@ export default function ClutchnessPage() {
           <span className="text-red-400 font-medium">Pressure Sensitive</span>
           <span>— scores lower in big games</span>
         </div>
-      </div>
-      <div className="hidden md:block">
-        <CollapsibleLegend title="Performance Categories">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex items-center gap-4 p-4 bg-emerald-400/10 border border-emerald-400/20 rounded-lg">
-              <Trophy className="w-8 h-8 text-emerald-400 shrink-0" />
-              <div>
-                <div className="font-bold text-emerald-400">Clutch Performers</div>
-                <div className="text-sm text-slate-300">Score higher in high-stakes games than regular season</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 bg-red-400/10 border border-red-400/20 rounded-lg">
-              <Target className="w-8 h-8 text-red-400 shrink-0" />
-              <div>
-                <div className="font-bold text-red-400">Pressure Sensitive</div>
-                <div className="text-sm text-slate-300">Score lower in high-stakes games than regular season</div>
-              </div>
-            </div>
-          </div>
-        </CollapsibleLegend>
       </div>
 
       {/* CLUTCHNESS RANKINGS */}

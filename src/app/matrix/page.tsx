@@ -259,6 +259,25 @@ export default function MatrixPage() {
         </p>
       </header>
 
+      <div className="hidden md:block">
+        <CollapsibleLegend title="How to Read the Matrix">
+          <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div className="flex items-center gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+              <div className="w-4 h-4 bg-emerald-500/20 shrink-0"></div>
+              <span>Winning record against opponent</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+              <div className="w-4 h-4 bg-red-500/20 shrink-0"></div>
+              <span>Losing record against opponent</span>
+            </div>
+            <div className="flex items-center gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
+              <div className="w-4 h-4 bg-slate-900 shrink-0"></div>
+              <span>Even record or no games</span>
+            </div>
+          </div>
+        </CollapsibleLegend>
+      </div>
+
       {/* SUPREMACY MATRIX */}
       <section>
         <div className="mb-6">
@@ -309,6 +328,7 @@ export default function MatrixPage() {
       </section>
 
       {/* MATRIX LEGEND */}
+      {/* MATRIX LEGEND - mobile only, below chart */}
       <div className="md:hidden flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 bg-emerald-500/20 border border-emerald-500/30 shrink-0 rounded-sm"></div>
@@ -322,24 +342,6 @@ export default function MatrixPage() {
           <div className="w-3 h-3 bg-slate-800 border border-slate-700 shrink-0 rounded-sm"></div>
           <span>Even / no games</span>
         </div>
-      </div>
-      <div className="hidden md:block">
-        <CollapsibleLegend title="How to Read the Matrix">
-          <div className="grid md:grid-cols-3 gap-4 text-sm">
-            <div className="flex items-center gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-              <div className="w-4 h-4 bg-emerald-500/20 shrink-0"></div>
-              <span>Winning record against opponent</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-              <div className="w-4 h-4 bg-red-500/20 shrink-0"></div>
-              <span>Losing record against opponent</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
-              <div className="w-4 h-4 bg-slate-900 shrink-0"></div>
-              <span>Even record or no games</span>
-            </div>
-          </div>
-        </CollapsibleLegend>
       </div>
 
       {/* DOMINANCE RANKINGS */}
