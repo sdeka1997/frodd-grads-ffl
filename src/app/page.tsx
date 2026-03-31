@@ -29,7 +29,7 @@ const schedule2026 = [
       { time: '2PM',  text: 'Sacko',                         sub: 'Union Square Station', star: true  },
       { time: '4PM',  text: 'Rooftop DJ Set',                sub: 'The Italic',           star: false },
       { time: '7PM',  text: 'Dinner',                        sub: 'Manhattan',            star: false },
-      { time: '9PM',  text: 'Beer Olympics',                   sub: '',                  star: false },
+      { time: '9PM',  text: 'Beer Olympics',                   sub: 'Airbnb',            star: false },
     ],
   },
   {
@@ -38,9 +38,9 @@ const schedule2026 = [
     accent: 'border-l-purple-400',
     headColor: 'text-purple-400',
     events: [
-      { time: '11AM', text: 'Check-Out',      sub: 'Airbnb',       star: false },
-      { time: '12PM', text: 'Basketball',     sub: 'Sternberg Park', star: false },
-      { time: '2PM',  text: 'Farewell Lunch', sub: 'Brooklyn',      star: false },
+      { time: '11AM',  text: 'Check-Out',      sub: 'Airbnb',        star: false },
+      { time: '11:30', text: 'Basketball',    sub: 'Sternberg Park', star: false },
+      { time: '1PM',   text: 'Farewell Lunch', sub: 'Brooklyn',     star: false },
     ],
   },
 ];
@@ -51,17 +51,18 @@ function getCurrentEventKey(now: Date): string | null {
   const h = now.getHours();
   // 1AM Saturday is still Friday night's CamelPhat
   if (d === 11 && h < 3) return 'Friday-1AM';
+  const mins = h * 60 + now.getMinutes();
   const days: [number, string, [string, number][]][] = [
-    [10, 'Friday',   [['4PM', 16], ['6PM', 18], ['8PM', 20], ['11PM', 23], ['1AM', 25]]],
-    [11, 'Saturday', [['12PM', 12], ['2PM', 14], ['4PM', 16], ['7PM', 19], ['9PM', 21]]],
-    [12, 'Sunday',   [['11AM', 11], ['12PM', 12], ['2PM', 14]]],
+    [10, 'Friday',   [['4PM', 16*60], ['6PM', 18*60], ['8PM', 20*60], ['11PM', 23*60], ['1AM', 25*60]]],
+    [11, 'Saturday', [['12PM', 12*60], ['2PM', 14*60], ['4PM', 16*60], ['7PM', 19*60], ['9PM', 21*60]]],
+    [12, 'Sunday',   [['11AM', 11*60], ['11:30', 11*60+30], ['1PM', 13*60]]],
   ];
   const entry = days.find(([date]) => date === d);
   if (!entry) return null;
   const [, dayName, events] = entry;
   let key: string | null = null;
-  for (const [time, hour] of events) {
-    if (h >= hour) key = `${dayName}-${time}`;
+  for (const [time, startMin] of events) {
+    if (mins >= startMin) key = `${dayName}-${time}`;
   }
   return key;
 }
