@@ -107,7 +107,7 @@ const schedule2026 = [
       { time: '2PM',  text: 'Sacko',                     sub: 'Union Square Station',      star: true  },
       { time: '4PM',  text: 'Rooftop DJ Set',           sub: 'The Italic',                star: false },
       { time: '7PM',  text: 'Dinner',                   sub: 'Manhattan',                 star: false },
-      { time: '9PM',  text: 'Beer Olympics / Darts / Bowling', sub: '',                  star: false },
+      { time: '9PM',  text: 'Beer Olympics',                   sub: '',                  star: false },
     ],
   },
   {
