@@ -137,7 +137,7 @@ export default function AllStarPage() {
 
   return (
     <>
-    <div className="space-y-16">
+    <div className="space-y-6 md:space-y-16">
       <header className="border-b border-slate-800 pb-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
           <h1 className="text-3xl md:text-4xl font-extrabold flex items-center gap-3">
@@ -155,13 +155,13 @@ export default function AllStarPage() {
 
       {/* YEAR SELECTOR */}
       <section>
-        {/* Mobile: horizontal scroll chips */}
-        <div className="flex gap-3 overflow-x-auto no-scrollbar md:hidden pb-1">
+        {/* Mobile: compact flex-wrap chips */}
+        <div className="flex flex-wrap gap-2 md:hidden">
           {allStarYears.map((yearData) => (
             <button
               key={yearData.year}
               onClick={() => setSelectedYear(yearData.year)}
-              className={`shrink-0 px-4 py-2 rounded-full border text-sm font-bold transition-all ${
+              className={`px-3 py-1 rounded-full border text-xs font-bold transition-all ${
                 selectedYear === yearData.year
                   ? 'border-yellow-400 bg-yellow-400/10 text-yellow-400'
                   : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-500'

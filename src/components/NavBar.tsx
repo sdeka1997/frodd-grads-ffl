@@ -131,12 +131,14 @@ export default function NavBar() {
 
   useEffect(() => {
     if (window.innerWidth >= 768) return;
+    // Wait for Next.js scroll restoration to finish, then scroll to header
     const timer = setTimeout(() => {
-      const header = document.querySelector('main header');
+      const header = document.querySelector('main header') as HTMLElement | null;
       if (!header) return;
-      const top = header.getBoundingClientRect().top + window.scrollY - 64;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
-    }, 50);
+      header.scrollIntoView({ behavior: 'instant', block: 'start' });
+      // Nudge back up by navbar height so header isn't hidden behind it
+      window.scrollBy({ top: -64, behavior: 'instant' });
+    }, 300);
     return () => clearTimeout(timer);
   }, [pathname]);
 
