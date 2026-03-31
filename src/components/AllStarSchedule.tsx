@@ -146,7 +146,7 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
 
   return (
     <div className="md:hidden flex flex-col items-center gap-5">
-      <div className="relative w-full" style={{ minHeight: '300px' }}>
+      <div className="relative w-full" style={{ height: '380px' }}>
         {[...visibleDays].reverse().map((day, reversedPos) => {
           const stackPos = visibleDays.length - 1 - reversedPos;
           const isTop = stackPos === 0;
@@ -172,7 +172,7 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
               key={`${day.day}-${(topIndex + stackPos) % n}`}
               style={{
                 position: 'absolute',
-                top: 0, left: 0, right: 0,
+                inset: 0,
                 transform: `translate(${translateX}px, ${s.y}px) rotate(${rotate}deg)`,
                 zIndex: visibleDays.length - stackPos,
                 transition,
@@ -181,7 +181,7 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
               }}
               {...(isTop ? { onPointerDown, onPointerMove, onPointerUp } : {})}
             >
-              <div className={`bg-slate-900 border border-slate-800 border-l-4 ${day.accent} rounded-xl p-5 pb-7 ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
+              <div className={`bg-slate-900 border border-slate-800 border-l-4 ${day.accent} rounded-xl p-5 h-full ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
                 <div className={`font-bold text-base ${day.headColor}`}>{day.day}</div>
                 <div className="text-slate-500 text-xs mb-4">{day.date}</div>
                 <div className="space-y-3">
