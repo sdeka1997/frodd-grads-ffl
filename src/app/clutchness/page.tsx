@@ -126,7 +126,7 @@ export default function ClutchnessPage() {
           High-Stakes Clutchness
         </h1>
         <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
-          Comparing regular season points per game to high-stakes postseason PPG — championship bracket and sacko games only. Discover who rises to the occasion when it matters most, and who crumbles under pressure.
+          Comparing regular season points per game to high-stakes postseason PPG — elimination and sacko games only. Discover who rises to the occasion when it matters most, and who crumbles under pressure.
         </p>
       </header>
 
