@@ -83,9 +83,74 @@ const allStarYears: YearData[] = [
   }
 ];
 
+const schedule2026 = [
+  {
+    day: 'Friday',
+    date: 'Apr 10',
+    accent: 'border-l-yellow-400',
+    headColor: 'text-yellow-400',
+    events: [
+      { time: '4PM',  text: 'Check-In',         sub: 'Airbnb',                         star: false },
+      { time: '6PM',  text: 'Happy Hour',          sub: 'Westlight',                      star: false },
+      { time: '8PM',  text: 'Dinner',            sub: 'Brooklyn',                       star: false },
+      { time: '11PM', text: 'Pre-Game',                  sub: 'Airbnb',                  star: false },
+      { time: '1AM',  text: 'CamelPhat',         sub: 'Brooklyn Storehouse',     star: true  },
+    ],
+  },
+  {
+    day: 'Saturday',
+    date: 'Apr 11',
+    accent: 'border-l-blue-400',
+    headColor: 'text-blue-400',
+    events: [
+      { time: '12PM', text: 'Football',                   sub: 'Sternberg Park',            star: false },
+      { time: '2PM',  text: 'Sacko',                     sub: 'Union Square Station',      star: true  },
+      { time: '4PM',  text: 'Rooftop DJ Set',           sub: 'The Italic',                star: false },
+      { time: '7PM',  text: 'Dinner',                   sub: 'Manhattan',                 star: false },
+      { time: '9PM',  text: 'Beer Olympics / Darts / Bowling', sub: '',                  star: false },
+    ],
+  },
+  {
+    day: 'Sunday',
+    date: 'Apr 12',
+    accent: 'border-l-purple-400',
+    headColor: 'text-purple-400',
+    events: [
+      { time: '11AM', text: 'Check-Out',          sub: 'Airbnb',        star: false },
+      { time: '12PM', text: 'Basketball',          sub: 'Sternberg Park', star: false },
+      { time: '2PM',  text: 'Farewell Lunch',     sub: 'Brooklyn',      star: false },
+    ],
+  },
+];
+
+function getCurrentEventKey(now: Date): string | null {
+  if (now.getFullYear() !== 2026 || now.getMonth() !== 3) return null;
+  const d = now.getDate();
+  const h = now.getHours();
+  if (d === 11 && h < 3) return 'Friday-1AM';
+  const days: [number, string, [string, number][]][] = [
+    [10, 'Friday',   [['4PM', 16], ['6PM', 18], ['8PM', 20], ['11PM', 23], ['1AM', 25]]],
+    [11, 'Saturday', [['12PM', 12], ['2PM', 14], ['4PM', 16], ['7PM', 19], ['9PM', 21]]],
+    [12, 'Sunday',   [['11AM', 11], ['12PM', 12], ['2PM', 14]]],
+  ];
+  const entry = days.find(([date]) => date === d);
+  if (!entry) return null;
+  const [, dayName, events] = entry;
+  let key: string | null = null;
+  for (const [time, hour] of events) {
+    if (h >= hour) key = `${dayName}-${time}`;
+  }
+  return key;
+}
+
 export default function AllStarPage() {
-  const [selectedYear, setSelectedYear] = useState<string>('2025');
+  const [selectedYear, setSelectedYear] = useState<string>('2026');
   const [modalIndex, setModalIndex] = useState<number | null>(null);
+  const [currentKey, setCurrentKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentKey(getCurrentEventKey(new Date()));
+  }, []);
 
   // Mobile photo carousel state
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -243,6 +308,43 @@ export default function AllStarPage() {
           <div className="pt-4">
             <div className="border-t border-slate-700"></div>
           </div>
+
+          {/* Schedule - 2026 only */}
+          {selectedYear === '2026' && (
+            <div className="pt-8">
+              <h3 className="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-yellow-400" />
+                Weekend Schedule
+              </h3>
+              <div className="grid md:grid-cols-3 gap-4">
+                {schedule2026.map(day => (
+                  <div key={day.day} className={`rounded-xl bg-slate-800/50 border border-slate-700/60 border-l-4 ${day.accent} p-5`}>
+                    <div className={`font-bold text-base ${day.headColor}`}>{day.day}</div>
+                    <div className="text-slate-500 text-xs mb-4">{day.date}</div>
+                    <div className="space-y-3">
+                      {day.events.map(ev => {
+                        const key = `${day.day}-${ev.time}`;
+                        const isCurrent = currentKey === key;
+                        return (
+                          <div
+                            key={ev.time}
+                            className={`flex gap-3 items-start rounded-lg ${isCurrent ? 'bg-white/5 px-2 py-1.5 -mx-2' : ''}`}
+                          >
+                            <span className="font-mono text-xs text-slate-500 w-10 shrink-0 pt-0.5">{ev.time}</span>
+                            <div>
+                              <div className={`text-sm font-medium leading-snug ${ev.star ? 'text-yellow-300' : 'text-slate-200'}`}>{ev.text}</div>
+                              {ev.sub && <div className="text-xs text-slate-500 mt-0.5">{ev.sub}</div>}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 border-t border-slate-700" />
+            </div>
+          )}
 
           {/* Photos/Upload Section */}
           <div className="pt-8">

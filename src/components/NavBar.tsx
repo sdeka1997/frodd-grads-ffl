@@ -129,6 +129,8 @@ export default function NavBar() {
     };
   }, [sidebarOpen]);
 
+  if (pathname === '/') return null;
+
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
@@ -185,7 +187,7 @@ export default function NavBar() {
             </Link>
 
             <div className="hidden md:flex items-center gap-1">
-              <Link href="/" className={desktopLinkClass} onClick={() => setOpen(null)}>
+              <Link href="/dashboard" className={desktopLinkClass} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
               <div className="relative pb-1" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
@@ -254,8 +256,8 @@ export default function NavBar() {
 
         {/* Scrollable links */}
         <div ref={sheetScrollRef} className="overflow-y-auto overscroll-contain py-1 pb-8">
-          <Link href="/"
-            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
+          <Link href="/dashboard"
+            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/dashboard') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
             onClick={closeSidebar}
           >Dashboard</Link>
 
