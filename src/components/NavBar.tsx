@@ -129,6 +129,17 @@ export default function NavBar() {
     };
   }, [sidebarOpen]);
 
+  useEffect(() => {
+    if (window.innerWidth >= 768) return;
+    const timer = setTimeout(() => {
+      const header = document.querySelector('main header');
+      if (!header) return;
+      const top = header.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
   if (pathname === '/') return null;
 
   const isActive = (href: string) =>
