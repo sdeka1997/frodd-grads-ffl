@@ -23,6 +23,7 @@ export const schedule2026 = [
     headColor: 'text-blue-400',
     events: [
       { time: '12PM', text: 'Football',       sub: 'Sternberg Park',       star: false },
+      { time: '2PM',  text: 'Lunch',          sub: "L'Industrie",          star: false },
       { time: '3PM',  text: 'Sacko',          sub: 'Union Square Station', star: true  },
       { time: '4PM',  text: 'Rooftop DJ Set', sub: 'The Italic',           star: false },
       { time: '7PM',  text: 'Dinner',         sub: 'Manhattan',            star: false },
@@ -50,7 +51,7 @@ export function getCurrentEventKey(now: Date): string | null {
   const mins = h * 60 + now.getMinutes();
   const days: [number, string, [string, number][]][] = [
     [10, 'Friday',   [['4PM', 16*60], ['6PM', 18*60], ['8PM', 20*60], ['11PM', 23*60], ['1AM', 25*60]]],
-    [11, 'Saturday', [['12PM', 12*60], ['3PM', 15*60], ['4PM', 16*60], ['7PM', 19*60], ['9PM', 21*60]]],
+    [11, 'Saturday', [['12PM', 12*60], ['2PM', 14*60], ['3PM', 15*60], ['4PM', 16*60], ['7PM', 19*60], ['9PM', 21*60]]],
     [12, 'Sunday',   [['11AM', 11*60], ['1PM', 13*60]]],
   ];
   const entry = days.find(([date]) => date === d);
