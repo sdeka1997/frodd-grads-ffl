@@ -116,8 +116,8 @@ const schedule2026 = [
     accent: 'border-l-purple-400',
     headColor: 'text-purple-400',
     events: [
-      { time: '11AM',  text: 'Check-Out',      sub: 'Airbnb',        star: false },
-      { time: '11:30', text: 'Basketball',    sub: 'Sternberg Park', star: false },
+      { time: '11AM', text: 'Check-Out',   sub: 'Airbnb',        star: false },
+      { time: '11AM', text: 'Basketball', sub: 'Sternberg Park', star: false },
       { time: '1PM',   text: 'Farewell Lunch', sub: 'Brooklyn',      star: false },
     ],
   },
@@ -131,7 +131,7 @@ function getCurrentEventKey(now: Date): string | null {
   const days: [number, string, [string, number][]][] = [
     [10, 'Friday',   [['4PM', 16*60], ['6PM', 18*60], ['8PM', 20*60], ['11PM', 23*60], ['1AM', 25*60]]],
     [11, 'Saturday', [['12PM', 12*60], ['2PM', 14*60], ['4PM', 16*60], ['7PM', 19*60], ['9PM', 21*60]]],
-    [12, 'Sunday',   [['11AM', 11*60], ['11:30', 11*60+30], ['1PM', 13*60]]],
+    [12, 'Sunday',   [['11AM', 11*60], ['1PM', 13*60]]],
   ];
   const entry = days.find(([date]) => date === d);
   if (!entry) return null;
