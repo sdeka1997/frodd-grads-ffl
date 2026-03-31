@@ -155,15 +155,6 @@ export default function AllStarPage() {
 
       {/* YEAR SELECTOR */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <Calendar className="text-blue-400" /> Choose Your Year
-          </h2>
-          <p className="text-slate-400 mt-2">
-            Select a year to view memories and upload photos.
-          </p>
-        </div>
-
         {/* Mobile: horizontal scroll chips */}
         <div className="flex gap-3 overflow-x-auto no-scrollbar md:hidden pb-1">
           {allStarYears.map((yearData) => (
