@@ -10,7 +10,7 @@ export const schedule2026 = [
     headColor: 'text-yellow-400',
     events: [
       { time: '4PM',  text: 'Check-In',   sub: 'Airbnb',              star: false },
-      { time: '6PM',  text: 'Happy Hour', sub: 'Westlight',           star: false },
+      { time: '6PM',  text: 'Happy Hour', sub: 'Williamsburg',        star: false },
       { time: '8PM',  text: 'Dinner',     sub: 'Brooklyn',            star: false },
       { time: '11PM', text: 'Pre-Game',   sub: 'Airbnb',              star: false },
       { time: '1AM',  text: 'CamelPhat',  sub: 'Brooklyn Storehouse', star: true  },
