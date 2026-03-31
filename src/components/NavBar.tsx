@@ -41,6 +41,7 @@ export default function NavBar() {
   const sheetRef = useRef<HTMLDivElement>(null);
   const sheetScrollRef = useRef<HTMLDivElement>(null);
   const currentDragY = useRef(0);
+  const isNavigatingRef = useRef(false);
 
   // FAB one-time pulse
   const [fabPulse, setFabPulse] = useState(false);
@@ -66,7 +67,8 @@ export default function NavBar() {
       const scrollY = html.dataset.scrollY;
       html.style.overflow = '';
       delete html.dataset.scrollY;
-      if (scrollY) window.scrollTo(0, parseInt(scrollY));
+      if (scrollY && !isNavigatingRef.current) window.scrollTo(0, parseInt(scrollY));
+      isNavigatingRef.current = false;
     }
     return () => {
       html.style.overflow = '';
@@ -266,7 +268,7 @@ export default function NavBar() {
         <div ref={sheetScrollRef} className="overflow-y-auto overscroll-contain py-1 pb-8">
           <Link href="/dashboard" scroll={false}
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/dashboard') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
-            onClick={closeSidebar}
+            onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
           >Dashboard</Link>
 
           <div className="border-t border-slate-800" />
@@ -286,7 +288,7 @@ export default function NavBar() {
               ].map(({ href, label }) => (
                 <Link key={href} href={href} scroll={false}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
-                  onClick={closeSidebar}
+                  onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
                 >{label}</Link>
               ))}
             </div>
@@ -311,7 +313,7 @@ export default function NavBar() {
               ].map(({ href, label }) => (
                 <Link key={href} href={href} scroll={false}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
-                  onClick={closeSidebar}
+                  onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
                 >{label}</Link>
               ))}
             </div>
@@ -321,7 +323,7 @@ export default function NavBar() {
 
           <Link href="/allstar" scroll={false}
             className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
-            onClick={closeSidebar}
+            onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
           >All-Star</Link>
 
           <div className="border-t border-slate-800" />
