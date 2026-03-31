@@ -125,7 +125,7 @@ export default function ClutchnessPage() {
           <BarChart3 className="w-10 h-10 text-blue-400" />
           High-Stakes Clutchness
         </h1>
-        <p className="mt-4 text-slate-400 text-lg hidden md:block">
+        <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
           Comparing regular season points per game to high-stakes postseason PPG — championship bracket and sacko games only. Discover who rises to the occasion when it matters most, and who crumbles under pressure.
         </p>
       </header>

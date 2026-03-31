@@ -170,7 +170,7 @@ export default function LuckPage() {
           <ScatterIcon className="w-10 h-10 text-purple-400" />
           Luck Index
         </h1>
-        <p className="mt-4 text-slate-400 text-lg hidden md:block">
+        <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
           Plotting Points For vs Average (X-axis) against Points Against vs Average (Y-axis). Discover who's been blessed by the fantasy gods and who's been cursed by terrible luck.
         </p>
       </header>

@@ -95,43 +95,105 @@ function ScheduleCard({ day, currentKey, cardBg }: {
   );
 }
 
-function MobileScheduleDeck({ currentKey, cardBg }: { currentKey: string | null; cardBg: string }) {
-  const [index, setIndex] = useState(0);
-  const startX = useRef(0);
-  const didDrag = useRef(false);
-  const n = schedule2026.length;
+const STACK_STYLE = [
+  { rotate:  1, x:  0, y: 0 },
+  { rotate: -5, x:  5, y: 5 },
+  { rotate:  3, x: -3, y: 9 },
+];
+const SWIPE_THRESHOLD = 75;
+const FLY_DISTANCE = 600;
 
-  const go = (dir: 1 | -1) => setIndex(i => (i + dir + n) % n);
+function MobileScheduleDeck({ currentKey, cardBg }: { currentKey: string | null; cardBg: string }) {
+  const n = schedule2026.length;
+  const [topIndex, setTopIndex] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dismissDir, setDismissDir] = useState<'left' | 'right' | null>(null);
+  const startXRef = useRef(0);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (dismissDir) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    startXRef.current = e.clientX;
+    setIsDragging(true);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging || dismissDir) return;
+    setDragX(e.clientX - startXRef.current);
+  };
+
+  const onPointerUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (Math.abs(dragX) > SWIPE_THRESHOLD) {
+      const dir = dragX < 0 ? 'left' : 'right';
+      setDismissDir(dir);
+      setTimeout(() => {
+        setTopIndex(i => dir === 'left' ? (i + 1) % n : (i - 1 + n) % n);
+        setDragX(0);
+        setDismissDir(null);
+      }, 280);
+    } else {
+      setDragX(0);
+    }
+  };
+
+  const visibleDays = Array.from({ length: n }, (_, i) => schedule2026[(topIndex + i) % n]);
 
   return (
-    <div className="md:hidden">
-      <div
-        className="relative select-none"
-        style={{ touchAction: 'none' }}
-        onPointerDown={e => { startX.current = e.clientX; didDrag.current = false; }}
-        onPointerMove={e => { if (Math.abs(e.clientX - startX.current) > 8) didDrag.current = true; }}
-        onPointerUp={e => {
-          if (!didDrag.current) return;
-          const dx = e.clientX - startX.current;
-          if (dx < -40) go(1);
-          else if (dx > 40) go(-1);
-        }}
-      >
-        {/* Stack layers peeking behind */}
-        <div className="absolute inset-x-4 top-3 bottom-0 rounded-xl bg-slate-800/25 border border-slate-700/30" />
-        <div className="absolute inset-x-2 top-1.5 bottom-0 rounded-xl bg-slate-800/40 border border-slate-700/40" />
-        {/* Front card */}
-        <div className="relative">
-          <ScheduleCard day={schedule2026[index]} currentKey={currentKey} cardBg={cardBg} />
-        </div>
+    <div className="md:hidden flex flex-col items-center gap-5">
+      <div className="relative w-full" style={{ height: '360px' }}>
+        {[...visibleDays].reverse().map((day, reversedPos) => {
+          const stackPos = visibleDays.length - 1 - reversedPos;
+          const isTop = stackPos === 0;
+          const s = STACK_STYLE[stackPos] ?? STACK_STYLE[STACK_STYLE.length - 1];
+
+          let translateX = s.x;
+          let rotate = s.rotate;
+          let transition = 'transform 0.28s ease';
+
+          if (isTop) {
+            if (dismissDir) {
+              translateX = dismissDir === 'left' ? -FLY_DISTANCE : FLY_DISTANCE;
+              rotate = s.rotate + (dismissDir === 'left' ? -25 : 25);
+            } else if (isDragging) {
+              translateX = dragX;
+              rotate = s.rotate + dragX * 0.04;
+              transition = 'none';
+            }
+          }
+
+          return (
+            <div
+              key={`${day.day}-${(topIndex + stackPos) % n}`}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                transform: `translate(${translateX}px, ${s.y}px) rotate(${rotate}deg)`,
+                zIndex: visibleDays.length - stackPos,
+                transition,
+                touchAction: 'none',
+                transformOrigin: 'center bottom',
+              }}
+              {...(isTop ? { onPointerDown, onPointerMove, onPointerUp } : {})}
+            >
+              <div className={`h-full overflow-y-auto rounded-xl ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
+                <ScheduleCard day={day} currentKey={currentKey} cardBg={cardBg} />
+              </div>
+            </div>
+          );
+        })}
       </div>
+
       {/* Dots */}
-      <div className="flex gap-1.5 justify-center mt-5">
-        {schedule2026.map((d, i) => (
-          <button
-            key={d.day}
-            onClick={() => setIndex(i)}
-            className={`rounded-full transition-all duration-300 ${i === index ? 'w-4 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-slate-600'}`}
+      <div className="flex gap-1.5">
+        {schedule2026.map((_, i) => (
+          <div
+            key={i}
+            className={`rounded-full transition-all duration-300 ${
+              i === topIndex ? 'w-4 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-slate-600'
+            }`}
           />
         ))}
       </div>

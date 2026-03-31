@@ -254,7 +254,7 @@ export default function MatrixPage() {
           <Grid3X3 className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />
           Supremacy Matrix
         </h1>
-        <p className="mt-4 text-slate-400 text-lg hidden md:block">
+        <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
           An interactive matrix showing the historical records between managers. Discover who dominates head-to-head matchups and who struggles against specific opponents.
         </p>
       </header>
