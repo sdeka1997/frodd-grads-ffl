@@ -36,9 +36,9 @@ export const schedule2026 = [
     accent: 'border-l-purple-400',
     headColor: 'text-purple-400',
     events: [
-      { time: '3PM',  text: 'Check-Out',      sub: 'Airbnb',         star: false },
       { time: '11AM', text: 'Basketball',     sub: 'Sternberg Park', star: false },
       { time: '1PM',  text: 'Farewell Lunch', sub: 'Brooklyn',      star: false },
+      { time: '3PM',  text: 'Check-Out',      sub: 'Airbnb',         star: false },
     ],
   },
 ];
