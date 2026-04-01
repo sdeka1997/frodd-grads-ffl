@@ -10,7 +10,7 @@ export const schedule2026 = [
     headColor: 'text-yellow-400',
     events: [
       { time: '12PM', text: 'Check-In',   sub: 'Airbnb',              star: false },
-      { time: '6PM',  text: 'Happy Hour', sub: "Marcela's",             star: false },
+      { time: '5PM',  text: 'Happy Hour', sub: "Marcela's",             star: false },
       { time: '8PM',  text: 'Dinner',     sub: 'Brooklyn',            star: false },
       { time: '11PM', text: 'Pre-Game',   sub: 'Airbnb',              star: false },
       { time: '1AM',  text: 'CamelPhat',  sub: 'Brooklyn Storehouse', star: true  },
@@ -50,7 +50,7 @@ export function getCurrentEventKey(now: Date): string | null {
   if (d === 11 && h < 3) return 'Friday-1AM';
   const mins = h * 60 + now.getMinutes();
   const days: [number, string, [string, number][]][] = [
-    [10, 'Friday',   [['12PM', 12*60], ['6PM', 18*60], ['8PM', 20*60], ['11PM', 23*60], ['1AM', 25*60]]],
+    [10, 'Friday',   [['12PM', 12*60], ['5PM', 17*60], ['8PM', 20*60], ['11PM', 23*60], ['1AM', 25*60]]],
     [11, 'Saturday', [['12PM', 12*60], ['2PM', 14*60], ['3PM', 15*60], ['4PM', 16*60], ['7PM', 19*60], ['9PM', 21*60]]],
     [12, 'Sunday',   [['11AM', 11*60], ['1PM', 13*60], ['3PM', 15*60]]],
   ];
