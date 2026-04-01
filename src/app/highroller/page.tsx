@@ -184,7 +184,7 @@ function HighRollerContent() {
       {/* HIGH ROLLER LEADERBOARD */}
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 overflow-x-auto" onClick={() => setActiveBar(null)}>
-          <div style={{ minWidth: `${Math.max(600, highRollerStats.length * 90)}px`, height: '360px' }}>
+          <div style={{ minWidth: `${Math.max(550, highRollerStats.length * 78)}px`, height: '360px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={highRollerStats} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />

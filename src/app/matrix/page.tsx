@@ -255,7 +255,7 @@ export default function MatrixPage() {
           Supremacy Matrix
         </h1>
         <p className="mt-2 text-slate-500 text-xs md:text-lg md:text-slate-400 md:mt-4">
-          An interactive matrix showing the historical records between managers. Discover who dominates head-to-head matchups and who struggles against specific opponents. Click any cell to see the full game log.
+          An interactive matrix showing the historical records between managers. Discover who dominates head-to-head matchups and who struggles against specific opponents.
         </p>
       </header>
 
@@ -336,6 +336,8 @@ export default function MatrixPage() {
           <span>Even / no games</span>
         </div>
       </div>
+
+      <hr className="border-slate-800" />
 
       {/* DOMINANCE RANKINGS */}
       <section>

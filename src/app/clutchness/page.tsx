@@ -219,6 +219,8 @@ export default function ClutchnessPage() {
         </div>
       </div>
 
+      <hr className="border-slate-800" />
+
       {/* CLUTCHNESS RANKINGS */}
       <section>
         <div className="mb-6">

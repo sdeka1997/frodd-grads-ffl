@@ -268,6 +268,8 @@ export default function LuckPage() {
           <span>Bad &amp; Unlucky</span>
         </div>
       </div>
+      <hr className="border-slate-800" />
+
       {/* LUCK RANKINGS */}
       <section>
         <h2 className="text-2xl font-bold text-slate-200 mb-6">Luck & Skill Rankings</h2>

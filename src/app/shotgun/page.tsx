@@ -90,7 +90,7 @@ function ShotgunContent() {
       {/* SHOTGUN LEADERBOARD */}
       <section>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 overflow-x-auto" onClick={() => setActiveBar(null)}>
-          <div style={{ minWidth: `${Math.max(500, shotgunStats.length * 65)}px`, height: '360px' }}>
+          <div style={{ minWidth: `${Math.max(550, shotgunStats.length * 78)}px`, height: '360px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={shotgunStats}
