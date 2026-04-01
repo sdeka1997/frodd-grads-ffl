@@ -155,13 +155,13 @@ export default function AllStarPage() {
 
       {/* YEAR SELECTOR */}
       <section>
-        {/* Mobile: compact flex-wrap chips */}
-        <div className="flex flex-wrap gap-2 md:hidden">
+        {/* Mobile: full-width grid chips */}
+        <div className="grid md:hidden gap-2" style={{ gridTemplateColumns: `repeat(${allStarYears.length}, 1fr)` }}>
           {allStarYears.map((yearData) => (
             <button
               key={yearData.year}
               onClick={() => setSelectedYear(yearData.year)}
-              className={`px-3 py-1 rounded-full border text-xs font-bold transition-all ${
+              className={`py-1.5 rounded-full border text-xs font-bold transition-all ${
                 selectedYear === yearData.year
                   ? 'border-yellow-400 bg-yellow-400/10 text-yellow-400'
                   : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-500'
