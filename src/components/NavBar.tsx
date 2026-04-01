@@ -144,6 +144,9 @@ export default function NavBar() {
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
+  const inHistory = ['/managers', '/seasons', '/rivalries'].some(p => isActive(p));
+  const inAnalytics = ['/luck', '/clutchness', '/matrix', '/shotgun', '/highroller'].some(p => isActive(p));
+
   const closeSidebar = () => {
     setSidebarOpen(false);
     setSidebarExpanded({ history: true, analytics: true });
@@ -152,10 +155,10 @@ export default function NavBar() {
   };
 
 
-  const desktopLinkClass =
-    'hover:text-emerald-400 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap';
-  const desktopDropdownItemClass =
-    'block px-4 py-2 text-sm hover:bg-slate-800 hover:text-emerald-400 transition-colors';
+  const desktopLinkClass = (active: boolean) =>
+    `px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap hover:text-emerald-400 ${active ? 'text-emerald-400' : 'text-slate-300'}`;
+  const desktopDropdownItemClass = (active: boolean) =>
+    `block px-4 py-2 text-sm transition-colors hover:bg-slate-800 hover:text-emerald-400 ${active ? 'text-emerald-400 bg-slate-800/60' : ''}`;
 
   const chevron = (rotated: boolean) => (
     <svg
@@ -197,36 +200,36 @@ export default function NavBar() {
             </Link>
 
             <div className="hidden md:flex items-center gap-1">
-              <Link href="/dashboard" className={desktopLinkClass} onClick={() => setOpen(null)}>
+              <Link href="/dashboard" className={desktopLinkClass(isActive('/dashboard'))} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
               <div className="relative pb-1" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
-                <button className={`${desktopLinkClass} flex items-center gap-1`}>
+                <button className={`${desktopLinkClass(inHistory)} flex items-center gap-1`}>
                   League History {chevron(open === 'history')}
                 </button>
                 {open === 'history' && (
                   <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
-                    <Link href="/managers" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Managers</Link>
-                    <Link href="/seasons" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Seasons</Link>
-                    <Link href="/rivalries" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Rivalries</Link>
+                    <Link href="/managers" className={desktopDropdownItemClass(isActive('/managers'))} onClick={() => setOpen(null)}>Managers</Link>
+                    <Link href="/seasons" className={desktopDropdownItemClass(isActive('/seasons'))} onClick={() => setOpen(null)}>Seasons</Link>
+                    <Link href="/rivalries" className={desktopDropdownItemClass(isActive('/rivalries'))} onClick={() => setOpen(null)}>Rivalries</Link>
                   </div>
                 )}
               </div>
               <div className="relative pb-1" onMouseEnter={() => setOpen('analytics')} onMouseLeave={() => setOpen(null)}>
-                <button className={`${desktopLinkClass} flex items-center gap-1`}>
+                <button className={`${desktopLinkClass(inAnalytics)} flex items-center gap-1`}>
                   Analytics {chevron(open === 'analytics')}
                 </button>
                 {open === 'analytics' && (
                   <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
-                    <Link href="/luck" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Luck Index</Link>
-                    <Link href="/clutchness" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Clutchness</Link>
-                    <Link href="/matrix" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
-                    <Link href="/shotgun" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>Shotgun</Link>
-                    <Link href="/highroller" className={desktopDropdownItemClass} onClick={() => setOpen(null)}>High Roller</Link>
+                    <Link href="/luck" className={desktopDropdownItemClass(isActive('/luck'))} onClick={() => setOpen(null)}>Luck Index</Link>
+                    <Link href="/clutchness" className={desktopDropdownItemClass(isActive('/clutchness'))} onClick={() => setOpen(null)}>Clutchness</Link>
+                    <Link href="/matrix" className={desktopDropdownItemClass(isActive('/matrix'))} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
+                    <Link href="/shotgun" className={desktopDropdownItemClass(isActive('/shotgun'))} onClick={() => setOpen(null)}>Shotgun</Link>
+                    <Link href="/highroller" className={desktopDropdownItemClass(isActive('/highroller'))} onClick={() => setOpen(null)}>High Roller</Link>
                   </div>
                 )}
               </div>
-              <Link href="/allstar" className={desktopLinkClass} onClick={() => setOpen(null)}>
+              <Link href="/allstar" className={desktopLinkClass(isActive('/allstar'))} onClick={() => setOpen(null)}>
                 All-Star
               </Link>
             </div>
@@ -274,7 +277,7 @@ export default function NavBar() {
           <div className="border-t border-slate-800" />
 
           <button
-            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-colors"
+            className={`w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors ${inHistory ? 'text-emerald-400' : 'text-slate-300'}`}
             onClick={() => setSidebarExpanded(s => ({ ...s, history: !s.history }))}
           >
             League History {chevron(sidebarExpanded.history)}
@@ -297,7 +300,7 @@ export default function NavBar() {
           <div className="border-t border-slate-800" />
 
           <button
-            className="w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-colors"
+            className={`w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors ${inAnalytics ? 'text-emerald-400' : 'text-slate-300'}`}
             onClick={() => setSidebarExpanded(s => ({ ...s, analytics: !s.analytics }))}
           >
             Analytics {chevron(sidebarExpanded.analytics)}
