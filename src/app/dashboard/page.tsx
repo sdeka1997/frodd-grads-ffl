@@ -4,7 +4,6 @@ import CumulativeTable from '@/components/CumulativeTable';
 import { Medal } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import AllStarCountdown from '@/components/AllStarCountdown';
 import HallOfFameStack from '@/components/HallOfFameStack';
 
 export default function Home() {
@@ -25,9 +24,6 @@ export default function Home() {
         </p>
       </header>
 
-      <div className="-mt-4">
-        <AllStarCountdown />
-      </div>
 
       <section>
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
