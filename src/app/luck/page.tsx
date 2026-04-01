@@ -200,12 +200,6 @@ export default function LuckPage() {
 
       {/* LUCK INDEX CHART */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-200">Luck vs. Skill Scatter</h2>
-          <p className="text-slate-400 mt-2">
-            Each dot is a manager's all-time average. X-axis: Points For vs league average. Y-axis: Points Against vs league average.
-          </p>
-        </div>
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-1 md:p-6 h-[500px]">
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 40, right: 5, bottom: 20, left: -30 }}>

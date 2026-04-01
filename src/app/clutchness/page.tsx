@@ -153,13 +153,6 @@ export default function ClutchnessPage() {
 
       {/* CLUTCHNESS CHART */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-200">Performance Differential</h2>
-          <p className="text-slate-400 mt-2">
-            Points per game difference between high-stakes postseason and regular season performance.
-          </p>
-        </div>
-
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-3 md:p-6 h-[600px] overflow-x-auto no-scrollbar" onClick={() => setActiveBar(null)}>
           <div className="min-w-[800px] h-full">
             <ResponsiveContainer width="100%" height="100%">

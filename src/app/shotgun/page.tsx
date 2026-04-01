@@ -89,15 +89,6 @@ function ShotgunContent() {
 
       {/* SHOTGUN LEADERBOARD */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <TrendingDown className="text-red-400" /> Hall of Shame
-          </h2>
-          <p className="text-slate-400 mt-2">
-            Total shotguns by manager since the rule started.
-          </p>
-        </div>
-
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 overflow-x-auto" onClick={() => setActiveBar(null)}>
           <div style={{ minWidth: `${Math.max(500, shotgunStats.length * 65)}px`, height: '360px' }}>
             <ResponsiveContainer width="100%" height="100%">

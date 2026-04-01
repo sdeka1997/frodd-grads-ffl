@@ -183,15 +183,8 @@ function HighRollerContent() {
 
       {/* HIGH ROLLER LEADERBOARD */}
       <section>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
-            <TrendingUp className="text-emerald-400" /> Money Leaders
-          </h2>
-          <p className="text-slate-400 mt-2">Total weekly high scores and earnings since the rule started.</p>
-        </div>
-
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 md:p-6 overflow-x-auto" onClick={() => setActiveBar(null)}>
-          <div style={{ minWidth: `${Math.max(500, highRollerStats.length * 65)}px`, height: '360px' }}>
+          <div style={{ minWidth: `${Math.max(600, highRollerStats.length * 90)}px`, height: '360px' }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={highRollerStats} margin={{ top: 20, right: 20, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
