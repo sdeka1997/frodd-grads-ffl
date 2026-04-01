@@ -280,6 +280,9 @@ export default function MatrixPage() {
 
       {/* SUPREMACY MATRIX */}
       <section>
+        <p className="text-xs text-slate-500 mb-3 px-1">
+          <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
+        </p>
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-center border-collapse">
@@ -315,9 +318,6 @@ export default function MatrixPage() {
             </table>
           </div>
         </div>
-        <p className="text-xs text-slate-500 mt-3 px-1">
-          <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
-        </p>
       </section>
 
       {/* MATRIX LEGEND */}
