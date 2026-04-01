@@ -17,10 +17,22 @@ function ShotgunContent() {
   const [selectedWeek, setSelectedWeek] = useState<{ year: string; week: number; manager: string } | null>(null);
 
   const getShameColor = (index: number) => {
-    if (index === 0) return '#dc2626';
-    if (index === 1) return '#ea580c';
-    if (index === 2) return '#d97706';
-    return '#64748b';
+    const total = shotgunStats.length;
+    const t = total <= 1 ? 0 : index / (total - 1);
+    // Red (#ef4444) → Amber (#f59e0b) → Green (#22c55e)
+    if (t <= 0.5) {
+      const s = t * 2;
+      const r = Math.round(239 + (245 - 239) * s);
+      const g = Math.round(68  + (158 - 68)  * s);
+      const b = Math.round(68  + (11  - 68)  * s);
+      return `rgb(${r},${g},${b})`;
+    } else {
+      const s = (t - 0.5) * 2;
+      const r = Math.round(245 + (34  - 245) * s);
+      const g = Math.round(158 + (197 - 158) * s);
+      const b = Math.round(11  + (94  - 11)  * s);
+      return `rgb(${r},${g},${b})`;
+    }
   };
 
   const ManagerTile = ({ stats }: { stats: typeof shotgunStats[number] }) => (
@@ -135,19 +147,10 @@ function ShotgunContent() {
           </div>
         </div>
 
-        <div className="mt-6 flex gap-6 text-xs font-bold uppercase tracking-widest justify-center md:justify-start">
-          <span className="flex items-center gap-2 text-red-600">
-            <div className="w-2 h-2 rounded-full bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.6)]" />
-            Most Shameful
-          </span>
-          <span className="flex items-center gap-2 text-orange-600">
-            <div className="w-2 h-2 rounded-full bg-orange-600 shadow-[0_0_8px_rgba(234,88,12,0.6)]" />
-            Runner-up Shame
-          </span>
-          <span className="flex items-center gap-2 text-amber-600">
-            <div className="w-2 h-2 rounded-full bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.6)]" />
-            Bronze Shame
-          </span>
+        <div className="mt-6 flex items-center gap-3 text-xs font-bold uppercase tracking-widest">
+          <span className="text-red-400">Hall of Shame</span>
+          <div className="flex-1 h-2 rounded-full" style={{ background: 'linear-gradient(to right, #ef4444, #f59e0b, #22c55e)' }} />
+          <span className="text-green-400">Sober</span>
         </div>
       </section>
 
