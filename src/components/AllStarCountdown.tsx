@@ -14,7 +14,7 @@ export default function AllStarCountdown() {
   const [eventPassed, setEventPassed] = useState(false);
 
   // All-Star Weekend 2026: April 10-12 in New York, NY
-  const allStarDate = new Date('2026-04-10T00:00:00');
+  const allStarDate = new Date('2026-04-10T16:00:00');
 
   const calculate = () => {
     const distance = allStarDate.getTime() - new Date().getTime();
