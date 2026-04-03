@@ -131,6 +131,13 @@ export default function NavBar() {
     };
   }, [sidebarOpen]);
 
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+    setSidebarExpanded({ history: true, analytics: true });
+    setSheetDragY(0);
+    setIsDraggingSheet(false);
+  };
+
   useEffect(() => {
     closeSidebar();
     if (window.innerWidth >= 768) return;
@@ -147,13 +154,6 @@ export default function NavBar() {
 
   const inHistory = ['/managers', '/seasons', '/rivalries'].some(p => isActive(p));
   const inAnalytics = ['/luck', '/clutchness', '/matrix', '/shotgun', '/highroller'].some(p => isActive(p));
-
-  const closeSidebar = () => {
-    setSidebarOpen(false);
-    setSidebarExpanded({ history: true, analytics: true });
-    setSheetDragY(0);
-    setIsDraggingSheet(false);
-  };
 
 
   const desktopLinkClass = (active: boolean) =>
