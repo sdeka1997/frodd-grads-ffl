@@ -1,24 +1,15 @@
 import { getCumulativeRecords } from '@/utils/dataProcessing';
-import { Trophy, Users, CalendarDays, Swords, Dices, Zap, LayoutGrid, TrendingUp } from 'lucide-react';
+import { Trophy, Target, Star, Calendar } from 'lucide-react';
 import CumulativeTable from '@/components/CumulativeTable';
 import { Medal } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import HallOfFameStack from '@/components/HallOfFameStack';
-
-const NAV_CARDS = [
-  { href: '/managers',   icon: Users,        label: 'Managers',         sub: 'Career stats & profiles' },
-  { href: '/seasons',    icon: CalendarDays, label: 'Seasons',          sub: 'Year-by-year breakdowns' },
-  { href: '/rivalries',  icon: Swords,       label: 'Rivalries',        sub: 'Head-to-head records' },
-  { href: '/luck',       icon: Dices,        label: 'Luck Index',       sub: 'Who got lucky' },
-  { href: '/clutchness', icon: Zap,          label: 'Clutchness',       sub: 'Playoff performance' },
-  { href: '/matrix',     icon: LayoutGrid,   label: 'Supremacy Matrix', sub: 'Who owns who' },
-  { href: '/shotgun',    icon: TrendingUp,   label: 'Shotgun',          sub: 'High score records' },
-  { href: '/highroller', icon: Trophy,       label: 'High Roller',      sub: 'Earnings leaderboard' },
-];
 
 export default function Home() {
   const records = getCumulativeRecords();
-
+  
+  // Hall of fame: managers with championships
   const hallOfFame = records.filter(r => r.championships > 0).sort((a, b) => b.championships - a.championships);
   const maxChamps = Math.max(...records.map(r => r.championships));
 
@@ -33,6 +24,7 @@ export default function Home() {
         </p>
       </header>
 
+
       <section>
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
           <Trophy className="text-yellow-400 w-8 h-8" /> Hall of Fame
@@ -41,6 +33,7 @@ export default function Home() {
         <div className="md:hidden py-2">
           <HallOfFameStack managers={hallOfFame} maxChamps={maxChamps} />
         </div>
+
         {/* Desktop: grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {hallOfFame.map((manager) => (
@@ -62,27 +55,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mobile: nav tiles */}
-      <section className="md:hidden">
-        <div className="grid grid-cols-2 gap-2">
-          {NAV_CARDS.map(({ href, icon: Icon, label, sub }) => (
-            <Link
-              key={href}
-              href={href}
-              className="flex flex-col gap-1 bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 hover:border-emerald-500/50 hover:bg-slate-800 transition-colors"
-            >
-              <Icon className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="text-sm font-semibold text-slate-100 leading-tight">{label}</span>
-              <span className="text-xs text-slate-500 leading-tight">{sub}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Desktop: decade leaderboard */}
-      <section className="hidden md:block">
+      <section>
         <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-          <Trophy className="text-blue-400 w-8 h-8" /> Decade Leaderboard
+          <Target className="text-blue-400 w-8 h-8" /> Decade Leaderboard
         </h2>
         <CumulativeTable initialRecords={records} />
       </section>
