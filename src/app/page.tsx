@@ -21,7 +21,6 @@ export default function LandingPage() {
 
           <AllStarCountdown />
 
-          {/* Desktop CTA */}
           <Link
             href="/dashboard"
             className="self-start hidden md:inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
@@ -29,27 +28,10 @@ export default function LandingPage() {
             <Star className="w-5 h-5" />
             Enter Site
           </Link>
-
-          {/* Mobile CTAs */}
-          <div className="flex flex-col gap-3 md:hidden">
-            <Link
-              href="/allstar"
-              className="inline-flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
-            >
-              <Star className="w-5 h-5" />
-              View All-Star Schedule
-            </Link>
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
-            >
-              Enter the Analytics Hub
-            </Link>
-          </div>
         </div>
 
-        {/* Right: schedule (desktop only) */}
-        <div className="hidden md:block">
+        {/* Right: schedule */}
+        <div>
           <AllStarSchedule />
         </div>
 
