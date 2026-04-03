@@ -21,7 +21,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 pt-6 pb-12">
+    <div className="min-h-screen flex items-center justify-center px-6 pt-8 pb-32">
       <div className="w-full max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
 
         {/* Left: hero + main content + CTAs */}
