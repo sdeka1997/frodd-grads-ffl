@@ -1,7 +1,7 @@
 "use client";
 
 import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
-import { Beer, TrendingDown, Calendar, Zap } from 'lucide-react';
+import { Beer, TrendingDown, Calendar, Zap, Maximize2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useState } from 'react';
 import WeekLeaderboardModal from '@/components/WeekLeaderboardModal';
@@ -42,9 +42,10 @@ function ShotgunContent() {
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-        <div className="flex items-center gap-1 text-red-400">
+        <div className="flex items-center gap-2 text-red-400">
           <Beer className="w-5 h-5" />
           <span className="text-2xl font-bold">{stats.totalShotguns}</span>
+          <Maximize2 className="w-3.5 h-3.5 text-slate-500" />
         </div>
       </div>
       <div className="space-y-3">
@@ -198,9 +199,12 @@ function ShotgunContent() {
                       <span className="text-lg font-bold text-white">{low.manager}</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-red-400">{low.points}</div>
-                    <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-red-400">{low.points}</div>
+                      <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
+                    </div>
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                   </div>
                 </button>
               ))}
@@ -236,9 +240,12 @@ function ShotgunContent() {
                       <span className="text-lg font-bold text-white">{low.manager}</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-red-400">{low.points}</div>
-                    <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-red-400">{low.points}</div>
+                      <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
+                    </div>
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                   </div>
                 </button>
               ))}

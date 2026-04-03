@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { getPlayoffClutchness } from '@/utils/dataProcessing';
 import { getManagerHighStakesGames, type HighStakesGame } from '@/utils/highStakesGames';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
-import { BarChart3, Trophy, Target, X, TrendingUp, TrendingDown } from 'lucide-react';
+import { BarChart3, Trophy, Target, X, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
 import CollapsibleLegend from '@/components/CollapsibleLegend';
 
 function HighStakesModal({ managerName, regularPPG, onClose }: { managerName: string; regularPPG: number; onClose: () => void }) {
@@ -273,6 +273,7 @@ export default function ClutchnessPage() {
                       <div className="text-xs text-slate-500">
                         {manager.playoffGames} high-stakes games
                       </div>
+                      <Maximize2 className="w-3.5 h-3.5 text-slate-500 mt-1 ml-auto" />
                     </div>
                   </button>
                 );

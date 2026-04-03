@@ -1,5 +1,5 @@
 import { getCumulativeRecords } from '@/utils/dataProcessing';
-import { Trophy, Target, Users, CalendarDays, Swords, Dices, Zap, LayoutGrid, TrendingUp } from 'lucide-react';
+import { Trophy, Target, Users, CalendarDays, Swords, Dices, Zap, LayoutGrid, TrendingUp, ChevronRight } from 'lucide-react';
 import CumulativeTable from '@/components/CumulativeTable';
 import { Medal } from 'lucide-react';
 import Link from 'next/link';
@@ -46,11 +46,12 @@ export default function Home() {
             <Link
               key={href}
               href={href}
-              className="flex flex-col gap-1 bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 hover:border-emerald-500/50 hover:bg-slate-800 transition-colors"
+              className="relative flex flex-col gap-1 bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 hover:border-emerald-500/50 hover:bg-slate-800 transition-colors"
             >
               <Icon className="w-4 h-4 text-emerald-400 shrink-0" />
               <span className="text-sm font-semibold text-slate-100 leading-tight">{label}</span>
               <span className="text-xs text-slate-500 leading-tight">{sub}</span>
+              <ChevronRight className="absolute top-2.5 right-2.5 w-3.5 h-3.5 text-slate-600" />
             </Link>
           ))}
         </div>

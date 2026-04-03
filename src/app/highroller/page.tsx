@@ -1,7 +1,7 @@
 "use client";
 
 import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing';
-import { DollarSign, TrendingUp, Calendar, Crown, Sparkles, X } from 'lucide-react';
+import { DollarSign, TrendingUp, Calendar, Crown, Sparkles, X, Maximize2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import React, { useState, useRef } from 'react';
 import { useModalEscape } from '@/hooks/useModalEscape';
@@ -119,12 +119,15 @@ function HighRollerContent() {
     >
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
-        <div className="text-right">
-          <div className="flex items-center gap-1 text-emerald-400">
-            <Crown className="w-5 h-5" />
-            <span className="text-2xl font-bold">{stats.totalWins}</span>
+        <div className="flex items-center gap-2">
+          <div className="text-right">
+            <div className="flex items-center gap-1 text-emerald-400">
+              <Crown className="w-5 h-5" />
+              <span className="text-2xl font-bold">{stats.totalWins}</span>
+            </div>
+            <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
           </div>
-          <div className="text-lg font-bold text-green-400">{formatCurrency(stats.totalEarnings)}</div>
+          <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
         </div>
       </div>
       <div className="space-y-3">
@@ -362,9 +365,12 @@ function HighRollerContent() {
                       <span className="text-lg font-bold text-white">{high.manager}</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
-                    <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
+                      <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
+                    </div>
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                   </div>
                 </button>
               ))}
@@ -398,9 +404,12 @@ function HighRollerContent() {
                       <span className="text-lg font-bold text-white">{high.manager}</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
-                    <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-emerald-400">{high.points}</div>
+                      <div className="text-sm text-emerald-300 font-medium">{formatCurrency(15)}</div>
+                    </div>
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                   </div>
                 </button>
               ))}

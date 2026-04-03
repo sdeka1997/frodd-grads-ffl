@@ -3,7 +3,7 @@
 import { getLuckIndex, getManagerScoringByYear } from '@/utils/dataProcessing';
 import CenteredBar from '@/components/CenteredBar';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, Cell, ReferenceLine } from 'recharts';
-import { ScatterChart as ScatterIcon, X } from 'lucide-react';
+import { ScatterChart as ScatterIcon, X, Maximize2 } from 'lucide-react';
 import { useState } from 'react';
 import { useModalEscape } from '@/hooks/useModalEscape';
 import Link from 'next/link';
@@ -149,7 +149,10 @@ export default function LuckPage() {
         <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
         <span className="font-medium text-white">{manager.name}</span>
       </div>
-      <div className="text-xl font-bold">{value > 0 ? '+' : ''}{value}</div>
+      <div className="flex items-center gap-2">
+        <div className="text-xl font-bold">{value > 0 ? '+' : ''}{value}</div>
+        <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+      </div>
     </button>
   );
 

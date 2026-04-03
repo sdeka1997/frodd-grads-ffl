@@ -1,7 +1,7 @@
 import { getManagerStats, getManagerHistory, getShotgunStats, getHighRollerStats, getPlayoffClutchness } from '@/utils/dataProcessing';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { notFound } from 'next/navigation';
-import { Trophy, Activity, Swords, TrendingUp, TrendingDown, Grid3X3 } from 'lucide-react';
+import { Trophy, Activity, Swords, TrendingUp, TrendingDown, Grid3X3, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import CenteredBar from '@/components/CenteredBar';
 import ManagerStatBoxes from '@/components/ManagerStatBoxes';
@@ -97,9 +97,12 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </div>
           <div className="space-y-4">
             {sons.length > 0 ? sons.map(rival => (
-              <Link key={rival.name} href={`/rivalries?m1=${encodeURIComponent(decodedId)}&m2=${encodeURIComponent(rival.name)}`} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
+              <Link key={rival.name} href={`/rivalries?m1=${encodeURIComponent(decodedId)}&m2=${encodeURIComponent(rival.name)}`} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors gap-2">
                 <span className="font-bold text-lg">{rival.name}</span>
-                <span className="text-emerald-400 font-black text-xl">{rival.total.wins} - {rival.total.losses}</span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="text-emerald-400 font-black text-xl">{rival.total.wins} - {rival.total.losses}</span>
+                  <ChevronRight className="w-4 h-4 text-slate-600" />
+                </div>
               </Link>
             )) : <p className="text-slate-500 italic">No dominant records yet.</p>}
           </div>
@@ -116,9 +119,12 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
           </div>
           <div className="space-y-4">
             {kryptonites.length > 0 ? kryptonites.map(rival => (
-              <Link key={rival.name} href={`/rivalries?m1=${encodeURIComponent(decodedId)}&m2=${encodeURIComponent(rival.name)}`} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
+              <Link key={rival.name} href={`/rivalries?m1=${encodeURIComponent(decodedId)}&m2=${encodeURIComponent(rival.name)}`} className="flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors gap-2">
                 <span className="font-bold text-lg">{rival.name}</span>
-                <span className="text-red-400 font-black text-xl">{rival.total.wins} - {rival.total.losses}</span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="text-red-400 font-black text-xl">{rival.total.wins} - {rival.total.losses}</span>
+                  <ChevronRight className="w-4 h-4 text-slate-600" />
+                </div>
               </Link>
             )) : <p className="text-slate-500 italic">No significant losing records.</p>}
           </div>
@@ -132,7 +138,8 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
               <Activity className="text-purple-400" /> Scoring Metrics
             </h2>
             <Link href="/luck" className="block group">
-              <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8 group-hover:border-slate-700 transition-colors">
+              <div className="relative bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8 group-hover:border-slate-700 transition-colors">
+                <ChevronRight className="absolute top-3 right-3 w-4 h-4 text-slate-600" />
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-slate-400 font-medium">Points For vs Average</span>
@@ -161,7 +168,8 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
                 <Swords className="text-yellow-400" /> High-Stakes Clutchness
               </h2>
               <Link href="/clutchness" className="block group">
-                <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 group-hover:border-slate-700 transition-colors">
+                <div className="relative bg-slate-900 p-6 rounded-lg border border-slate-800 group-hover:border-slate-700 transition-colors">
+                  <ChevronRight className="absolute top-3 right-3 w-4 h-4 text-slate-600" />
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <div className="text-slate-400 text-sm mb-1">Regular Season PPG</div>
