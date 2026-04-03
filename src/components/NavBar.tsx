@@ -143,7 +143,7 @@ export default function NavBar() {
     if (window.innerWidth >= 768) return;
     const h1 = document.querySelector('main h1');
     if (!h1) return;
-    const top = h1.getBoundingClientRect().top + window.scrollY;
+    const top = h1.getBoundingClientRect().top + window.scrollY - 16;
     window.scrollTo(0, Math.max(0, top));
   }, [pathname]);
 
