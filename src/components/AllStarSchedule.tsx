@@ -140,7 +140,6 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (dismissDir) return;
-    e.currentTarget.setPointerCapture(e.pointerId);
     startXRef.current = e.clientX;
     setIsDragging(true);
   };
@@ -212,7 +211,7 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
                 transform: `translate(${translateX}px, ${s.y}px) rotate(${rotate}deg)`,
                 zIndex: visibleDays.length - stackPos,
                 transition,
-                touchAction: 'none',
+                touchAction: 'pan-y',
                 transformOrigin: 'center bottom',
               }}
               {...(isTop ? { onPointerDown, onPointerMove, onPointerUp } : {})}
