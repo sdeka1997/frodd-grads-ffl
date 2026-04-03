@@ -132,6 +132,7 @@ export default function NavBar() {
   }, [sidebarOpen]);
 
   useEffect(() => {
+    closeSidebar();
     if (window.innerWidth >= 768) return;
     const h1 = document.querySelector('main h1');
     if (!h1) return;
