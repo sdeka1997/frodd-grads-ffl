@@ -214,7 +214,12 @@ export default function AllStarPage() {
                   <div className="flex items-center gap-1.5">
                     <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
                     <span className="hidden md:inline font-medium text-sm">Location:&nbsp;</span>
-                    <span className="md:hidden text-sm">{yd?.location?.split(',')[0]}</span>
+                    <span className="md:hidden text-sm">{{
+                      'New York, NY': 'NYC',
+                      'Washington, D.C.': 'DC',
+                      'Philadelphia, PA': 'PHL',
+                      'Houston, TX': 'HTX',
+                    }[yd?.location ?? ''] ?? yd?.location}</span>
                     <span className="hidden md:inline text-sm">{yd?.location}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
