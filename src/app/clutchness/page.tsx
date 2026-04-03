@@ -239,7 +239,7 @@ export default function ClutchnessPage() {
                   <button
                     key={manager.name}
                     onClick={() => setSelectedManager(manager.name)}
-                    className={`relative border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors text-left w-full cursor-pointer ${
+                    className={`relative border border-slate-800 rounded-lg p-4 pr-8 flex items-center justify-between hover:border-slate-700 transition-colors text-left w-full cursor-pointer ${
                       manager.differential > 0 ? 'bg-emerald-400/5' : 'bg-red-400/5'
                     }`}
                   >

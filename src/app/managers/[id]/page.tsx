@@ -137,9 +137,8 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
               <Activity className="text-purple-400" /> Scoring Metrics
             </h2>
-            <Link href="/luck" className="block group">
-              <div className="relative bg-slate-900 p-6 rounded-lg border border-slate-800 space-y-8 group-hover:border-slate-700 transition-colors">
-                <ChevronRight className="absolute top-3 right-3 w-4 h-4 text-slate-600" />
+            <Link href="/luck" className="flex group rounded-lg overflow-hidden border border-slate-800 group-hover:border-slate-700 transition-colors">
+              <div className="flex-1 bg-slate-900 p-6 space-y-8">
                 <div>
                   <div className="flex justify-between mb-2">
                     <span className="text-slate-400 font-medium">Points For vs Average</span>
@@ -159,6 +158,9 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
                   <CenteredBar value={stats.pa_vs_avg} isGoodWhenPositive={false} />
                 </div>
               </div>
+              <div className="bg-slate-900 border-l border-slate-800 flex items-center px-3">
+                <ChevronRight className="w-4 h-4 text-slate-600" />
+              </div>
             </Link>
           </section>
 
@@ -167,9 +169,8 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                 <Swords className="text-yellow-400" /> High-Stakes Clutchness
               </h2>
-              <Link href="/clutchness" className="block group">
-                <div className="relative bg-slate-900 p-6 rounded-lg border border-slate-800 group-hover:border-slate-700 transition-colors">
-                  <ChevronRight className="absolute top-3 right-3 w-4 h-4 text-slate-600" />
+              <Link href="/clutchness" className="flex group rounded-lg overflow-hidden border border-slate-800 group-hover:border-slate-700 transition-colors">
+                <div className="flex-1 bg-slate-900 p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <div className="text-slate-400 text-sm mb-1">Regular Season PPG</div>
@@ -188,6 +189,9 @@ export default async function ManagerProfile({ params }: { params: Promise<{ id:
                     </div>
                   </div>
                   <CenteredBar value={clutchnessData.differential} isGoodWhenPositive={true} />
+                </div>
+                <div className="bg-slate-900 border-l border-slate-800 flex items-center px-3">
+                  <ChevronRight className="w-4 h-4 text-slate-600" />
                 </div>
               </Link>
             </section>

@@ -354,7 +354,7 @@ export default function MatrixPage() {
               {half.map((stats, i) => {
                 const index = col * Math.ceil(dominanceStats.length / 2) + i;
                 return (
-                  <button key={stats.manager} onClick={() => setSelectedDominance(stats.manager)} className={`relative w-full text-left border border-slate-800 rounded-lg p-4 hover:border-slate-700 transition-colors flex items-center justify-between cursor-pointer ${
+                  <button key={stats.manager} onClick={() => setSelectedDominance(stats.manager)} className={`relative w-full text-left border border-slate-800 rounded-lg p-4 pr-8 hover:border-slate-700 transition-colors flex items-center justify-between cursor-pointer ${
                     stats.netDominance > 0 ? 'bg-emerald-400/5' :
                     stats.netDominance < 0 ? 'bg-red-400/5' : 'bg-slate-900/50'
                   }`}>

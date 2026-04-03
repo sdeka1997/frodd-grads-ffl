@@ -143,7 +143,7 @@ export default function LuckPage() {
   }) => (
     <button
       onClick={() => setSelectedManager({ ...manager, focus })}
-      className={`relative ${colorFn(value)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity w-full cursor-pointer`}
+      className={`relative ${colorFn(value)} border rounded-lg p-3 pr-8 flex items-center justify-between hover:opacity-80 transition-opacity w-full cursor-pointer`}
     >
       <div className="flex items-center gap-3">
         <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>

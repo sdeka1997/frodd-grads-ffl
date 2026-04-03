@@ -123,6 +123,7 @@ function SeasonsContent() {
           <table className="w-full text-sm text-left">
             <thead className="text-xs text-slate-400 uppercase bg-slate-950/50 border-b border-slate-800">
               <tr>
+                <th className="px-3 py-4 w-8"></th>
                 <th className="px-6 py-4 cursor-pointer group hover:bg-slate-800 transition-colors whitespace-nowrap" onClick={() => handleSort('playoff_finish')}>
                   <div className="flex items-center">Standing {getSortIcon('playoff_finish')}</div>
                 </th>
@@ -141,7 +142,6 @@ function SeasonsContent() {
                 <th className="px-6 py-4 cursor-pointer group hover:bg-slate-800 transition-colors whitespace-nowrap" onClick={() => handleSort('pa')}>
                   <div className="flex items-center justify-end">Points Against {getSortIcon('pa')}</div>
                 </th>
-                <th className="px-3 py-4 w-8"></th>
               </tr>
             </thead>
             <tbody>
@@ -151,6 +151,9 @@ function SeasonsContent() {
                   onClick={() => setSelectedTeam(team)}
                   className="border-b border-slate-800/50 hover:bg-slate-800/50 transition-colors group cursor-pointer"
                 >
+                  <td className="px-3 py-4">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-600" />
+                  </td>
                   <td className="px-6 py-4">
                     {team.playoff_finish ? (
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
@@ -186,9 +189,6 @@ function SeasonsContent() {
                   </td>
                   <td className="px-6 py-4 text-right text-slate-400">
                     {team.regular_season.pa.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                  </td>
-                  <td className="px-3 py-4">
-                    <Maximize2 className="w-3.5 h-3.5 text-slate-600" />
                   </td>
                 </tr>
               ))}
