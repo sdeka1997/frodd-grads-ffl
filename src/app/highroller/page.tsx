@@ -264,7 +264,8 @@ function HighRollerContent() {
                 const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
                 const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
                 return (
-                  <button key={year} style={{ minWidth: '85%' }} onClick={() => { if (wasDragging.current) { wasDragging.current = false; return; } setSelectedSeasonYear(year); }} className="bg-slate-900 border border-slate-800 rounded-xl p-6 select-none w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
+                  <button key={year} style={{ minWidth: '85%' }} onClick={() => { if (wasDragging.current) { wasDragging.current = false; return; } setSelectedSeasonYear(year); }} className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 select-none w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
+                    <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-bold text-white">{year} Season</h3>
                       <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
@@ -303,7 +304,8 @@ function HighRollerContent() {
             const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
             const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
             return (
-              <button key={year} onClick={() => setSelectedSeasonYear(year)} className="bg-slate-900 border border-slate-800 rounded-xl p-6 w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
+              <button key={year} onClick={() => setSelectedSeasonYear(year)} className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
+                <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-2xl font-bold text-white">{year} Season</h3>
                   <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
