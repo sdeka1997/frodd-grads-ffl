@@ -140,12 +140,6 @@ export default function NavBar() {
 
   useEffect(() => {
     closeSidebar();
-    if (window.innerWidth >= 768) return;
-    if (window.location.hash) return; // let anchor handle scroll
-    const h1 = document.querySelector('main h1');
-    if (!h1) return;
-    const top = h1.getBoundingClientRect().top + window.scrollY - 16;
-    window.scrollTo(0, Math.max(0, top));
   }, [pathname]);
 
   if (pathname === '/') return null;
