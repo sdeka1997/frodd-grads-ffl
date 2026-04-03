@@ -2,8 +2,19 @@
 
 import AllStarCountdown from '@/components/AllStarCountdown';
 import AllStarSchedule from '@/components/AllStarSchedule';
-import { Star } from 'lucide-react';
+import { Star, Users, CalendarDays, Swords, Dices, Zap, LayoutGrid, TrendingUp, Trophy } from 'lucide-react';
 import Link from 'next/link';
+
+const NAV_CARDS = [
+  { href: '/managers',   icon: Users,        label: 'Managers',         sub: 'Career stats & profiles' },
+  { href: '/seasons',    icon: CalendarDays, label: 'Seasons',          sub: 'Year-by-year breakdowns' },
+  { href: '/rivalries',  icon: Swords,       label: 'Rivalries',        sub: 'Head-to-head records' },
+  { href: '/luck',       icon: Dices,        label: 'Luck Index',       sub: 'Who got lucky' },
+  { href: '/clutchness', icon: Zap,          label: 'Clutchness',       sub: 'Playoff performance' },
+  { href: '/matrix',     icon: LayoutGrid,   label: 'Supremacy Matrix', sub: 'Who owns who' },
+  { href: '/shotgun',    icon: TrendingUp,   label: 'Shotgun',          sub: 'High score records' },
+  { href: '/highroller', icon: Trophy,       label: 'High Roller',      sub: 'Earnings leaderboard' },
+];
 
 export default function LandingPage() {
   return (
@@ -30,13 +41,20 @@ export default function LandingPage() {
             Enter Site
           </Link>
 
-          {/* Mobile CTA */}
-          <Link
-            href="/dashboard"
-            className="md:hidden inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
-          >
-            Enter the Analytics Hub
-          </Link>
+          {/* Mobile nav grid */}
+          <div className="md:hidden grid grid-cols-2 gap-2">
+            {NAV_CARDS.map(({ href, icon: Icon, label, sub }) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex flex-col gap-1 bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 hover:border-emerald-500/50 hover:bg-slate-800 transition-colors"
+              >
+                <Icon className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-sm font-semibold text-slate-100 leading-tight">{label}</span>
+                <span className="text-xs text-slate-500 leading-tight">{sub}</span>
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Right: schedule (desktop only) */}
