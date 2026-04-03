@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { getPlayoffClutchness } from '@/utils/dataProcessing';
 import { getManagerHighStakesGames, type HighStakesGame } from '@/utils/highStakesGames';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
-import { BarChart3, Trophy, Target, X, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
+import { BarChart3, Trophy, Target, X, TrendingUp, TrendingDown, Expand } from 'lucide-react';
 import CollapsibleLegend from '@/components/CollapsibleLegend';
 
 function HighStakesModal({ managerName, regularPPG, onClose }: { managerName: string; regularPPG: number; onClose: () => void }) {
@@ -239,7 +239,7 @@ export default function ClutchnessPage() {
                   <button
                     key={manager.name}
                     onClick={() => setSelectedManager(manager.name)}
-                    className={`border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors text-left w-full cursor-pointer ${
+                    className={`relative border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:border-slate-700 transition-colors text-left w-full cursor-pointer ${
                       manager.differential > 0 ? 'bg-emerald-400/5' : 'bg-red-400/5'
                     }`}
                   >
@@ -273,8 +273,8 @@ export default function ClutchnessPage() {
                       <div className="text-xs text-slate-500">
                         {manager.playoffGames} high-stakes games
                       </div>
-                      <Maximize2 className="w-3.5 h-3.5 text-slate-500 mt-1 ml-auto" />
                     </div>
+                    <Expand className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
                   </button>
                 );
               })}

@@ -1,7 +1,7 @@
 "use client";
 
 import { getWeeklyLowScores, getShotgunStats } from '@/utils/dataProcessing';
-import { Beer, TrendingDown, Calendar, Zap, Maximize2 } from 'lucide-react';
+import { Beer, TrendingDown, Calendar, Zap, Expand } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { useState } from 'react';
 import WeekLeaderboardModal from '@/components/WeekLeaderboardModal';
@@ -38,14 +38,14 @@ function ShotgunContent() {
   const ManagerTile = ({ stats }: { stats: typeof shotgunStats[number] }) => (
     <button
       onClick={() => setSelectedManager(stats.manager)}
-      className="bg-slate-900 border border-slate-800 rounded-xl p-6 block w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
+      className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 block w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
     >
+      <Expand className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
         <div className="flex items-center gap-2 text-red-400">
           <Beer className="w-5 h-5" />
           <span className="text-2xl font-bold">{stats.totalShotguns}</span>
-          <Maximize2 className="w-3.5 h-3.5 text-slate-500" />
         </div>
       </div>
       <div className="space-y-3">
@@ -187,8 +187,9 @@ function ShotgunContent() {
                 <button
                   key={`${low.year}-${low.week}-${low.manager}`}
                   onClick={() => setSelectedWeek({ year: low.year, week: low.week, manager: low.manager })}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
+                  className="relative bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
+                  <Expand className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
                       <Calendar className="w-4 h-4" />
@@ -199,12 +200,9 @@ function ShotgunContent() {
                       <span className="text-lg font-bold text-white">{low.manager}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-red-400">{low.points}</div>
-                      <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
-                    </div>
-                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-red-400">{low.points}</div>
+                    <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
                   </div>
                 </button>
               ))}
@@ -228,8 +226,9 @@ function ShotgunContent() {
                 <button
                   key={`${low.year}-${low.week}-${low.manager}`}
                   onClick={() => setSelectedWeek({ year: low.year, week: low.week, manager: low.manager })}
-                  className="bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
+                  className="relative bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
+                  <Expand className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
                       <Calendar className="w-4 h-4" />
@@ -240,12 +239,9 @@ function ShotgunContent() {
                       <span className="text-lg font-bold text-white">{low.manager}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="text-right">
-                      <div className="text-2xl font-bold text-red-400">{low.points}</div>
-                      <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
-                    </div>
-                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-red-400">{low.points}</div>
+                    <div className="text-xs text-slate-500 uppercase font-bold">Points</div>
                   </div>
                 </button>
               ))}

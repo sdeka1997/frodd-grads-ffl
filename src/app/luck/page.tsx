@@ -3,7 +3,7 @@
 import { getLuckIndex, getManagerScoringByYear } from '@/utils/dataProcessing';
 import CenteredBar from '@/components/CenteredBar';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList, Cell, ReferenceLine } from 'recharts';
-import { ScatterChart as ScatterIcon, X, Maximize2 } from 'lucide-react';
+import { ScatterChart as ScatterIcon, X, Expand } from 'lucide-react';
 import { useState } from 'react';
 import { useModalEscape } from '@/hooks/useModalEscape';
 import Link from 'next/link';
@@ -143,16 +143,14 @@ export default function LuckPage() {
   }) => (
     <button
       onClick={() => setSelectedManager({ ...manager, focus })}
-      className={`${colorFn(value)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity w-full cursor-pointer`}
+      className={`relative ${colorFn(value)} border rounded-lg p-3 flex items-center justify-between hover:opacity-80 transition-opacity w-full cursor-pointer`}
     >
       <div className="flex items-center gap-3">
         <div className="flex items-center justify-center w-6 h-6 bg-slate-800 rounded-full text-xs font-bold text-slate-300">{index + 1}</div>
         <span className="font-medium text-white">{manager.name}</span>
       </div>
-      <div className="flex items-center gap-2">
-        <div className="text-xl font-bold">{value > 0 ? '+' : ''}{value}</div>
-        <Maximize2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-      </div>
+      <div className="text-xl font-bold">{value > 0 ? '+' : ''}{value}</div>
+      <Expand className="absolute top-1.5 right-1.5 w-3 h-3 text-slate-400" />
     </button>
   );
 
