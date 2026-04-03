@@ -53,7 +53,7 @@ export default function LandingPage() {
           {/* Mobile CTA */}
           <Link
             href="/dashboard"
-            className="md:hidden self-start inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors"
+            className="md:hidden flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 px-8 rounded-xl text-lg transition-colors w-full"
           >
             <Star className="w-5 h-5" />
             Enter Analytics Hub
