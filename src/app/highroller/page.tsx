@@ -1,7 +1,7 @@
 "use client";
 
 import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing';
-import { DollarSign, TrendingUp, Calendar, Crown, Sparkles, X, Expand } from 'lucide-react';
+import { DollarSign, TrendingUp, Calendar, Crown, Sparkles, X, Maximize2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import React, { useState, useRef } from 'react';
 import { useModalEscape } from '@/hooks/useModalEscape';
@@ -117,7 +117,7 @@ function HighRollerContent() {
       onClick={() => setSelectedManager(stats.manager)}
       className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
     >
-      <Expand className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
+      <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white">{stats.manager}</h3>
         <div className="text-right">
@@ -351,9 +351,9 @@ function HighRollerContent() {
                 <button
                   key={`${high.year}-${high.week}-${high.manager}`}
                   onClick={() => setSelectedWeek({ year: high.year, week: high.week, manager: high.manager })}
-                  className="relative bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
+                  className="relative bg-slate-900 border border-slate-800 rounded-lg p-4 pr-8 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
-                  <Expand className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
+                  <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
                       <Calendar className="w-4 h-4" />
@@ -388,9 +388,9 @@ function HighRollerContent() {
                 <button
                   key={`${high.year}-${high.week}-${high.manager}`}
                   onClick={() => setSelectedWeek({ year: high.year, week: high.week, manager: high.manager })}
-                  className="relative bg-slate-900 border border-slate-800 rounded-lg p-4 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
+                  className="relative bg-slate-900 border border-slate-800 rounded-lg p-4 pr-8 flex items-center justify-between hover:bg-slate-800/50 hover:border-slate-700 transition-colors cursor-pointer w-full text-left"
                 >
-                  <Expand className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
+                  <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-400 font-mono text-sm">
                       <Calendar className="w-4 h-4" />

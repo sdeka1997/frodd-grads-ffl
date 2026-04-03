@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { History } from 'lucide-react';
+import { History, Maximize2 } from 'lucide-react';
 import { SeasonTeam } from '@/utils/dataProcessing';
 import SeasonModal from '@/components/SeasonModal';
 
@@ -33,8 +33,9 @@ export default function TeamHistorySection({ history }: { history: HistoryEntry[
           <button
             key={h.year}
             onClick={() => setSelected(h)}
-            className="bg-slate-900 p-4 rounded-lg border border-slate-800 flex justify-between items-center hover:border-slate-700 transition-colors w-full text-left cursor-pointer"
+            className="relative bg-slate-900 p-4 rounded-lg border border-slate-800 flex justify-between items-center hover:border-slate-700 transition-colors w-full text-left cursor-pointer pr-8"
           >
+            <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-400" />
             <div>
               <span className="text-emerald-400 font-bold mr-3">{h.year}</span>
               <span className="font-medium text-lg">{h.team.team}</span>
