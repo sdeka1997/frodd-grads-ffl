@@ -9,11 +9,10 @@ export const schedule2026 = [
     accent: 'border-l-yellow-400',
     headColor: 'text-yellow-400',
     events: [
-      { time: '12PM', text: 'Check-In',   sub: 'Airbnb',              star: false },
-      { time: '5PM',  text: 'Happy Hour', sub: "Marcela's",             star: false },
-      { time: '8PM',  text: 'Dinner',     sub: 'Brooklyn',            star: false },
-      { time: '11PM', text: 'Pre-Game',   sub: 'Airbnb',              star: false },
-      { time: '1AM',  text: 'CamelPhat',  sub: 'Brooklyn Storehouse', star: true  },
+      { time: '4PM',  end: undefined, text: 'Check-In',   sub: 'Airbnb',              star: false },
+      { time: '5PM',  end: '7PM',     text: 'Happy Hour', sub: "Marcela's",            star: false },
+      { time: '9PM',  end: '1AM',     text: 'Pre-Game',   sub: 'Airbnb',              star: false },
+      { time: '1AM',  end: '3AM',     text: 'CamelPhat',  sub: 'Brooklyn Storehouse', star: true  },
     ],
   },
   {
@@ -22,12 +21,11 @@ export const schedule2026 = [
     accent: 'border-l-blue-400',
     headColor: 'text-blue-400',
     events: [
-      { time: '12PM', text: 'Football',       sub: 'Sternberg Park',  star: false },
-      { time: '2PM',  text: 'Lunch',          sub: "L'Industrie",     star: false },
-      { time: '3PM',  text: 'Sacko',          sub: 'Union Square',    star: true  },
-      { time: '4PM',  text: 'Rooftop DJ Set', sub: 'The Italic',      star: false },
-      { time: '7PM',  text: 'Dinner',         sub: 'Manhattan',       star: false },
-      { time: '9PM',  text: 'Beer Olympics',  sub: 'Airbnb',          star: false },
+      { time: '11AM', end: '1PM',     text: 'Football',       sub: 'Sternberg Park',       star: false },
+      { time: '2PM',  end: undefined, text: 'Sacko',          sub: 'Union Square',         star: true  },
+      { time: '5PM',  end: '7PM',    text: 'Basketball',     sub: 'The Post BK (Dobbin)', star: false },
+      { time: '9PM',  end: '11PM',   text: 'Reunion Dinner', sub: 'Antidote',             star: false },
+      { time: '11PM', end: '1AM',    text: 'Beer Olympics',  sub: 'Airbnb',               star: false },
     ],
   },
   {
@@ -36,9 +34,8 @@ export const schedule2026 = [
     accent: 'border-l-purple-400',
     headColor: 'text-purple-400',
     events: [
-      { time: '11AM', text: 'Basketball',     sub: 'Sternberg Park', star: false },
-      { time: '1PM',  text: 'Farewell Lunch', sub: 'Brooklyn',      star: false },
-      { time: '3PM',  text: 'Check-Out',      sub: 'Airbnb',         star: false },
+      { time: '11AM', end: undefined, text: 'Check-Out',      sub: 'Airbnb',  star: false },
+      { time: '12PM', end: undefined, text: 'Farewell Brunch', sub: 'TBD',     star: false },
     ],
   },
 ];
@@ -50,9 +47,9 @@ export function getCurrentEventKey(now: Date): string | null {
   if (d === 11 && h < 3) return 'Friday-1AM';
   const mins = h * 60 + now.getMinutes();
   const days: [number, string, [string, number][]][] = [
-    [10, 'Friday',   [['12PM', 12*60], ['5PM', 17*60], ['8PM', 20*60], ['11PM', 23*60], ['1AM', 25*60]]],
-    [11, 'Saturday', [['12PM', 12*60], ['2PM', 14*60], ['3PM', 15*60], ['4PM', 16*60], ['7PM', 19*60], ['9PM', 21*60]]],
-    [12, 'Sunday',   [['11AM', 11*60], ['1PM', 13*60], ['3PM', 15*60]]],
+    [10, 'Friday',   [['4PM', 16*60], ['5PM', 17*60], ['9PM', 21*60], ['1AM', 25*60]]],
+    [11, 'Saturday', [['11AM', 11*60], ['2PM', 14*60], ['5PM', 17*60], ['9PM', 21*60], ['11PM', 23*60]]],
+    [12, 'Sunday',   [['11AM', 11*60], ['12PM', 12*60]]],
   ];
   const entry = days.find(([date]) => date === d);
   if (!entry) return null;
@@ -62,6 +59,44 @@ export function getCurrentEventKey(now: Date): string | null {
     if (mins >= startMin) key = `${dayName}-${time}`;
   }
   return key;
+}
+
+function EventTimeline({ day, currentKey }: { day: typeof schedule2026[0]; currentKey: string | null }) {
+  return (
+    <div>
+      {day.events.map((ev, i) => {
+        const isLast = i === day.events.length - 1;
+        const evKey = `${day.day}-${ev.time}`;
+        const isCurrent = currentKey === evKey;
+        const dotColor = isCurrent ? 'bg-white ring-2 ring-white/30' : ev.star ? 'bg-yellow-300' : 'bg-slate-600';
+
+        const isRange = !!ev.end;
+
+        return (
+          <div key={`${ev.time}-${i}`} className="flex gap-3">
+            {/* Timeline spine */}
+            <div className="flex flex-col items-center w-3 shrink-0">
+              {isRange
+                ? <div className={`w-1.5 rounded-full shrink-0 mt-1 ${isCurrent ? 'bg-white' : ev.star ? 'bg-yellow-300' : 'bg-slate-500'}`} style={{ height: '2.25rem' }} />
+                : <div className={`w-2.5 h-2.5 rounded-full mt-1 shrink-0 ${dotColor}`} />
+              }
+              {!isLast && <div className="w-px flex-1 min-h-[1rem] bg-slate-700 mt-1" />}
+            </div>
+            {/* Content */}
+            <div className={`${isLast ? 'pb-0' : 'pb-4'} min-w-0`}>
+              <div className="font-mono text-[10px] text-slate-500 leading-none mb-0.5">
+                {ev.time}{ev.end ? ` – ${ev.end}` : ''}
+              </div>
+              <div className={`text-sm font-medium leading-snug ${ev.star ? 'text-yellow-300' : isCurrent ? 'text-white' : 'text-slate-200'}`}>
+                {ev.text}
+              </div>
+              {ev.sub && <div className="text-xs text-slate-500 mt-0.5">{ev.sub}</div>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 function ScheduleCard({ day, currentKey, cardBg, className = '' }: {
@@ -74,24 +109,7 @@ function ScheduleCard({ day, currentKey, cardBg, className = '' }: {
     <div className={`rounded-xl border border-l-4 ${cardBg} ${day.accent} p-5 ${className}`}>
       <div className={`font-bold text-base ${day.headColor}`}>{day.day}</div>
       <div className="text-slate-500 text-xs mb-4">{day.date}</div>
-      <div className="space-y-3">
-        {day.events.map((ev, i) => {
-          const evKey = `${day.day}-${ev.time}`;
-          const isCurrent = currentKey === evKey;
-          return (
-            <div
-              key={`${ev.time}-${i}`}
-              className={`flex gap-3 items-start rounded-lg ${isCurrent ? 'bg-white/5 px-2 py-1.5 -mx-2' : ''}`}
-            >
-              <span className="font-mono text-xs text-slate-500 w-10 shrink-0 pt-0.5">{ev.time}</span>
-              <div>
-                <div className={`text-sm font-medium leading-snug ${ev.star ? 'text-yellow-300' : 'text-slate-200'}`}>{ev.text}</div>
-                {ev.sub && <div className="text-xs text-slate-500 mt-0.5">{ev.sub}</div>}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <EventTimeline day={day} currentKey={currentKey} />
     </div>
   );
 }
@@ -184,24 +202,7 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
               <div className={`bg-slate-900 border border-slate-800 border-l-4 ${day.accent} rounded-xl p-5 h-full ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
                 <div className={`font-bold text-base ${day.headColor}`}>{day.day}</div>
                 <div className="text-slate-500 text-xs mb-4">{day.date}</div>
-                <div className="space-y-3">
-                  {day.events.map((ev, i) => {
-                    const evKey = `${day.day}-${ev.time}`;
-                    const isCurrent = currentKey === evKey;
-                    return (
-                      <div
-                        key={`${ev.time}-${i}`}
-                        className={`flex gap-3 items-start rounded-lg ${isCurrent ? 'bg-white/5 px-2 py-1.5 -mx-2' : ''}`}
-                      >
-                        <span className="font-mono text-xs text-slate-500 w-10 shrink-0 pt-0.5">{ev.time}</span>
-                        <div>
-                          <div className={`text-sm font-medium leading-snug ${ev.star ? 'text-yellow-300' : 'text-slate-200'}`}>{ev.text}</div>
-                          {ev.sub && <div className="text-xs text-slate-500 mt-0.5">{ev.sub}</div>}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                <EventTimeline day={day} currentKey={currentKey} />
               </div>
             </div>
           );
