@@ -34,7 +34,12 @@ export default function Home() {
           </p>
         </div>
 
-        <HallOfFameStack managers={hallOfFame} maxChamps={maxChamps} />
+        <div>
+          <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
+            <Trophy className="text-yellow-400 w-5 h-5" /> Hall of Fame
+          </h2>
+          <HallOfFameStack managers={hallOfFame} maxChamps={maxChamps} />
+        </div>
 
         <div className="grid grid-cols-2 gap-2">
           {NAV_CARDS.map(({ href, icon: Icon, label, sub }) => (
