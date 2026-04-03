@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { getLeagueData, SeasonTeam } from '@/utils/dataProcessing';
-import { Calendar, Medal, ArrowUpDown, Trash2 } from 'lucide-react';
+import { Calendar, Medal, ArrowUpDown, Trash2, Maximize2 } from 'lucide-react';
 import Link from 'next/link';
 import SeasonModal from '@/components/SeasonModal';
 
@@ -141,6 +141,7 @@ function SeasonsContent() {
                 <th className="px-6 py-4 cursor-pointer group hover:bg-slate-800 transition-colors whitespace-nowrap" onClick={() => handleSort('pa')}>
                   <div className="flex items-center justify-end">Points Against {getSortIcon('pa')}</div>
                 </th>
+                <th className="px-3 py-4 w-8"></th>
               </tr>
             </thead>
             <tbody>
@@ -185,6 +186,9 @@ function SeasonsContent() {
                   </td>
                   <td className="px-6 py-4 text-right text-slate-400">
                     {team.regular_season.pa.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  </td>
+                  <td className="px-3 py-4">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-600" />
                   </td>
                 </tr>
               ))}

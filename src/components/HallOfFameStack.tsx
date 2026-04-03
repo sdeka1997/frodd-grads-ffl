@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { Medal } from 'lucide-react';
+import { Medal, ChevronRight } from 'lucide-react';
 
 type Manager = {
   manager: string;
@@ -116,13 +116,14 @@ export default function HallOfFameStack({
                 draggable={false}
               >
                 <div className={`bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden h-full ${isTop ? 'cursor-grab active:cursor-grabbing' : ''}`}>
-                  <div className="absolute top-0 right-0 p-4">
+                  <div className="absolute top-0 left-0 p-4">
                     <Medal className={`w-6 h-6 ${
                       manager.championships === maxChamps ? 'text-yellow-400' :
                       manager.championships === maxChamps - 1 ? 'text-slate-300' :
                       'text-amber-600'
                     }`} />
                   </div>
+                  <ChevronRight className="absolute top-3 right-3 w-4 h-4 text-slate-600" />
                   <h3 className="text-2xl font-bold mb-2">{manager.manager}</h3>
                   <div className="text-4xl font-black text-emerald-400 mb-2">
                     {manager.championships}{' '}

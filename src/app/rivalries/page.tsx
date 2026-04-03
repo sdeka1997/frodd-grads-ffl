@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { getAllH2HManagers, getLifetimeH2H } from '@/utils/h2hProcessing';
 import { getCurrentManagers } from '@/utils/dataProcessing';
 import { getH2HGameLog, type H2HGame } from '@/utils/h2hGameLog';
-import { Swords, Trophy, History, X } from 'lucide-react';
+import { Swords, Trophy, History, X, Maximize2 } from 'lucide-react';
 import { useModalEscape } from '@/hooks/useModalEscape';
 
 function GameLogModal({
@@ -210,8 +210,9 @@ function RivalriesContent() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <button
                 onClick={() => regularGames.length > 0 && setActiveModal('regular')}
-                className={`bg-slate-950/50 p-6 rounded-xl border border-slate-800 text-center space-y-2 w-full transition-colors ${regularGames.length > 0 ? 'hover:border-slate-600 cursor-pointer' : 'cursor-default'}`}
+                className={`relative bg-slate-950/50 p-6 rounded-xl border border-slate-800 text-center space-y-2 w-full transition-colors ${regularGames.length > 0 ? 'hover:border-slate-600 cursor-pointer' : 'cursor-default'}`}
               >
+                {regularGames.length > 0 && <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-500" />}
                 <div className="flex justify-center mb-2"><History className="text-blue-400 w-6 h-6" /></div>
                 <div className="text-slate-500 text-xs font-bold uppercase tracking-wider">Regular Season</div>
                 <div className={`text-4xl font-black ${getDominanceColor(stats.regular.wins, stats.regular.losses)}`}>
@@ -221,8 +222,9 @@ function RivalriesContent() {
 
               <button
                 onClick={() => games.length > 0 && setActiveModal('total')}
-                className={`bg-slate-950/50 p-6 rounded-xl border border-slate-800 text-center space-y-2 transform md:scale-110 md:-translate-y-2 ring-2 ring-emerald-500/20 shadow-2xl w-full transition-colors ${games.length > 0 ? 'hover:border-slate-600 cursor-pointer' : 'cursor-default'}`}
+                className={`relative bg-slate-950/50 p-6 rounded-xl border border-slate-800 text-center space-y-2 transform md:scale-110 md:-translate-y-2 ring-2 ring-emerald-500/20 shadow-2xl w-full transition-colors ${games.length > 0 ? 'hover:border-slate-600 cursor-pointer' : 'cursor-default'}`}
               >
+                {games.length > 0 && <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-500" />}
                 <div className="flex justify-center mb-2"><Swords className="text-emerald-400 w-8 h-8" /></div>
                 <div className="text-emerald-400/80 text-xs font-bold uppercase tracking-wider">Lifetime Series</div>
                 <div className={`text-5xl font-black ${getDominanceColor(stats.total.wins, stats.total.losses)}`}>
@@ -235,8 +237,9 @@ function RivalriesContent() {
 
               <button
                 onClick={() => playoffGames.length > 0 && setActiveModal('playoffs')}
-                className={`bg-slate-950/50 p-6 rounded-xl border border-slate-800 text-center space-y-2 w-full transition-colors ${playoffGames.length > 0 ? 'hover:border-slate-600 cursor-pointer' : 'cursor-default'}`}
+                className={`relative bg-slate-950/50 p-6 rounded-xl border border-slate-800 text-center space-y-2 w-full transition-colors ${playoffGames.length > 0 ? 'hover:border-slate-600 cursor-pointer' : 'cursor-default'}`}
               >
+                {playoffGames.length > 0 && <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-500" />}
                 <div className="flex justify-center mb-2"><Trophy className="text-yellow-400 w-6 h-6" /></div>
                 <div className="text-slate-500 text-xs font-bold uppercase tracking-wider">Postseason</div>
                 <div className={`text-4xl font-black ${getDominanceColor(stats.playoffs.wins, stats.playoffs.losses)}`}>

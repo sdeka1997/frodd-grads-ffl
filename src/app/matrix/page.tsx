@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { getCurrentManagers } from '@/utils/dataProcessing';
 import { getLifetimeH2H } from '@/utils/h2hProcessing';
 import { getH2HGameLog, type H2HGame } from '@/utils/h2hGameLog';
-import { Grid3X3, Trophy, Target, Users, X, TrendingUp, TrendingDown } from 'lucide-react';
+import { Grid3X3, Trophy, Target, Users, X, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
 import CollapsibleLegend from '@/components/CollapsibleLegend';
 
 function DominanceModal({ manager, onClose }: { manager: string; onClose: () => void }) {
@@ -281,7 +281,7 @@ export default function MatrixPage() {
       {/* SUPREMACY MATRIX */}
       <section>
         <p className="text-xs text-slate-500 mb-3 px-1">
-          <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>.
+          <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>. Tap a tile to see the H2H game log.
         </p>
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
@@ -354,7 +354,7 @@ export default function MatrixPage() {
               {half.map((stats, i) => {
                 const index = col * Math.ceil(dominanceStats.length / 2) + i;
                 return (
-                  <button key={stats.manager} onClick={() => setSelectedDominance(stats.manager)} className={`w-full text-left border border-slate-800 rounded-lg p-4 hover:border-slate-700 transition-colors flex items-center justify-between cursor-pointer ${
+                  <button key={stats.manager} onClick={() => setSelectedDominance(stats.manager)} className={`relative w-full text-left border border-slate-800 rounded-lg p-4 hover:border-slate-700 transition-colors flex items-center justify-between cursor-pointer ${
                     stats.netDominance > 0 ? 'bg-emerald-400/5' :
                     stats.netDominance < 0 ? 'bg-red-400/5' : 'bg-slate-900/50'
                   }`}>
@@ -390,6 +390,7 @@ export default function MatrixPage() {
                         Net dominance
                       </div>
                     </div>
+                    <Maximize2 className="absolute top-2 right-2 w-3.5 h-3.5 text-slate-500" />
                   </button>
                 );
               })}
