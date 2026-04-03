@@ -47,6 +47,10 @@ export default function NavBar() {
   const [fabPulse, setFabPulse] = useState(false);
 
   useEffect(() => {
+    history.scrollRestoration = 'manual';
+  }, []);
+
+  useEffect(() => {
     if (!localStorage.getItem('fab-hint-shown')) {
       const t = setTimeout(() => {
         setFabPulse(true);
