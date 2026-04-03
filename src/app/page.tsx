@@ -1,9 +1,11 @@
-"use client";
-
 import AllStarCountdown from '@/components/AllStarCountdown';
 import AllStarSchedule from '@/components/AllStarSchedule';
+import HallOfFameStack from '@/components/HallOfFameStack';
+import { getCumulativeRecords } from '@/utils/dataProcessing';
 import { Star, Users, CalendarDays, Swords, Dices, Zap, LayoutGrid, TrendingUp, Trophy } from 'lucide-react';
 import Link from 'next/link';
+
+const ALL_STAR_END = new Date('2026-04-13T00:00:00');
 
 const NAV_CARDS = [
   { href: '/managers',   icon: Users,        label: 'Managers',         sub: 'Career stats & profiles' },
@@ -17,20 +19,38 @@ const NAV_CARDS = [
 ];
 
 export default function LandingPage() {
+  const allStarPassed = new Date() > ALL_STAR_END;
+
+  let hallOfFame: { manager: string; championships: number; wins: number; losses: number }[] = [];
+  let maxChamps = 0;
+  if (allStarPassed) {
+    const records = getCumulativeRecords();
+    hallOfFame = records
+      .filter(r => r.championships > 0)
+      .sort((a, b) => b.championships - a.championships);
+    maxChamps = Math.max(...hallOfFame.map(r => r.championships));
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-6xl grid md:grid-cols-2 gap-12 md:gap-16 items-center">
 
-        {/* Left: hero + countdown + CTA */}
+        {/* Left: hero + main content + CTAs */}
         <div className="flex flex-col gap-8">
           <div>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
               The <span className="text-emerald-400">Frodd Grads</span> Hub
             </h1>
-            <p className="text-slate-400 text-lg">All-Star Weekend 2026 is coming.</p>
+            <p className="text-slate-400 text-lg">
+              {allStarPassed ? 'The complete digital home for the Frodd Grads.' : 'All-Star Weekend 2026 is coming.'}
+            </p>
           </div>
 
-          <AllStarCountdown />
+          {/* Before All-Star: countdown. After: Hall of Fame on mobile */}
+          {allStarPassed
+            ? <div className="md:hidden"><HallOfFameStack managers={hallOfFame} maxChamps={maxChamps} /></div>
+            : <AllStarCountdown />
+          }
 
           {/* Desktop CTA */}
           <Link
@@ -57,10 +77,12 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Right: schedule (desktop only) */}
-        <div className="hidden md:block">
-          <AllStarSchedule />
-        </div>
+        {/* Right: schedule on desktop before All-Star only */}
+        {!allStarPassed && (
+          <div className="hidden md:block">
+            <AllStarSchedule />
+          </div>
+        )}
 
       </div>
     </div>
