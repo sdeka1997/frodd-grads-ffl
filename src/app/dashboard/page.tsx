@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <>
       {/* ── Mobile layout ── */}
-      <div className="md:hidden flex flex-col gap-8 py-12">
+      <div className="md:hidden flex flex-col gap-8">
         <div>
           <h1 className="text-4xl font-extrabold tracking-tight mb-3">
             The <span className="text-emerald-400">Frodd Grads</span> Hub
