@@ -173,9 +173,9 @@ export default function NavBar() {
     <>
       <nav className="border-b border-slate-800 bg-slate-900 sticky top-0 z-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
+          <div className="flex items-center justify-between h-16">
 
-            {/* Mobile: 🏈 + page name — left aligned */}
+            {/* Mobile: 🏈 logo — left aligned */}
             <div className="md:hidden">
               <Link
                 href="/"
@@ -187,6 +187,17 @@ export default function NavBar() {
                 <span className="text-emerald-400">FFL</span>
               </Link>
             </div>
+
+            {/* Mobile: hamburger — right aligned */}
+            <button
+              className="md:hidden text-slate-300 hover:text-white p-2 rounded-md transition-colors"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="Open navigation"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
 
             {/* Desktop: logo + nav links */}
             <Link
