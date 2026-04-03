@@ -164,7 +164,7 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
 
   return (
     <div className="md:hidden flex flex-col items-center gap-5">
-      <div className="relative w-full" style={{ height: '380px' }}>
+      <div className="relative w-full" style={{ height: '460px' }}>
         {[...visibleDays].reverse().map((day, reversedPos) => {
           const stackPos = visibleDays.length - 1 - reversedPos;
           const isTop = stackPos === 0;
