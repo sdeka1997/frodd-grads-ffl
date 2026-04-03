@@ -75,7 +75,7 @@ export default function AllStarCountdown() {
         </div>
 
         <Link
-          href="/allstar"
+          href="/allstar#year-selector"
           className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg transition-colors"
         >
           <Star className="w-5 h-5" />

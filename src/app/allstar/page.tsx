@@ -154,7 +154,7 @@ export default function AllStarPage() {
       </header>
 
       {/* YEAR SELECTOR */}
-      <section>
+      <section id="year-selector">
         {/* Mobile: full-width grid chips */}
         <div className="grid md:hidden gap-2" style={{ gridTemplateColumns: `repeat(${allStarYears.length}, 1fr)` }}>
           {allStarYears.map((yearData) => (
