@@ -23,7 +23,7 @@ export const schedule2026 = [
     events: [
       { time: '11AM', end: '1PM',     text: 'Football',       sub: 'Sternberg Park',       star: false },
       { time: '2PM',  end: undefined, text: 'Sacko',          sub: 'Union Square',         star: true  },
-      { time: '5PM',  end: '7PM',    text: 'Basketball',     sub: 'The Post BK (Dobbin)', star: false },
+      { time: '5PM',  end: '7PM',    text: 'Basketball',     sub: 'MADE HMBL Gym',        star: false },
       { time: '9PM',  end: '11PM',   text: 'Reunion Dinner', sub: 'Antidote',             star: false },
       { time: '11PM', end: '1AM',    text: 'Beer Olympics',  sub: 'Airbnb',               star: false },
     ],
