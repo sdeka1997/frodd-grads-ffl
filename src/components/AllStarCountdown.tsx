@@ -75,18 +75,12 @@ export default function AllStarCountdown() {
         </div>
 
         <Link
-          href="/allstar#year-selector"
-          className="md:hidden inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg transition-colors"
-        >
-          <Star className="w-5 h-5" />
-          View All-Star Schedule
-        </Link>
-        <Link
           href="/allstar"
-          className="hidden md:inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg transition-colors"
+          className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 px-6 rounded-lg transition-colors"
         >
           <Star className="w-5 h-5" />
-          View All-Star Memories
+          <span className="md:hidden">View All-Star Schedule</span>
+          <span className="hidden md:inline">View All-Star Memories</span>
         </Link>
       </div>
     </section>
