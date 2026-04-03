@@ -38,7 +38,7 @@ function ShotgunContent() {
   const ManagerTile = ({ stats }: { stats: typeof shotgunStats[number] }) => (
     <button
       onClick={() => setSelectedManager(stats.manager)}
-      className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 block w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
+      className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 pr-8 block w-full text-left hover:border-slate-700 transition-colors cursor-pointer"
     >
       <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
       <div className="flex items-center justify-between mb-4">
