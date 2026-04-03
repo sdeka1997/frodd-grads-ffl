@@ -128,7 +128,15 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dismissDir, setDismissDir] = useState<'left' | 'right' | null>(null);
+  const [deckHeight, setDeckHeight] = useState<number | null>(null);
+  const measureRefs = useRef<(HTMLDivElement | null)[]>([]);
   const startXRef = useRef(0);
+
+  useEffect(() => {
+    const heights = measureRefs.current.map(el => el?.offsetHeight ?? 0);
+    const max = Math.max(...heights);
+    if (max > 0) setDeckHeight(max + 18); // 18px accounts for stack offset
+  }, []);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (dismissDir) return;
@@ -164,7 +172,17 @@ function MobileScheduleDeck({ currentKey }: { currentKey: string | null }) {
 
   return (
     <div className="md:hidden flex flex-col items-center gap-5">
-      <div className="relative w-full" style={{ height: '460px' }}>
+      {/* Hidden measurement renders */}
+      <div className="absolute invisible pointer-events-none w-full" aria-hidden>
+        {schedule2026.map((day, i) => (
+          <div key={day.day} ref={el => { measureRefs.current[i] = el; }} className="bg-slate-900 border border-slate-800 border-l-4 rounded-xl p-5">
+            <div className="font-bold text-base">{day.day}</div>
+            <div className="text-xs mb-4">{day.date}</div>
+            <EventTimeline day={day} currentKey={null} />
+          </div>
+        ))}
+      </div>
+      <div className="relative w-full" style={{ height: deckHeight ? `${deckHeight}px` : '460px' }}>
         {[...visibleDays].reverse().map((day, reversedPos) => {
           const stackPos = visibleDays.length - 1 - reversedPos;
           const isTop = stackPos === 0;
