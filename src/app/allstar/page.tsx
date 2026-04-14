@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Upload, Star, Calendar, MapPin, Users, Heart } from 'lucide-react';
-import AllStarSchedule from '@/components/AllStarSchedule';
+// ALL-STAR SCHEDULE: uncomment each year before the event, update the year check below
+// import AllStarSchedule from '@/components/AllStarSchedule';
 
 interface Photo {
   src: string;
@@ -242,8 +243,8 @@ export default function AllStarPage() {
             <div className="border-t border-slate-700"></div>
           </div>
 
-          {/* Schedule - 2026 only */}
-          {selectedYear === '2026' && (
+          {/* ALL-STAR SCHEDULE: uncomment for the upcoming year, update the year check and re-enable the import above */}
+          {/* {selectedYear === '2026' && (
             <div className="pt-8">
               <h3 className="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-yellow-400" />
@@ -252,7 +253,7 @@ export default function AllStarPage() {
               <AllStarSchedule />
               <div className="mt-8 border-t border-slate-700" />
             </div>
-          )}
+          )} */}
 
           {/* Photos/Upload Section */}
           <div className="pt-8">
