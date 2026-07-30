@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 type DropdownName = 'history' | 'analytics' | null;
 
 const PAGE_NAMES: Record<string, string> = {
+  '/rules': 'Rules',
   '/managers': 'Managers',
   '/seasons': 'Seasons',
   '/shotgun': 'Shotgun',
@@ -151,7 +152,7 @@ export default function NavBar() {
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
-  const inHistory = ['/managers', '/seasons', '/rivalries'].some(p => isActive(p));
+  const inHistory = ['/managers', '/seasons', '/rivalries', '/allstar'].some(p => isActive(p));
   const inAnalytics = ['/luck', '/clutchness', '/matrix', '/shotgun', '/highroller'].some(p => isActive(p));
 
 
@@ -214,6 +215,9 @@ export default function NavBar() {
               <Link href="/dashboard" className={desktopLinkClass(isActive('/dashboard'))} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
+              <Link href="/rules" className={desktopLinkClass(isActive('/rules'))} onClick={() => setOpen(null)}>
+                Rules
+              </Link>
               <div className="relative pb-1" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
                 <button className={`${desktopLinkClass(inHistory)} flex items-center gap-1`}>
                   League History {chevron(open === 'history')}
@@ -223,6 +227,7 @@ export default function NavBar() {
                     <Link href="/managers" className={desktopDropdownItemClass(isActive('/managers'))} onClick={() => setOpen(null)}>Managers</Link>
                     <Link href="/seasons" className={desktopDropdownItemClass(isActive('/seasons'))} onClick={() => setOpen(null)}>Seasons</Link>
                     <Link href="/rivalries" className={desktopDropdownItemClass(isActive('/rivalries'))} onClick={() => setOpen(null)}>Rivalries</Link>
+                    <Link href="/allstar" className={desktopDropdownItemClass(isActive('/allstar'))} onClick={() => setOpen(null)}>All-Star</Link>
                   </div>
                 )}
               </div>
@@ -240,16 +245,11 @@ export default function NavBar() {
                   </div>
                 )}
               </div>
-              <Link href="/allstar" className={desktopLinkClass(isActive('/allstar'))} onClick={() => setOpen(null)}>
-                All-Star
-              </Link>
             </div>
           </div>
         </div>
 
       </nav>
-
-      {/* Mobile FAB — bottom-left, opens bottom sheet */}
       <button
         className={`fixed bottom-6 left-4 z-[9997] md:hidden bg-slate-800 border border-slate-700 text-slate-100 rounded-full p-3.5 hover:bg-slate-700 transition-colors fab-glow ${fabPulse ? 'fab-pulse' : ''}`}
         onClick={() => setSidebarOpen(true)}
@@ -287,6 +287,13 @@ export default function NavBar() {
 
           <div className="border-t border-slate-800" />
 
+          <Link href="/rules" scroll={false}
+            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/rules') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
+            onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
+          >Rules</Link>
+
+          <div className="border-t border-slate-800" />
+
           <button
             className={`w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors ${inHistory ? 'text-emerald-400' : 'text-slate-300'}`}
             onClick={() => setSidebarExpanded(s => ({ ...s, history: !s.history }))}
@@ -299,6 +306,7 @@ export default function NavBar() {
                 { href: '/managers', label: 'Managers' },
                 { href: '/seasons', label: 'Seasons' },
                 { href: '/rivalries', label: 'Rivalries' },
+                { href: '/allstar', label: 'All-Star' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href} scroll={false}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
@@ -332,13 +340,6 @@ export default function NavBar() {
               ))}
             </div>
           )}
-
-          <div className="border-t border-slate-800" />
-
-          <Link href="/allstar" scroll={false}
-            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/allstar') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
-            onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
-          >All-Star</Link>
 
           <div className="border-t border-slate-800" />
         </div>
