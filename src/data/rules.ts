@@ -228,8 +228,8 @@ export const rulesYears: RulesYear[] = [
     sackoTeamCount: 4,
     sackoWeeks: [
       { week: 'Week 15', detail: '9v10, 11v12' },
-      { week: 'Week 16', detail: '9v11, 10v12' },
-      { week: 'Week 17', detail: '9v12, 10v11' },
+      { week: 'Week 16', detail: '9v12, 10v11' },
+      { week: 'Week 17', detail: '9v11, 10v12' },
     ],
     sackoPunishment: 'The Sacko will be awarded to the team with the worst 17-game record among the bottom four.',
     sackoWarning: 'Failure to complete the Sacko results in removal from the league.',

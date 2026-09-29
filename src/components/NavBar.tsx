@@ -17,11 +17,13 @@ const PAGE_NAMES: Record<string, string> = {
   '/matrix': 'Supremacy Matrix',
   '/rivalries': 'Rivalries',
   '/allstar': 'All-Star',
+  '/median': 'Median What-If',
 };
 
 function getPageName(path: string): string | null {
   if (PAGE_NAMES[path]) return PAGE_NAMES[path];
   if (path.startsWith('/managers/')) return 'Managers';
+  if (path.startsWith('/median/')) return 'Median What-If';
   return null;
 }
 
@@ -153,7 +155,7 @@ export default function NavBar() {
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
   const inHistory = ['/managers', '/seasons', '/rivalries', '/allstar'].some(p => isActive(p));
-  const inAnalytics = ['/luck', '/clutchness', '/matrix', '/shotgun', '/highroller'].some(p => isActive(p));
+  const inAnalytics = ['/luck', '/clutchness', '/matrix', '/shotgun', '/highroller', '/median'].some(p => isActive(p));
 
 
   const desktopLinkClass = (active: boolean) =>
@@ -242,6 +244,7 @@ export default function NavBar() {
                     <Link href="/matrix" className={desktopDropdownItemClass(isActive('/matrix'))} onClick={() => setOpen(null)}>Supremacy Matrix</Link>
                     <Link href="/shotgun" className={desktopDropdownItemClass(isActive('/shotgun'))} onClick={() => setOpen(null)}>Shotgun</Link>
                     <Link href="/highroller" className={desktopDropdownItemClass(isActive('/highroller'))} onClick={() => setOpen(null)}>High Roller</Link>
+                    <Link href="/median" className={desktopDropdownItemClass(isActive('/median'))} onClick={() => setOpen(null)}>Median What-If</Link>
                   </div>
                 )}
               </div>
@@ -332,6 +335,7 @@ export default function NavBar() {
                 { href: '/matrix', label: 'Supremacy Matrix' },
                 { href: '/shotgun', label: 'Shotgun' },
                 { href: '/highroller', label: 'High Roller' },
+                { href: '/median', label: 'Median What-If' },
               ].map(({ href, label }) => (
                 <Link key={href} href={href} scroll={false}
                   className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${isActive(href) ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
