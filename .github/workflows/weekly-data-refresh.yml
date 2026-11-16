@@ -39,15 +39,19 @@ jobs:
       - name: Refresh data (fetch, parse, sync, archive check)
         run: npm run data:all
 
+      # "New results" means the data the site reads changed. The raw Sleeper download
+      # (src/data/archive) also carries rosters etc. that change without new scores;
+      # on its own that is logged but not committed.
       - name: Check for new results
         id: diff
         run: |
-          if [ -z "$(git status --porcelain -- src/data)" ]; then
+          git status --short -- src/data
+          node scripts/archive_diff.mjs
+          if [ -z "$(git status --porcelain -- src/data ':!src/data/archive')" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No new results; nothing to commit."
+            echo "No new results for the site; nothing to commit."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            git status --short -- src/data
           fi
 
       # Never commit data that would break the site
