@@ -52,7 +52,8 @@ Always run `verify:archive` before committing data changes.
 (7–8am Pacific), after Monday night's games and Tuesday's stat corrections. It:
 
 1. runs `npm run data:all`, which fails if a Sleeper fetch fails or a final season would change,
-2. stops quietly if nothing changed (e.g. the off-season),
+2. stops quietly if the data the site reads didn't change (off-season, or no newly scored week).
+   Changes only in the raw download (`src/data/archive`, e.g. roster moves) are logged, not committed,
 3. builds the site with the new data, so data that breaks the build is never committed,
 4. commits only `src/data/` to `main` ("Weekly data refresh: 2026 through week N"), and Vercel redeploys.
 
