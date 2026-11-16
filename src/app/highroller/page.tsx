@@ -240,7 +240,7 @@ function HighRollerContent() {
           <h2 className="text-3xl font-bold flex items-center gap-2">
             <Sparkles className="text-blue-400" /> Season Summary
           </h2>
-          <p className="text-slate-400 mt-2">Total money distributed each season.</p>
+          <p className="text-slate-400 mt-2">Weekly high-score winners each season.</p>
         </div>
 
         {/* Mobile: swipeable carousel */}
@@ -261,7 +261,6 @@ function HighRollerContent() {
             >
               {years.map(year => {
                 const yearHighs = weeklyHighs.filter(h => h.year === year);
-                const totalPayout = yearHighs.length * 15;
                 const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
                 const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
                 const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
@@ -273,7 +272,6 @@ function HighRollerContent() {
                       {year} Season
                       {isInProgress(year) && <span className="ml-2 align-middle text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded border border-amber-500/40 bg-amber-500/10 text-amber-300">In progress</span>}
                     </h3>
-                      <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div><div className="text-slate-400">Total Weeks</div><div className="text-xl font-bold text-white">{yearHighs.length}</div></div>
@@ -304,7 +302,6 @@ function HighRollerContent() {
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {years.map(year => {
             const yearHighs = weeklyHighs.filter(h => h.year === year);
-            const totalPayout = yearHighs.length * 15;
             const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
             const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
             const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
@@ -316,7 +313,6 @@ function HighRollerContent() {
                       {year} Season
                       {isInProgress(year) && <span className="ml-2 align-middle text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded border border-amber-500/40 bg-amber-500/10 text-amber-300">In progress</span>}
                     </h3>
-                  <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div><div className="text-slate-400">Total Weeks</div><div className="text-xl font-bold text-white">{yearHighs.length}</div></div>
