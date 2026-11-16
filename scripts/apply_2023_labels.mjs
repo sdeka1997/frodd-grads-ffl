@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+import { assertWritable } from './lib/seasons.mjs';
 
 const labels2023 = {
     15: [
@@ -27,6 +28,7 @@ const labels2023 = {
 
 async function main() {
     const filePath = "src/data/matchups/2023_espn.json";
+    assertWritable(2023, filePath);
     const data = JSON.parse(await fs.readFile(filePath, "utf8"));
 
     data.matchups.forEach(m => {

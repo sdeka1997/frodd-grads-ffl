@@ -1,0 +1,14 @@
+{
+  "_comment": "Every league season. status 'final' = locked archive: no script may rewrite its data (set ALLOW_ARCHIVE_EDIT=1 for a deliberate, reviewed fix). 'in_progress' = the current season, refreshed from the platform. When a season ends, flip it to 'final'.",
+  "espnLeagueId": "19580891",
+  "seasons": [
+    { "year": 2019, "platform": "espn", "status": "final" },
+    { "year": 2020, "platform": "espn", "status": "final" },
+    { "year": 2021, "platform": "espn", "status": "final" },
+    { "year": 2022, "platform": "espn", "status": "final" },
+    { "year": 2023, "platform": "espn", "status": "final" },
+    { "year": 2024, "platform": "espn", "status": "final" },
+    { "year": 2025, "platform": "sleeper", "status": "final", "leagueId": "1253749630043181056" },
+    { "year": 2026, "platform": "sleeper", "status": "in_progress", "leagueId": "1387600957575028736" }
+  ]
+}

@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { isFinal, archiveEditAllowed } from './lib/seasons.mjs';
 
 function getOrdinal(rank) {
     if (rank === 1) return "1st";
@@ -17,6 +18,17 @@ async function main() {
     };
 
     const h2hData = { seasons: {} };
+
+    // Locked (final) seasons keep their committed entries verbatim, so manual corrections
+    // (e.g. the 2020 Sacko order) survive a resync. Only in-progress seasons are recomputed.
+    const readCommitted = async (file) => {
+        try { return JSON.parse(await fs.readFile(path.join('src', 'data', file), 'utf8')); }
+        catch { return { seasons: {} }; }
+    };
+    const committedFfl = await readCommitted('ffl_data.json');
+    const committedH2H = await readCommitted('head_to_head.json');
+    const isLocked = (year) => isFinal(year) && !archiveEditAllowed()
+        && committedFfl.seasons?.[year] !== undefined && committedH2H.seasons?.[year] !== undefined;
     const managerStats = {}; 
 
     const matchupsDir = path.join('src', 'data', 'matchups');
@@ -231,7 +243,8 @@ async function main() {
             // Build Year Output
             const yearOutput = [];
             for (const [name, stats] of Object.entries(statsByOwner)) {
-                const rank = finalStandings[name] || 0;
+                const lockedEntry = isLocked(year) ? committedFfl.seasons[year].find(e => e.owner === name) : null;
+                const rank = lockedEntry ? (parseInt(lockedEntry.playoff_finish) || 0) : (finalStandings[name] || 0);
                 const entry = {
                     owner: name,
                     team: stats.teamName,
@@ -279,8 +292,8 @@ async function main() {
                 if (rank === 1) mStats.championships++;
             }
 
-            fflData.seasons[year] = yearOutput;
-            h2hData.seasons[year] = yearH2H;
+            fflData.seasons[year] = isLocked(year) ? committedFfl.seasons[year] : yearOutput;
+            h2hData.seasons[year] = isLocked(year) ? committedH2H.seasons[year] : yearH2H;
             console.log(`Successfully synced year ${year}`);
 
         } catch (e) {
