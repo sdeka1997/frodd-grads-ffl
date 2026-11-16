@@ -46,6 +46,23 @@ npm run data:all        # all four in order
 
 Always run `verify:archive` before committing data changes.
 
+## Automatic weekly refresh
+
+`.github/workflows/weekly-data-refresh.yml` runs every **Wednesday at 15:00 UTC**
+(7–8am Pacific), after Monday night's games and Tuesday's stat corrections. It:
+
+1. runs `npm run data:all`, which fails if a Sleeper fetch fails or a final season would change,
+2. stops quietly if nothing changed (e.g. the off-season),
+3. builds the site with the new data, so data that breaks the build is never committed,
+4. commits only `src/data/` to `main` ("Weekly data refresh: 2026 through week N"), and Vercel redeploys.
+
+To refresh now, open GitHub → Actions → *Weekly data refresh* → **Run workflow**.
+Tick *Dry run* to see what would change without committing.
+
+A failed run commits nothing and GitHub emails the repo owner. GitHub pauses scheduled
+workflows after 60 days with no repository activity. If that happens over the
+off-season, re-enable it from the Actions tab before the next season.
+
 ## Deliberate corrections to a final season
 
 Locked seasons can still be fixed on purpose:

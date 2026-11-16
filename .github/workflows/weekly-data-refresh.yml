@@ -1,0 +1,81 @@
+name: Weekly data refresh
+
+# Pulls the in-progress season from Sleeper and commits it to main, which makes
+# Vercel redeploy. Finished seasons are locked: the run fails (and commits nothing)
+# if the archive check finds any of them changed. See README_SYNC.md.
+
+on:
+  schedule:
+    # Wednesdays 15:00 UTC (7-8am Pacific / 10-11am Eastern), after Monday night's
+    # games and Tuesday's stat corrections are final.
+    - cron: '0 15 * * 3'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run: refresh and build, but do not commit'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Fails on any Sleeper fetch error, or if a final season would change
+      - name: Refresh data (fetch, parse, sync, archive check)
+        run: npm run data:all
+
+      - name: Check for new results
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- src/data)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No new results; nothing to commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git status --short -- src/data
+          fi
+
+      # Never commit data that would break the site
+      - name: Build the site with the new data
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true' && inputs.dry_run != true
+        run: |
+          summary=$(node -e '
+            const fs = require("fs");
+            const { seasons } = JSON.parse(fs.readFileSync("src/data/seasons.json", "utf8"));
+            const live = seasons.filter(s => s.status === "in_progress").map(s => {
+              const f = `src/data/matchups/${s.year}_${s.platform}.json`;
+              const week = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")).settings.lastScoredWeek : undefined;
+              return week ? `${s.year} through week ${week}` : `${s.year}`;
+            });
+            process.stdout.write(live.join(", ") || "current season");
+          ')
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data
+          git commit -m "Weekly data refresh: ${summary}"
+          git push
+
+      - name: Dry run summary
+        if: steps.diff.outputs.changed == 'true' && inputs.dry_run == true
+        run: echo "Dry run; changes above were built successfully but not committed."
