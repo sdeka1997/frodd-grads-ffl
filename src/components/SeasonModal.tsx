@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import { useModalEscape } from '@/hooks/useModalEscape';
 import { SeasonTeam } from '@/utils/dataProcessing';
 import { getTeamWeeklyResults, type WeeklyResult } from '@/utils/weeklyResults';
+import { isInProgress, inProgressLabel } from '@/utils/seasons';
 
 interface Props {
   team: SeasonTeam;
@@ -70,7 +71,9 @@ export default function SeasonModal({ team, year, footerHref, footerLabel, onClo
             <h2 className="text-xl font-bold text-white">{team.team}</h2>
             <p className="text-sm text-slate-400 mt-0.5">
               {team.owner} · {year} · {wins}–{losses}
-              {team.playoff_finish && <span className="ml-2 text-slate-500">· {team.playoff_finish}</span>}
+              {isInProgress(year)
+                ? <span className="ml-2 text-amber-300/80">· {inProgressLabel(year)}</span>
+                : team.playoff_finish && <span className="ml-2 text-slate-500">· {team.playoff_finish}</span>}
             </p>
           </div>
           <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">

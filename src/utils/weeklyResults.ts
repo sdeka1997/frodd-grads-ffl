@@ -1,3 +1,4 @@
+import { loadMatchups } from './seasons';
 export interface WeeklyResult {
   week: number;
   isPlayoff: boolean;
@@ -32,7 +33,7 @@ function getDisplayLabel(isPlayoff: boolean, label: string, week: number): strin
 
 export function getTeamWeeklyResults(year: string, manager: string): WeeklyResult[] {
   try {
-    const matchupData = require(`../data/matchups/${year}_${year === '2025' ? 'sleeper' : 'espn'}.json`);
+    const matchupData = loadMatchups(year);
     const results: WeeklyResult[] = [];
 
     matchupData.matchups?.forEach((m: any) => {

@@ -1,4 +1,5 @@
 import fflData from '../data/ffl_data.json';
+import { LATEST_YEAR, loadMatchups, yearsFrom } from './seasons';
 
 export interface ManagerRecord {
   manager: string;
@@ -77,8 +78,8 @@ export const getManagerHistory = (managerName: string) => {
 };
 
 export const getCurrentManagers = (): string[] => {
-  const season2025 = getSeasonData('2025');
-  return season2025.map(t => t.owner);
+  // Managers in the newest season (the league's current members)
+  return getSeasonData(LATEST_YEAR).map(t => t.owner);
 };
 
 export const getManagerScoringByYear = (managerName: string) => {
@@ -178,11 +179,12 @@ export interface ShotgunStats {
 
 export const getWeeklyLowScores = (): WeeklyLowScore[] => {
   const lowScores: WeeklyLowScore[] = [];
-  const years = ['2023', '2024', '2025'];
+  // Shotgun tracking started in 2023 (Week 2)
+  const years = yearsFrom(2023);
 
   years.forEach(year => {
     try {
-      const matchupData = require(`../data/matchups/${year}_${year === '2025' ? 'sleeper' : 'espn'}.json`);
+      const matchupData = loadMatchups(year);
       const regularSeasonLength = matchupData.settings?.regularSeasonLength || 14;
 
       // Group scores by week
@@ -314,11 +316,12 @@ export interface HighRollerStats {
 
 export const getWeeklyHighScores = (): WeeklyHighScore[] => {
   const highScores: WeeklyHighScore[] = [];
-  const years = ['2024', '2025'];
+  // High Roller payouts started in 2024
+  const years = yearsFrom(2024);
 
   years.forEach(year => {
     try {
-      const matchupData = require(`../data/matchups/${year}_${year === '2025' ? 'sleeper' : 'espn'}.json`);
+      const matchupData = loadMatchups(year);
       const regularSeasonLength = matchupData.settings?.regularSeasonLength || 14;
 
       // Group scores by week

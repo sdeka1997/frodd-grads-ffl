@@ -1,9 +1,10 @@
+import { loadMatchups } from './seasons';
 export function getWeekScores(
   year: string,
   week: number
 ): { manager: string; points: number }[] {
   try {
-    const matchupData = require(`../data/matchups/${year}_${year === '2025' ? 'sleeper' : 'espn'}.json`);
+    const matchupData = loadMatchups(year);
     const scores: { manager: string; points: number }[] = [];
     matchupData.matchups?.forEach((m: any) => {
       if (m.period === week && !m.isPlayoff) {
