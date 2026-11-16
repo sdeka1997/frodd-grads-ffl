@@ -4,10 +4,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-type DropdownName = 'history' | 'analytics' | null;
+type DropdownName = 'rules' | 'history' | 'analytics' | null;
 
 const PAGE_NAMES: Record<string, string> = {
   '/rules': 'Rules',
+  '/rules/flex': 'Flex Schedule',
   '/managers': 'Managers',
   '/seasons': 'Seasons',
   '/shotgun': 'Shotgun',
@@ -36,7 +37,7 @@ export default function NavBar() {
 
   // Mobile bottom sheet state
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarExpanded, setSidebarExpanded] = useState({ history: true, analytics: true });
+  const [sidebarExpanded, setSidebarExpanded] = useState({ rules: true, history: true, analytics: true });
 
   // Bottom sheet drag-to-dismiss
   const [sheetDragY, setSheetDragY] = useState(0);
@@ -117,7 +118,7 @@ export default function NavBar() {
         setIsDraggingSheet(false);
         if (currentDragY.current > 80) {
           setSidebarOpen(false);
-          setSidebarExpanded({ history: true, analytics: true });
+          setSidebarExpanded({ rules: true, history: true, analytics: true });
           setSheetDragY(0);
         } else {
           setSheetDragY(0);
@@ -140,7 +141,7 @@ export default function NavBar() {
 
   const closeSidebar = () => {
     setSidebarOpen(false);
-    setSidebarExpanded({ history: true, analytics: true });
+    setSidebarExpanded({ rules: true, history: true, analytics: true });
     setSheetDragY(0);
     setIsDraggingSheet(false);
   };
@@ -217,9 +218,17 @@ export default function NavBar() {
               <Link href="/dashboard" className={desktopLinkClass(isActive('/dashboard'))} onClick={() => setOpen(null)}>
                 Dashboard
               </Link>
-              <Link href="/rules" className={desktopLinkClass(isActive('/rules'))} onClick={() => setOpen(null)}>
-                Rules
-              </Link>
+              <div className="relative pb-1" onMouseEnter={() => setOpen('rules')} onMouseLeave={() => setOpen(null)}>
+                <button className={`${desktopLinkClass(isActive('/rules'))} flex items-center gap-1`}>
+                  Rules {chevron(open === 'rules')}
+                </button>
+                {open === 'rules' && (
+                  <div className="absolute top-full left-0 w-48 bg-slate-900 border border-slate-800 rounded-md shadow-xl z-[9999]">
+                    <Link href="/rules" className={desktopDropdownItemClass(pathname === '/rules')} onClick={() => setOpen(null)}>League Rules</Link>
+                    <Link href="/rules/flex" className={desktopDropdownItemClass(isActive('/rules/flex'))} onClick={() => setOpen(null)}>Flex Schedule</Link>
+                  </div>
+                )}
+              </div>
               <div className="relative pb-1" onMouseEnter={() => setOpen('history')} onMouseLeave={() => setOpen(null)}>
                 <button className={`${desktopLinkClass(inHistory)} flex items-center gap-1`}>
                   League History {chevron(open === 'history')}
@@ -290,10 +299,25 @@ export default function NavBar() {
 
           <div className="border-t border-slate-800" />
 
-          <Link href="/rules" scroll={false}
-            className={`block px-6 py-3.5 text-sm font-medium transition-colors hover:bg-slate-800 hover:text-emerald-400 ${isActive('/rules') ? 'text-emerald-400 bg-slate-800/60' : ''}`}
-            onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
-          >Rules</Link>
+          <button
+            className={`w-full flex items-center justify-between px-6 py-3.5 text-sm font-medium hover:bg-slate-800 hover:text-emerald-400 transition-colors ${isActive('/rules') ? 'text-emerald-400' : 'text-slate-300'}`}
+            onClick={() => setSidebarExpanded(s => ({ ...s, rules: !s.rules }))}
+          >
+            Rules {chevron(sidebarExpanded.rules)}
+          </button>
+          {sidebarExpanded.rules && (
+            <div className="bg-slate-950/60">
+              {[
+                { href: '/rules', label: 'League Rules', active: pathname === '/rules' },
+                { href: '/rules/flex', label: 'Flex Schedule', active: isActive('/rules/flex') },
+              ].map(({ href, label, active }) => (
+                <Link key={href} href={href} scroll={false}
+                  className={`block px-10 py-3 text-sm transition-colors hover:text-emerald-400 ${active ? 'text-emerald-400 bg-emerald-400/5' : 'text-slate-400'}`}
+                  onClick={() => { isNavigatingRef.current = true; closeSidebar(); }}
+                >{label}</Link>
+              ))}
+            </div>
+          )}
 
           <div className="border-t border-slate-800" />
 
