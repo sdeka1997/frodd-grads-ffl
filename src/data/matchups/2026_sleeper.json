@@ -1,0 +1,990 @@
+{
+  "settings": {
+    "regularSeasonLength": 14,
+    "postSeasonLength": 3,
+    "totalPeriods": 17,
+    "playoffTeamCount": 8,
+    "status": "in_progress",
+    "lastScoredWeek": 9
+  },
+  "mappings": {
+    "teams": {
+      "1": {
+        "teamId": 1,
+        "ownerId": "649449296185393152",
+        "managerName": "Swapnav",
+        "teamName": "all’s fair in love&warren",
+        "playoffSeed": 7,
+        "finalRank": 0
+      },
+      "2": {
+        "teamId": 2,
+        "ownerId": "993281156730753024",
+        "managerName": "Nikhil",
+        "teamName": "It Matters. ",
+        "playoffSeed": 3,
+        "finalRank": 0
+      },
+      "3": {
+        "teamId": 3,
+        "ownerId": "727988023450505216",
+        "managerName": "Asad",
+        "teamName": "Bhayshul Bhai",
+        "playoffSeed": 7,
+        "finalRank": 0
+      },
+      "4": {
+        "teamId": 4,
+        "ownerId": "1253774743752937472",
+        "managerName": "Arun",
+        "teamName": "PantomimeKane",
+        "playoffSeed": 4,
+        "finalRank": 0
+      },
+      "5": {
+        "teamId": 5,
+        "ownerId": "994333195090866176",
+        "managerName": "Ameesh",
+        "teamName": "Brian Cortese",
+        "playoffSeed": 3,
+        "finalRank": 0
+      },
+      "6": {
+        "teamId": 6,
+        "ownerId": "994330569154539520",
+        "managerName": "Ro B",
+        "teamName": "ICEMAN SZN",
+        "playoffSeed": 5,
+        "finalRank": 0
+      },
+      "7": {
+        "teamId": 7,
+        "ownerId": "994051773549633536",
+        "managerName": "Smeet",
+        "teamName": "#Swacko",
+        "playoffSeed": 6,
+        "finalRank": 0
+      },
+      "8": {
+        "teamId": 8,
+        "ownerId": "1154199635821522944",
+        "managerName": "Ro K",
+        "teamName": "rokrish96",
+        "playoffSeed": 4,
+        "finalRank": 0
+      },
+      "9": {
+        "teamId": 9,
+        "ownerId": "994326168872550400",
+        "managerName": "Manuj",
+        "teamName": "The Blue Tent",
+        "playoffSeed": 6,
+        "finalRank": 0
+      },
+      "10": {
+        "teamId": 10,
+        "ownerId": "1260468517744943104",
+        "managerName": "Palanki",
+        "teamName": "It Doesn’t Matter.",
+        "playoffSeed": 5,
+        "finalRank": 0
+      },
+      "11": {
+        "teamId": 11,
+        "ownerId": "996065541934620672",
+        "managerName": "Sai",
+        "teamName": "Falafel over Rice ",
+        "playoffSeed": 1,
+        "finalRank": 0
+      },
+      "12": {
+        "teamId": 12,
+        "ownerId": "996604246772576256",
+        "managerName": "Shrey",
+        "teamName": "Cookin’ with Kraft cheese",
+        "playoffSeed": 3,
+        "finalRank": 0
+      }
+    },
+    "owners": {
+      "649449296185393152": "Swapnav",
+      "993281156730753024": "Nikhil",
+      "727988023450505216": "Asad",
+      "1253774743752937472": "Arun",
+      "994333195090866176": "Ameesh",
+      "994330569154539520": "Ro B",
+      "994051773549633536": "Smeet",
+      "1154199635821522944": "Ro K",
+      "994326168872550400": "Manuj",
+      "1260468517744943104": "Palanki",
+      "996065541934620672": "Sai",
+      "996604246772576256": "Shrey"
+    }
+  },
+  "matchups": [
+    {
+      "period": 1,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 170.54
+      },
+      "away": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 116.96
+      }
+    },
+    {
+      "period": 1,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 127.8
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 104.46
+      }
+    },
+    {
+      "period": 1,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 99.46
+      },
+      "away": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 124.52
+      }
+    },
+    {
+      "period": 1,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 106.44
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 83.54
+      }
+    },
+    {
+      "period": 1,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 90.8
+      },
+      "away": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 110.96
+      }
+    },
+    {
+      "period": 1,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 78.32
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 91.76
+      }
+    },
+    {
+      "period": 2,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 119.84
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 82.78
+      }
+    },
+    {
+      "period": 2,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 79.9
+      },
+      "away": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 55.72
+      }
+    },
+    {
+      "period": 2,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 100.68
+      },
+      "away": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 111.06
+      }
+    },
+    {
+      "period": 2,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 122.52
+      },
+      "away": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 88.98
+      }
+    },
+    {
+      "period": 2,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 116.92
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 101.88
+      }
+    },
+    {
+      "period": 2,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 82.48
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 90.36
+      }
+    },
+    {
+      "period": 3,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 79.44
+      },
+      "away": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 101.66
+      }
+    },
+    {
+      "period": 3,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 128.84
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 88.14
+      }
+    },
+    {
+      "period": 3,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 99.68
+      },
+      "away": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 100.04
+      }
+    },
+    {
+      "period": 3,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 86.34
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 95.16
+      }
+    },
+    {
+      "period": 3,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 99.12
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 121.82
+      }
+    },
+    {
+      "period": 3,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 125.58
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 99.8
+      }
+    },
+    {
+      "period": 4,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 119.88
+      },
+      "away": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 111.3
+      }
+    },
+    {
+      "period": 4,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 143.48
+      },
+      "away": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 90.52
+      }
+    },
+    {
+      "period": 4,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 109.62
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 104.2
+      }
+    },
+    {
+      "period": 4,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 135.56
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 79.66
+      }
+    },
+    {
+      "period": 4,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 113.22
+      },
+      "away": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 86.5
+      }
+    },
+    {
+      "period": 4,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 80.76
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 82.54
+      }
+    },
+    {
+      "period": 5,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 133.44
+      },
+      "away": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 81.28
+      }
+    },
+    {
+      "period": 5,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 133.58
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 118.1
+      }
+    },
+    {
+      "period": 5,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 107.54
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 92.72
+      }
+    },
+    {
+      "period": 5,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 136.84
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 86.32
+      }
+    },
+    {
+      "period": 5,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 95.6
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 118.04
+      }
+    },
+    {
+      "period": 5,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 137.06
+      },
+      "away": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 86.54
+      }
+    },
+    {
+      "period": 6,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 146.8
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 85.6
+      }
+    },
+    {
+      "period": 6,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 89.72
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 116.44
+      }
+    },
+    {
+      "period": 6,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 97.96
+      },
+      "away": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 69.38
+      }
+    },
+    {
+      "period": 6,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 101.58
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 111.46
+      }
+    },
+    {
+      "period": 6,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 84.3
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 75.22
+      }
+    },
+    {
+      "period": 6,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 88.04
+      },
+      "away": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 64.72
+      }
+    },
+    {
+      "period": 7,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 82.92
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 115.56
+      }
+    },
+    {
+      "period": 7,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 106.52
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 103.8
+      }
+    },
+    {
+      "period": 7,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 107.08
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 103.82
+      }
+    },
+    {
+      "period": 7,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 77.44
+      },
+      "away": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 87.7
+      }
+    },
+    {
+      "period": 7,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 89.02
+      },
+      "away": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 113.68
+      }
+    },
+    {
+      "period": 7,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 98.22
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 70
+      }
+    },
+    {
+      "period": 8,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 130
+      },
+      "away": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 129.48
+      }
+    },
+    {
+      "period": 8,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 98.22
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 83.36
+      }
+    },
+    {
+      "period": 8,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 82.16
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 121.26
+      }
+    },
+    {
+      "period": 8,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 134.88
+      },
+      "away": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 135.3
+      }
+    },
+    {
+      "period": 8,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 71.08
+      },
+      "away": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 110.7
+      }
+    },
+    {
+      "period": 8,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 82.3
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 89.48
+      }
+    },
+    {
+      "period": 9,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 3,
+        "manager": "Asad",
+        "points": 135.6
+      },
+      "away": {
+        "teamId": 12,
+        "manager": "Shrey",
+        "points": 99.58
+      }
+    },
+    {
+      "period": 9,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 1,
+        "manager": "Swapnav",
+        "points": 114.68
+      },
+      "away": {
+        "teamId": 4,
+        "manager": "Arun",
+        "points": 93.14
+      }
+    },
+    {
+      "period": 9,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 8,
+        "manager": "Ro K",
+        "points": 82.2
+      },
+      "away": {
+        "teamId": 9,
+        "manager": "Manuj",
+        "points": 95.18
+      }
+    },
+    {
+      "period": 9,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 6,
+        "manager": "Ro B",
+        "points": 98.06
+      },
+      "away": {
+        "teamId": 10,
+        "manager": "Palanki",
+        "points": 90.06
+      }
+    },
+    {
+      "period": 9,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "HOME",
+      "home": {
+        "teamId": 5,
+        "manager": "Ameesh",
+        "points": 89.24
+      },
+      "away": {
+        "teamId": 11,
+        "manager": "Sai",
+        "points": 84.74
+      }
+    },
+    {
+      "period": 9,
+      "isPlayoff": false,
+      "label": "",
+      "winner": "AWAY",
+      "home": {
+        "teamId": 2,
+        "manager": "Nikhil",
+        "points": 107.16
+      },
+      "away": {
+        "teamId": 7,
+        "manager": "Smeet",
+        "points": 109.78
+      }
+    }
+  ]
+}

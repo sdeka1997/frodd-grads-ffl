@@ -39,7 +39,7 @@ async function fetchESPNSeason(year, views = ['mTeam', 'mRoster', 'mSettings', '
 }
 
 async function fetchSleeperData(leagueId, endpoint) {
-    const res = await fetch(`https://api.sleeper.app/v1/league/${leagueId}/${endpoint}`);
+    const res = await fetch(`https://api.sleeper.app/v1/league/${leagueId}${endpoint ? `/${endpoint}` : ''}`);
     if (!res.ok) throw new Error(`Failed to fetch Sleeper endpoint: ${endpoint}`);
     return res.json();
 }
@@ -67,41 +67,38 @@ async function main() {
             console.log(`Successfully archived ESPN data for ${year}`);
         } catch (e) {
             console.error(`Failed to archive ESPN data for ${year}:`, e);
+            process.exitCode = 1;
         }
     }
 
     for (const { year, leagueId, status } of SLEEPER_SEASONS) {
         const archivePath = path.join('src', 'data', 'archive', `matchups_sleeper_${year}.json`);
+        const inProgress = status !== 'final';
 
-        if (status !== 'final') {
-            // In-progress seasons need score-aware handling (unplayed / partial weeks); not wired up yet.
-            console.log(`Skipping ${year}: in-progress season refresh is handled separately.`);
-            continue;
+        if (!inProgress) {
+            // Final seasons are fetched once (backfill) and never again
+            if (await fileExists(archivePath)) {
+                console.log(`Archived Sleeper data for ${year} already exists, skipping fetch.`);
+                continue;
+            }
+            assertWritable(year, archivePath);
         }
-        if (await fileExists(archivePath)) {
-            console.log(`Archived Sleeper data for ${year} already exists, skipping fetch.`);
-            continue;
-        }
-        assertWritable(year, archivePath);
 
         try {
-            console.log(`Fetching Sleeper season ${year}...`);
-            
-            console.log(`Fetching Sleeper users...`);
+            console.log(`Fetching Sleeper season ${year}${inProgress ? ' (in progress — refreshing)' : ''}...`);
+            const league = await fetchSleeperData(leagueId, '');
             const users = await fetchSleeperData(leagueId, 'users');
-            
-            console.log(`Fetching Sleeper rosters...`);
             const rosters = await fetchSleeperData(leagueId, 'rosters');
-            
-            console.log(`Fetching Sleeper winners bracket...`);
             const winnersBracket = await fetchSleeperData(leagueId, 'winners_bracket');
-
-            console.log(`Fetching Sleeper losers bracket...`);
             const losersBracket = await fetchSleeperData(leagueId, 'losers_bracket');
-            
+
+            // In-progress: only weeks Sleeper has finished scoring, so a partly played
+            // week (or an unplayed 0-0 week) never reaches the site.
+            const lastScoredWeek = league.settings?.last_scored_leg ?? Math.max(0, (league.settings?.leg ?? 1) - 1);
+            const maxWeek = inProgress ? lastScoredWeek : 18;
+
             const allMatchups = [];
-            for (let week = 1; week <= 18; week++) {
-                console.log(`Fetching Sleeper matchups for week ${week}...`);
+            for (let week = 1; week <= maxWeek; week++) {
                 const matchups = await fetchSleeperMatchups(leagueId, week);
                 if (!matchups || matchups.length === 0) break;
                 allMatchups.push({ week, matchups });
@@ -109,6 +106,8 @@ async function main() {
 
             const archiveData = {
                 year,
+                league,
+                lastScoredWeek,
                 users,
                 rosters,
                 winnersBracket,
@@ -117,9 +116,10 @@ async function main() {
             };
 
             await fs.writeFile(archivePath, JSON.stringify(archiveData, null, 2));
-            console.log(`Successfully archived Sleeper data for ${year}`);
+            console.log(`Archived Sleeper ${year}: weeks 1-${allMatchups.length} (last scored week ${lastScoredWeek}).`);
         } catch (e) {
             console.error(`Failed to archive Sleeper data for ${year}:`, e);
+            process.exitCode = 1; // fail loudly so an automated refresh never commits partial data
         }
     }
 }

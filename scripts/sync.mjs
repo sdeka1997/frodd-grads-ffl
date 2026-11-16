@@ -1,6 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { isFinal, archiveEditAllowed } from './lib/seasons.mjs';
+import { getSeason, isFinal, archiveEditAllowed } from './lib/seasons.mjs';
+
+// In-progress seasons stay out of ffl_data.json / head_to_head.json until the pages
+// can show a partial season (games shown, titles and finishes held). Flip when ready.
+const INCLUDE_IN_PROGRESS = false;
 
 function getOrdinal(rank) {
     if (rank === 1) return "1st";
@@ -40,6 +44,11 @@ async function main() {
         if (!yearMatch) continue;
         const year = parseInt(yearMatch[0]);
         const platform = file.includes('espn') ? 'espn' : 'sleeper';
+
+        if (getSeason(year)?.status !== 'final' && !INCLUDE_IN_PROGRESS) {
+            console.log(`Skipping ${year}: in-progress season is not added to the site data yet.`);
+            continue;
+        }
 
         try {
             const rawData = await fs.readFile(path.join(matchupsDir, file), 'utf8');

@@ -12,7 +12,22 @@ Data only changes when the scripts below are run and the result is committed.
   corrections (for example the 2020 Sacko order).
 - **`in_progress`**: the current season, refreshed from the platform.
 
-When a season ends and its data has been checked, change its status to `final`.
+## The in-progress season
+
+Every run re-downloads the in-progress season, but only weeks Sleeper has finished scoring
+(`last_scored_leg`). A week being played, or not yet played, never reaches the data. Season
+length and playoff size come from the league settings, and the parsed file records
+`status: "in_progress"` and `lastScoredWeek`. Rerunning with no new results changes nothing.
+
+For now the in-progress season is written to `archive/` and `matchups/` but kept out of
+`ffl_data.json` / `head_to_head.json` (`INCLUDE_IN_PROGRESS` in `scripts/sync.mjs`) until the
+pages can show a partial season.
+
+## Ending a season
+
+1. After the final week is scored, run `npm run data:all` once more and check the results.
+2. Change the season's status to `final` in `seasons.json` and commit. From then on it is locked.
+3. Add next season with its Sleeper league ID and `"status": "in_progress"`.
 
 ## Pipeline
 
