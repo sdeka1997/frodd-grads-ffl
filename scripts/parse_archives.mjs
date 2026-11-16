@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { getSeason, isFinal, archiveEditAllowed } from './lib/seasons.mjs';
 
 const OWNER_MAP = {
     "{03B69993-DB31-412A-9990-AEC4B9B7A735}": "Ameesh",
@@ -54,15 +55,24 @@ async function main() {
         const platform = file.includes('espn') ? 'espn' : 'sleeper';
         const outputPath = path.join(matchupsDir, `${year}_${platform}.json`);
 
-        // Skip existing ESPN files to preserve manual label fixes
-        if (platform === 'espn') {
-            try {
-                await fs.access(outputPath);
-                console.log(`Skipping existing ${platform.toUpperCase()} ${year} to preserve manual labels.`);
+        const season = getSeason(year);
+        if (!season) {
+            console.log(`Skipping ${file}: ${year} is not listed in src/data/seasons.json.`);
+            continue;
+        }
+        if (season.status !== 'final') {
+            console.log(`Skipping ${year}: in-progress season parsing is handled separately.`);
+            continue;
+        }
+        // Locked seasons keep their committed matchups file (it may carry manual label fixes)
+        if (isFinal(year) && !archiveEditAllowed()) {
+            let exists = true;
+            try { await fs.access(outputPath); } catch { exists = false; }
+            if (exists) {
+                console.log(`Skipping ${platform.toUpperCase()} ${year}: final season, matchups file is locked.`);
                 continue;
-            } catch {
-                // File doesn't exist, proceed with parsing
             }
+            throw new Error(`${year} is final but ${outputPath} is missing. Restore it from git, or rerun with ALLOW_ARCHIVE_EDIT=1 to rebuild it deliberately.`);
         }
         
         const filePath = path.join(archiveDir, file);

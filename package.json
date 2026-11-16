@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "data:fetch": "node scripts/repopulate_archive.mjs",
+    "data:parse": "node scripts/parse_archives.mjs",
+    "data:sync": "node scripts/sync.mjs",
+    "data:all": "npm run data:fetch && npm run data:parse && npm run data:sync && npm run verify:archive",
+    "verify:archive": "node scripts/verify_archive.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.6.0",
