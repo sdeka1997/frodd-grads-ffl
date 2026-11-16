@@ -46,3 +46,13 @@ body {
     scrollbar-width: none;
   }
 }
+
+/* Flex schedule: matchup cards drop in one by one after the draw lands */
+@keyframes flex-reveal {
+  0%   { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  100% { opacity: 1; transform: none; }
+}
+
+.flex-reveal {
+  animation: flex-reveal 0.35s ease-out both;
+}
