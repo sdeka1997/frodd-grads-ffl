@@ -40,6 +40,16 @@ const SLEEPER_USER_TO_MANAGER = {
     "drdrroro": "Palanki"
 };
 
+// Sleeper user id -> manager name (stable across display-name changes)
+const SLEEPER_USER_ID_TO_MANAGER = {
+    "649449296185393152": "Swapnav", "993281156730753024": "Nikhil",
+    "727988023450505216": "Asad", "1253774743752937472": "Arun",
+    "994333195090866176": "Ameesh", "994330569154539520": "Ro B",
+    "994051773549633536": "Smeet", "1154199635821522944": "Ro K",
+    "994326168872550400": "Manuj", "1260468517744943104": "Palanki",
+    "996065541934620672": "Sai", "996604246772576256": "Shrey",
+};
+
 async function main() {
     const archiveDir = path.join('src', 'data', 'archive');
     const matchupsDir = path.join('src', 'data', 'matchups');
@@ -60,8 +70,8 @@ async function main() {
             console.log(`Skipping ${file}: ${year} is not listed in src/data/seasons.json.`);
             continue;
         }
-        if (season.status !== 'final') {
-            console.log(`Skipping ${year}: in-progress season parsing is handled separately.`);
+        if (season.status !== 'final' && platform !== 'sleeper') {
+            console.log(`Skipping ${year}: only Sleeper seasons can be in progress.`);
             continue;
         }
         // Locked seasons keep their committed matchups file (it may carry manual label fixes)
@@ -125,17 +135,24 @@ async function main() {
             }
             
         } else if (file.startsWith('matchups_sleeper_')) {
-            // Get regular season length from rosters or default to 14
-            regularSeasonLength = data.rosters?.[0]?.settings?.wins + data.rosters?.[0]?.settings?.losses || 14;
+            if (data.league?.settings?.playoff_week_start) {
+                // Archives saved with league settings (2026+): read the real season shape
+                regularSeasonLength = data.league.settings.playoff_week_start - 1;
+                playoffTeamCount = data.league.settings.playoff_teams || 8;
+            } else {
+                // Older archives (2025): wins + losses of a finished season, default 14
+                regularSeasonLength = data.rosters?.[0]?.settings?.wins + data.rosters?.[0]?.settings?.losses || 14;
+                playoffTeamCount = 8;
+            }
             postSeasonLength = 3;
             totalPeriods = regularSeasonLength + postSeasonLength;
-            playoffTeamCount = 8; 
 
             const userIdToManager = {};
             const userIdToTeamName = {};
             if (data.users) {
                 data.users.forEach(u => {
-                    const manager = SLEEPER_USER_TO_MANAGER[u.display_name] || u.display_name;
+                    // User IDs never change; display names can, so they are only a fallback
+                    const manager = SLEEPER_USER_ID_TO_MANAGER[u.user_id] || SLEEPER_USER_TO_MANAGER[u.display_name] || u.display_name;
                     userIdToManager[u.user_id] = manager;
                     userIdToTeamName[u.user_id] = u.metadata?.team_name || u.display_name;
                 });
@@ -259,8 +276,14 @@ async function main() {
             }
         }
 
+        const settings = { regularSeasonLength, postSeasonLength, totalPeriods, playoffTeamCount };
+        if (season.status !== 'final') {
+            // Lets the site label the season as in progress and know how far it has got
+            settings.status = 'in_progress';
+            settings.lastScoredWeek = data.lastScoredWeek ?? Math.max(0, ...data.matchups.map(w => w.week));
+        }
         const yearData = {
-            settings: { regularSeasonLength, postSeasonLength, totalPeriods, playoffTeamCount },
+            settings,
             mappings: { teams: teamMapping, owners: ownerMapping },
             matchups
         };
