@@ -3,6 +3,7 @@ import { Trophy, Target, Users, CalendarDays, Swords, Dices, Zap, LayoutGrid, Tr
 import CumulativeTable from '@/components/CumulativeTable';
 import { Medal } from 'lucide-react';
 import Link from 'next/link';
+import { ALL_YEARS, LATEST_YEAR } from '@/utils/seasons';
 import HallOfFameStack from '@/components/HallOfFameStack';
 
 const NAV_CARDS = [
@@ -64,7 +65,7 @@ export default function Home() {
             The <span className="text-emerald-400">Frodd Grads</span> Hub
           </h1>
           <p className="max-w-2xl mx-auto text-lg sm:text-xl text-slate-400">
-            The complete digital home for the Frodd Grads <span className="whitespace-nowrap">(2019-2025)</span>. League history, analytics, memories, and more.
+            The complete digital home for the Frodd Grads <span className="whitespace-nowrap">({ALL_YEARS[0]}–{LATEST_YEAR})</span>. League history, analytics, memories, and more.
           </p>
         </header>
 

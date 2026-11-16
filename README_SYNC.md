@@ -19,15 +19,19 @@ Every run re-downloads the in-progress season, but only weeks Sleeper has finish
 length and playoff size come from the league settings, and the parsed file records
 `status: "in_progress"` and `lastScoredWeek`. Rerunning with no new results changes nothing.
 
-For now the in-progress season is written to `archive/` and `matchups/` but kept out of
-`ffl_data.json` / `head_to_head.json` (`INCLUDE_IN_PROGRESS` in `scripts/sync.mjs`) until the
-pages can show a partial season.
+The site shows the in-progress season's games (records, head-to-head, weekly highs and lows)
+but holds finishes, titles and Sackos until it is final; per-game averages use the weeks
+actually played. Pages get their list of seasons from `src/utils/seasons.ts`, which reads
+`seasons.json`, so no page lists years by hand. (`INCLUDE_IN_PROGRESS` in
+`scripts/sync.mjs` can keep the current season out of the site data entirely.)
 
 ## Ending a season
 
 1. After the final week is scored, run `npm run data:all` once more and check the results.
 2. Change the season's status to `final` in `seasons.json` and commit. From then on it is locked.
 3. Add next season with its Sleeper league ID and `"status": "in_progress"`.
+4. To include the finished season in the Median What-If pages, add its playoff format to
+   `FORMATS` in `src/utils/medianScoring.ts` (that page only replays final seasons).
 
 ## Pipeline
 

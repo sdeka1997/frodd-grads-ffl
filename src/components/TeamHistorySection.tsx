@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { History, Maximize2 } from 'lucide-react';
 import { SeasonTeam } from '@/utils/dataProcessing';
 import SeasonModal from '@/components/SeasonModal';
+import { isInProgress } from '@/utils/seasons';
 
 interface HistoryEntry {
   year: string;
@@ -41,7 +42,11 @@ export default function TeamHistorySection({ history }: { history: HistoryEntry[
               <span className="font-medium text-lg">{h.team.team}</span>
             </div>
             <div className="text-right">
-              <div className="text-sm font-semibold">{h.team.playoff_finish || 'Missed Playoffs'}</div>
+              <div className="text-sm font-semibold">
+                {isInProgress(h.year)
+                  ? <span className="text-amber-300">In progress</span>
+                  : h.team.playoff_finish || 'Missed Playoffs'}
+              </div>
               <div className="text-xs text-slate-400">
                 {`${h.team.regular_season.wins}-${h.team.regular_season.losses}`}
               </div>

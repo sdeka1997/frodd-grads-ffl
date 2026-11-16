@@ -1757,6 +1757,175 @@
           }
         }
       }
+    },
+    "2026": {
+      "regular": {
+        "managers": [
+          "Swapnav",
+          "Nikhil",
+          "Asad",
+          "Arun",
+          "Ameesh",
+          "Ro B",
+          "Smeet",
+          "Ro K",
+          "Manuj",
+          "Palanki",
+          "Sai",
+          "Shrey"
+        ],
+        "matrix": {
+          "Asad": {
+            "Ro B": "1-0",
+            "Sai": "1-0",
+            "Nikhil": "1-0",
+            "Smeet": "1-0",
+            "Ameesh": "1-0",
+            "Palanki": "1-0",
+            "Manuj": "0-1",
+            "Swapnav": "0-1",
+            "Shrey": "1-0"
+          },
+          "Ro B": {
+            "Asad": "0-1",
+            "Nikhil": "0-1",
+            "Ameesh": "1-0",
+            "Manuj": "1-0",
+            "Shrey": "0-1",
+            "Ro K": "1-0",
+            "Sai": "1-0",
+            "Smeet": "0-1",
+            "Palanki": "1-0"
+          },
+          "Ro K": {
+            "Sai": "1-0",
+            "Smeet": "1-0",
+            "Palanki": "0-1",
+            "Swapnav": "0-1",
+            "Arun": "0-1",
+            "Ro B": "0-1",
+            "Nikhil": "1-0",
+            "Ameesh": "1-0",
+            "Manuj": "0-1"
+          },
+          "Sai": {
+            "Ro K": "0-1",
+            "Asad": "0-1",
+            "Smeet": "0-1",
+            "Palanki": "0-1",
+            "Swapnav": "0-1",
+            "Arun": "0-1",
+            "Ro B": "0-1",
+            "Nikhil": "1-0",
+            "Ameesh": "0-1"
+          },
+          "Nikhil": {
+            "Arun": "0-1",
+            "Ro B": "1-0",
+            "Asad": "0-1",
+            "Ameesh": "1-0",
+            "Manuj": "1-0",
+            "Shrey": "0-1",
+            "Ro K": "0-1",
+            "Sai": "0-1",
+            "Smeet": "0-1"
+          },
+          "Arun": {
+            "Nikhil": "1-0",
+            "Ameesh": "1-0",
+            "Manuj": "0-1",
+            "Shrey": "0-1",
+            "Ro K": "1-0",
+            "Sai": "1-0",
+            "Smeet": "0-1",
+            "Palanki": "0-1",
+            "Swapnav": "0-1"
+          },
+          "Smeet": {
+            "Shrey": "1-0",
+            "Ro K": "0-1",
+            "Sai": "1-0",
+            "Asad": "0-1",
+            "Palanki": "1-0",
+            "Swapnav": "0-1",
+            "Arun": "1-0",
+            "Ro B": "1-0",
+            "Nikhil": "1-0"
+          },
+          "Shrey": {
+            "Smeet": "0-1",
+            "Palanki": "0-1",
+            "Swapnav": "0-1",
+            "Arun": "1-0",
+            "Ro B": "1-0",
+            "Nikhil": "1-0",
+            "Ameesh": "0-1",
+            "Manuj": "0-1",
+            "Asad": "0-1"
+          },
+          "Swapnav": {
+            "Ameesh": "0-1",
+            "Manuj": "0-1",
+            "Shrey": "1-0",
+            "Ro K": "1-0",
+            "Sai": "1-0",
+            "Smeet": "1-0",
+            "Palanki": "1-0",
+            "Asad": "1-0",
+            "Arun": "1-0"
+          },
+          "Ameesh": {
+            "Swapnav": "1-0",
+            "Arun": "0-1",
+            "Ro B": "0-1",
+            "Nikhil": "0-1",
+            "Asad": "0-1",
+            "Manuj": "0-1",
+            "Shrey": "1-0",
+            "Ro K": "0-1",
+            "Sai": "1-0"
+          },
+          "Manuj": {
+            "Palanki": "0-1",
+            "Swapnav": "1-0",
+            "Arun": "1-0",
+            "Ro B": "0-1",
+            "Nikhil": "0-1",
+            "Ameesh": "1-0",
+            "Asad": "1-0",
+            "Shrey": "1-0",
+            "Ro K": "1-0"
+          },
+          "Palanki": {
+            "Manuj": "1-0",
+            "Shrey": "1-0",
+            "Ro K": "1-0",
+            "Sai": "1-0",
+            "Smeet": "0-1",
+            "Asad": "0-1",
+            "Swapnav": "0-1",
+            "Arun": "1-0",
+            "Ro B": "0-1"
+          }
+        }
+      },
+      "playoffs": {
+        "managers": [
+          "Swapnav",
+          "Nikhil",
+          "Asad",
+          "Arun",
+          "Ameesh",
+          "Ro B",
+          "Smeet",
+          "Ro K",
+          "Manuj",
+          "Palanki",
+          "Sai",
+          "Shrey"
+        ],
+        "matrix": {}
+      }
     }
   }
 }

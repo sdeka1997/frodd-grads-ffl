@@ -1,6 +1,7 @@
 "use client";
 
 import { getWeeklyHighScores, getHighRollerStats } from '@/utils/dataProcessing';
+import { yearsFrom, isInProgress } from '@/utils/seasons';
 import { DollarSign, TrendingUp, Calendar, Crown, Sparkles, X, Maximize2 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import React, { useState, useRef } from 'react';
@@ -63,7 +64,8 @@ function HighRollerContent() {
   const weeklyHighs = getWeeklyHighScores();
   const highRollerStats = getHighRollerStats();
 
-  const years = ['2025', '2024'];
+  // Newest first; High Roller payouts started in 2024
+  const years = [...yearsFrom(2024)].reverse();
   const [topYear, setTopYear] = useState(0);
   const [yearDragX, setYearDragX] = useState(0);
   const [isDraggingYear, setIsDraggingYear] = useState(false);
@@ -238,7 +240,7 @@ function HighRollerContent() {
           <h2 className="text-3xl font-bold flex items-center gap-2">
             <Sparkles className="text-blue-400" /> Season Summary
           </h2>
-          <p className="text-slate-400 mt-2">Total money distributed each season.</p>
+          <p className="text-slate-400 mt-2">Weekly high-score winners each season.</p>
         </div>
 
         {/* Mobile: swipeable carousel */}
@@ -259,7 +261,6 @@ function HighRollerContent() {
             >
               {years.map(year => {
                 const yearHighs = weeklyHighs.filter(h => h.year === year);
-                const totalPayout = yearHighs.length * 15;
                 const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
                 const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
                 const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
@@ -267,8 +268,10 @@ function HighRollerContent() {
                   <button key={year} style={{ minWidth: '85%' }} onClick={() => { if (wasDragging.current) { wasDragging.current = false; return; } setSelectedSeasonYear(year); }} className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 pr-8 select-none w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
                     <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-2xl font-bold text-white">{year} Season</h3>
-                      <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
+                      <h3 className="text-2xl font-bold text-white">
+                      {year} Season
+                      {isInProgress(year) && <span className="ml-2 align-middle text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded border border-amber-500/40 bg-amber-500/10 text-amber-300">In progress</span>}
+                    </h3>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div><div className="text-slate-400">Total Weeks</div><div className="text-xl font-bold text-white">{yearHighs.length}</div></div>
@@ -296,10 +299,9 @@ function HighRollerContent() {
         </div>
 
         {/* Desktop: grid of cards */}
-        <div className="hidden md:grid md:grid-cols-2 gap-4">
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {years.map(year => {
             const yearHighs = weeklyHighs.filter(h => h.year === year);
-            const totalPayout = yearHighs.length * 15;
             const uniqueWinners = new Set(yearHighs.map(h => h.manager)).size;
             const winCounts = yearHighs.reduce((acc, h) => { acc[h.manager] = (acc[h.manager] || 0) + 1; return acc; }, {} as Record<string, number>);
             const topWinner = Object.entries(winCounts).sort(([, a], [, b]) => b - a)[0];
@@ -307,8 +309,10 @@ function HighRollerContent() {
               <button key={year} onClick={() => setSelectedSeasonYear(year)} className="relative bg-slate-900 border border-slate-800 rounded-xl p-6 pr-8 w-full text-left hover:border-slate-700 transition-colors cursor-pointer">
                 <Maximize2 className="absolute top-3 right-3 w-3.5 h-3.5 text-slate-400" />
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold text-white">{year} Season</h3>
-                  <div className="text-3xl font-bold text-emerald-400">{formatCurrency(totalPayout)}</div>
+                  <h3 className="text-2xl font-bold text-white">
+                      {year} Season
+                      {isInProgress(year) && <span className="ml-2 align-middle text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded border border-amber-500/40 bg-amber-500/10 text-amber-300">In progress</span>}
+                    </h3>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div><div className="text-slate-400">Total Weeks</div><div className="text-xl font-bold text-white">{yearHighs.length}</div></div>

@@ -6,6 +6,7 @@ import { getLeagueData, SeasonTeam } from '@/utils/dataProcessing';
 import { Calendar, Medal, ArrowUpDown, Trash2, Maximize2 } from 'lucide-react';
 import Link from 'next/link';
 import SeasonModal from '@/components/SeasonModal';
+import { isInProgress, inProgressLabel } from '@/utils/seasons';
 
 const parseFinish = (finish: string | undefined): number => {
   if (!finish) return 999;
@@ -30,14 +31,23 @@ function SeasonsContent() {
 
   const seasonData = data.seasons[selectedYear];
 
+  // A season in progress has no finishes yet: rank by current standings (record, then points for)
+  const live = isInProgress(selectedYear);
+  const currentRank: Record<string, number> = Object.fromEntries(
+    [...seasonData]
+      .sort((a, b) => b.regular_season.wins - a.regular_season.wins || b.regular_season.pf - a.regular_season.pf)
+      .map((t, i) => [t.owner, i + 1]),
+  );
+  const finishOf = (t: SeasonTeam) => (live ? currentRank[t.owner] : parseFinish(t.playoff_finish));
+
   const sortedSeason = [...seasonData].sort((a, b) => {
     let aVal: any;
     let bVal: any;
     let direction = sortConfig?.direction || 'asc';
 
     if (!sortConfig) {
-      const aFinish = parseFinish(a.playoff_finish);
-      const bFinish = parseFinish(b.playoff_finish);
+      const aFinish = finishOf(a);
+      const bFinish = finishOf(b);
       if (aFinish !== bFinish) return aFinish - bFinish;
       const aWins = a.regular_season.wins;
       const bWins = b.regular_season.wins;
@@ -47,8 +57,8 @@ function SeasonsContent() {
 
     const key = sortConfig.key;
     if (key === 'playoff_finish') {
-      aVal = parseFinish(a.playoff_finish);
-      bVal = parseFinish(b.playoff_finish);
+      aVal = finishOf(a);
+      bVal = finishOf(b);
     } else if (key === 'record') {
       aVal = a.regular_season.wins;
       bVal = b.regular_season.wins;
@@ -113,10 +123,17 @@ function SeasonsContent() {
           className="bg-slate-900 border border-slate-700 text-white text-lg rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block p-2.5 outline-none cursor-pointer"
         >
           {years.map(year => (
-            <option key={year} value={year}>{year} Season</option>
+            <option key={year} value={year}>{year} Season{isInProgress(year) ? ' (in progress)' : ''}</option>
           ))}
         </select>
       </div>
+
+      {live && (
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+          <span className="font-semibold">{inProgressLabel(selectedYear)}.</span>{' '}
+          Ranked by current record, then points for. Finishes, the champion and the Sacko are added when the season ends.
+        </div>
+      )}
 
       <div className="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
@@ -125,7 +142,7 @@ function SeasonsContent() {
               <tr>
                 <th className="px-3 py-4 w-8"></th>
                 <th className="px-6 py-4 cursor-pointer group hover:bg-slate-800 transition-colors whitespace-nowrap" onClick={() => handleSort('playoff_finish')}>
-                  <div className="flex items-center">Standing {getSortIcon('playoff_finish')}</div>
+                  <div className="flex items-center">{live ? 'Current Rank' : 'Standing'} {getSortIcon('playoff_finish')}</div>
                 </th>
                 <th className="px-6 py-4 cursor-pointer group hover:bg-slate-800 transition-colors whitespace-nowrap" onClick={() => handleSort('team')}>
                   <div className="flex items-center">Team Name {getSortIcon('team')}</div>
@@ -155,7 +172,11 @@ function SeasonsContent() {
                     <Maximize2 className="w-3.5 h-3.5 text-slate-600" />
                   </td>
                   <td className="px-6 py-4">
-                    {team.playoff_finish ? (
+                    {live ? (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-300">
+                        #{currentRank[team.owner]}
+                      </span>
+                    ) : team.playoff_finish ? (
                       <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
                         team.playoff_finish.includes('1st') ? 'bg-yellow-400/10 text-yellow-400 border border-yellow-400/20' :
                         team.playoff_finish.includes('2nd') ? 'bg-slate-300/10 text-slate-300 border border-slate-300/20' :

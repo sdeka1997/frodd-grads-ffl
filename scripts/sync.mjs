@@ -2,9 +2,10 @@ import fs from 'fs/promises';
 import path from 'path';
 import { getSeason, isFinal, archiveEditAllowed } from './lib/seasons.mjs';
 
-// In-progress seasons stay out of ffl_data.json / head_to_head.json until the pages
-// can show a partial season (games shown, titles and finishes held). Flip when ready.
-const INCLUDE_IN_PROGRESS = false;
+// In-progress seasons are included: their games count toward records and head-to-head,
+// while finishes stay "N/A" until the season is final (pages hold titles/finishes).
+// Set false to keep the current season out of the site data entirely.
+const INCLUDE_IN_PROGRESS = true;
 
 function getOrdinal(rank) {
     if (rank === 1) return "1st";
@@ -78,7 +79,10 @@ async function main() {
                 };
             });
             
-            const regularWeeks = data.settings.regularSeasonLength;
+            // Weeks actually played: a season in progress has only played lastScoredWeek of them
+            const regularWeeks = data.settings.status === 'in_progress'
+                ? Math.min(data.settings.lastScoredWeek, data.settings.regularSeasonLength)
+                : data.settings.regularSeasonLength;
 
             data.matchups.forEach(m => {
                 const homeOwner = m.home.manager;

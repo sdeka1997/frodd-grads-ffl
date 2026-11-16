@@ -1,10 +1,4 @@
-import data2019 from '../data/matchups/2019_espn.json';
-import data2020 from '../data/matchups/2020_espn.json';
-import data2021 from '../data/matchups/2021_espn.json';
-import data2022 from '../data/matchups/2022_espn.json';
-import data2023 from '../data/matchups/2023_espn.json';
-import data2024 from '../data/matchups/2024_espn.json';
-import data2025 from '../data/matchups/2025_sleeper.json';
+import { ALL_YEARS, loadMatchups } from './seasons';
 
 const winnersLabels = ["quarterfinal", "semifinal", "championship"];
 const sackoLabels = ["sacko_semifinal", "sacko_final", "9th_place_final_sacko_qf", "10th_place_final_sacko_sf"];
@@ -30,15 +24,8 @@ export interface HighStakesGame {
   opponent: string;
 }
 
-const allSeasons = [
-  { year: '2019', matchups: data2019.matchups },
-  { year: '2020', matchups: data2020.matchups },
-  { year: '2021', matchups: data2021.matchups },
-  { year: '2022', matchups: data2022.matchups },
-  { year: '2023', matchups: data2023.matchups },
-  { year: '2024', matchups: data2024.matchups },
-  { year: '2025', matchups: data2025.matchups },
-];
+// Every season, including one in progress (its scored weeks only)
+const allSeasons = ALL_YEARS.map(year => ({ year, matchups: loadMatchups(year).matchups }));
 
 export const getManagerHighStakesGames = (managerName: string): HighStakesGame[] => {
   const games: HighStakesGame[] = [];

@@ -3,19 +3,19 @@
   "cumulative_records": [
     {
       "manager": "Nikhil",
-      "wins": 52,
-      "losses": 44,
-      "pf_vs_avg": 1.45,
-      "pa_vs_avg": 1.36,
+      "wins": 55,
+      "losses": 50,
+      "pf_vs_avg": 1.06,
+      "pa_vs_avg": 0.96,
       "championships": 0,
       "playoff_record": "5-5"
     },
     {
       "manager": "Arun",
-      "wins": 48,
-      "losses": 48,
-      "pf_vs_avg": -4.18,
-      "pa_vs_avg": -1.92,
+      "wins": 52,
+      "losses": 53,
+      "pf_vs_avg": -3.99,
+      "pa_vs_avg": -2.14,
       "championships": 1,
       "playoff_record": "3-4"
     },
@@ -30,37 +30,37 @@
     },
     {
       "manager": "Asad",
-      "wins": 46,
-      "losses": 50,
-      "pf_vs_avg": -3.18,
-      "pa_vs_avg": -0.18,
+      "wins": 53,
+      "losses": 52,
+      "pf_vs_avg": -0.8,
+      "pa_vs_avg": -0.32,
       "championships": 1,
       "playoff_record": "7-4"
     },
     {
       "manager": "Manuj",
-      "wins": 43,
-      "losses": 53,
-      "pf_vs_avg": -2.06,
-      "pa_vs_avg": -0.9,
+      "wins": 49,
+      "losses": 56,
+      "pf_vs_avg": -2.17,
+      "pa_vs_avg": -1.43,
       "championships": 0,
       "playoff_record": "1-2"
     },
     {
       "manager": "Palanki",
-      "wins": 46,
-      "losses": 50,
-      "pf_vs_avg": 3.87,
-      "pa_vs_avg": 2.22,
+      "wins": 51,
+      "losses": 54,
+      "pf_vs_avg": 3.67,
+      "pa_vs_avg": 2.21,
       "championships": 1,
       "playoff_record": "5-3"
     },
     {
       "manager": "Ameesh",
-      "wins": 53,
-      "losses": 43,
-      "pf_vs_avg": -0.51,
-      "pa_vs_avg": -1.28,
+      "wins": 56,
+      "losses": 49,
+      "pf_vs_avg": -0.72,
+      "pa_vs_avg": -0.1,
       "championships": 1,
       "playoff_record": "4-4"
     },
@@ -75,55 +75,55 @@
     },
     {
       "manager": "Ro K",
-      "wins": 43,
-      "losses": 53,
-      "pf_vs_avg": 4.03,
-      "pa_vs_avg": 4.51,
+      "wins": 47,
+      "losses": 58,
+      "pf_vs_avg": 3.45,
+      "pa_vs_avg": 4.49,
       "championships": 0,
       "playoff_record": "2-3"
     },
     {
       "manager": "Sai",
-      "wins": 51,
-      "losses": 45,
-      "pf_vs_avg": 1.71,
-      "pa_vs_avg": 1.45,
+      "wins": 52,
+      "losses": 53,
+      "pf_vs_avg": 0.3,
+      "pa_vs_avg": 1.88,
       "championships": 2,
       "playoff_record": "10-3"
     },
     {
       "manager": "Swapnav",
-      "wins": 50,
-      "losses": 46,
-      "pf_vs_avg": 2.76,
-      "pa_vs_avg": 0.12,
+      "wins": 57,
+      "losses": 48,
+      "pf_vs_avg": 3.28,
+      "pa_vs_avg": -0.36,
       "championships": 1,
       "playoff_record": "4-4"
     },
     {
       "manager": "Ro B",
-      "wins": 46,
-      "losses": 50,
-      "pf_vs_avg": -1.19,
-      "pa_vs_avg": -2.18,
+      "wins": 51,
+      "losses": 54,
+      "pf_vs_avg": -1.65,
+      "pa_vs_avg": -2.33,
       "championships": 0,
       "playoff_record": "2-5"
     },
     {
       "manager": "Smeet",
-      "wins": 35,
-      "losses": 48,
-      "pf_vs_avg": -5.34,
-      "pa_vs_avg": 1.27,
+      "wins": 41,
+      "losses": 51,
+      "pf_vs_avg": -4.38,
+      "pa_vs_avg": 0.66,
       "championships": 0,
       "playoff_record": "1-3"
     },
     {
       "manager": "Shrey",
-      "wins": 35,
-      "losses": 21,
-      "pf_vs_avg": 4.33,
-      "pa_vs_avg": -3.05,
+      "wins": 38,
+      "losses": 27,
+      "pf_vs_avg": 3.2,
+      "pa_vs_avg": -1.87,
       "championships": 0,
       "playoff_record": "0-4"
     }
@@ -2409,6 +2409,332 @@
         },
         "playoff_finish": "7th",
         "playoff_record": "0-1"
+      }
+    ],
+    "2026": [
+      {
+        "owner": "Swapnav",
+        "team": "all’s fair in love&warren",
+        "regular_season": {
+          "wins": 7,
+          "losses": 2,
+          "pf": 998.08,
+          "pa": 869.74,
+          "pf_pg": 110.9,
+          "pa_pg": 96.64
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Nikhil",
+        "team": "It Matters. ",
+        "regular_season": {
+          "wins": 3,
+          "losses": 6,
+          "pf": 889.88,
+          "pa": 889.54,
+          "pf_pg": 98.88,
+          "pa_pg": 98.84
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Asad",
+        "team": "Bhayshul Bhai",
+        "regular_season": {
+          "wins": 7,
+          "losses": 2,
+          "pf": 1140.16,
+          "pa": 902.5,
+          "pf_pg": 126.68,
+          "pa_pg": 100.28
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Arun",
+        "team": "PantomimeKane",
+        "regular_season": {
+          "wins": 4,
+          "losses": 5,
+          "pf": 901.02,
+          "pa": 878.2,
+          "pf_pg": 100.11,
+          "pa_pg": 97.58
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Ameesh",
+        "team": "Brian Cortese",
+        "regular_season": {
+          "wins": 3,
+          "losses": 6,
+          "pf": 892.34,
+          "pa": 1030.58,
+          "pf_pg": 99.15,
+          "pa_pg": 114.51
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Ro B",
+        "team": "ICEMAN SZN",
+        "regular_season": {
+          "wins": 5,
+          "losses": 4,
+          "pf": 859.28,
+          "pa": 883.3,
+          "pf_pg": 95.48,
+          "pa_pg": 98.14
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Smeet",
+        "team": "#Swacko",
+        "regular_season": {
+          "wins": 6,
+          "losses": 3,
+          "pf": 958.4,
+          "pa": 874.36,
+          "pf_pg": 106.49,
+          "pa_pg": 97.15
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Ro K",
+        "team": "rokrish96",
+        "regular_season": {
+          "wins": 4,
+          "losses": 5,
+          "pf": 894.14,
+          "pa": 957.7,
+          "pf_pg": 99.35,
+          "pa_pg": 106.41
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Manuj",
+        "team": "The Blue Tent",
+        "regular_season": {
+          "wins": 6,
+          "losses": 3,
+          "pf": 888.28,
+          "pa": 854.66,
+          "pf_pg": 98.7,
+          "pa_pg": 94.96
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Palanki",
+        "team": "It Doesn’t Matter.",
+        "regular_season": {
+          "wins": 5,
+          "losses": 4,
+          "pf": 932.28,
+          "pa": 937.86,
+          "pf_pg": 103.59,
+          "pa_pg": 104.21
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Sai",
+        "team": "Falafel over Rice ",
+        "regular_season": {
+          "wins": 1,
+          "losses": 8,
+          "pf": 785.34,
+          "pa": 977,
+          "pf_pg": 87.26,
+          "pa_pg": 108.56
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
+      },
+      {
+        "owner": "Shrey",
+        "team": "Cookin’ with Kraft cheese",
+        "regular_season": {
+          "wins": 3,
+          "losses": 6,
+          "pf": 884.02,
+          "pa": 967.78,
+          "pf_pg": 98.22,
+          "pa_pg": 107.53
+        },
+        "post_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0,
+          "bracket": "none"
+        },
+        "sacko_season": {
+          "wins": 0,
+          "losses": 0,
+          "pf": 0,
+          "pa": 0
+        },
+        "playoff_finish": "N/A",
+        "playoff_record": "0-0"
       }
     ]
   }
