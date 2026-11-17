@@ -9,7 +9,13 @@ import { getH2HGameLog, type H2HGame } from '@/utils/h2hGameLog';
 import { Grid3X3, Trophy, Target, Users, X, TrendingUp, TrendingDown, Maximize2 } from 'lucide-react';
 import CollapsibleLegend from '@/components/CollapsibleLegend';
 
-function DominanceModal({ manager, onClose }: { manager: string; onClose: () => void }) {
+// Lifetime record, optionally excluding postseason games
+const getRecord = (m1: string, m2: string, includePlayoffs: boolean) => {
+  const h2h = getLifetimeH2H(m1, m2);
+  return includePlayoffs ? h2h.total : h2h.regular;
+};
+
+function DominanceModal({ manager, includePlayoffs, onClose }: { manager: string; includePlayoffs: boolean; onClose: () => void }) {
   useModalEscape(onClose);
 
   const activeManagers = getCurrentManagers().sort();
@@ -18,7 +24,7 @@ function DominanceModal({ manager, onClose }: { manager: string; onClose: () => 
     .filter(m => m !== manager)
     .map(opponent => ({
       name: opponent,
-      ...getLifetimeH2H(manager, opponent)
+      total: getRecord(manager, opponent, includePlayoffs)
     }))
     .filter(r => r.total.wins + r.total.losses > 0);
 
@@ -41,7 +47,7 @@ function DominanceModal({ manager, onClose }: { manager: string; onClose: () => 
         <div className="flex items-center justify-between p-6 border-b border-slate-800">
           <div>
             <h2 className="text-xl font-bold text-white">{manager}</h2>
-            <p className="text-sm text-slate-400 mt-0.5">Head-to-Head Rivalries</p>
+            <p className="text-sm text-slate-400 mt-0.5">Head-to-Head Rivalries{includePlayoffs ? '' : ' · Regular season only'}</p>
           </div>
           <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
             <X className="w-5 h-5" />
@@ -103,8 +109,8 @@ function DominanceModal({ manager, onClose }: { manager: string; onClose: () => 
   );
 }
 
-function H2HModal({ m1, m2, onClose }: { m1: string; m2: string; onClose: () => void }) {
-  const games = getH2HGameLog(m1, m2);
+function H2HModal({ m1, m2, includePlayoffs, onClose }: { m1: string; m2: string; includePlayoffs: boolean; onClose: () => void }) {
+  const games = getH2HGameLog(m1, m2).filter(g => includePlayoffs || !g.isPlayoff);
 
   useModalEscape(onClose);
 
@@ -129,7 +135,7 @@ function H2HModal({ m1, m2, onClose }: { m1: string; m2: string; onClose: () => 
         <div className="flex items-center justify-between p-6 border-b border-slate-800">
           <div>
             <h2 className="text-xl font-bold text-white">{m1} vs {m2}</h2>
-            <p className="text-sm text-slate-400 mt-0.5">All-time Head-to-Head</p>
+            <p className="text-sm text-slate-400 mt-0.5">All-time Head-to-Head{includePlayoffs ? '' : ' · Regular season only'}</p>
           </div>
           <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
             <X className="w-5 h-5" />
@@ -194,20 +200,67 @@ function H2HModal({ m1, m2, onClose }: { m1: string; m2: string; onClose: () => 
   );
 }
 
+// Win % adjusted toward .500 for small samples: (W + 2) / (W + L + 4).
+// A 4-2 record shades like 60%, while 9-5 shades like 61%.
+const adjustedWinPct = (wins: number, losses: number) => (wins + 2) / (wins + losses + 4);
+
+const EMERALD = '16, 185, 129';
+const RED = '239, 68, 68';
+
+const HEAT_TIERS = [
+  { label: '<35%',   min: -Infinity, bg: `rgba(${RED}, 0.55)`,     text: 'text-red-100 font-semibold' },
+  { label: '35–43%', min: 0.35,      bg: `rgba(${RED}, 0.32)`,     text: 'text-red-200' },
+  { label: '43–50%', min: 0.43,      bg: `rgba(${RED}, 0.14)`,     text: 'text-red-400' },
+  { label: 'Even',   min: 0.5,       bg: 'rgb(15, 23, 42)',        text: 'text-slate-500' },
+  { label: '50–57%', min: 0.5,       bg: `rgba(${EMERALD}, 0.14)`, text: 'text-emerald-400' },
+  { label: '57–65%', min: 0.57,      bg: `rgba(${EMERALD}, 0.32)`, text: 'text-emerald-200' },
+  { label: '65%+',   min: 0.65,      bg: `rgba(${EMERALD}, 0.55)`, text: 'text-emerald-100 font-semibold' },
+] as const;
+
+function getHeatTier(wins: number, losses: number) {
+  if (wins === losses) return HEAT_TIERS[3];
+  const pct = adjustedWinPct(wins, losses);
+  if (wins > losses) {
+    if (pct >= 0.65) return HEAT_TIERS[6];
+    if (pct >= 0.57) return HEAT_TIERS[5];
+    return HEAT_TIERS[4];
+  }
+  if (pct < 0.35) return HEAT_TIERS[0];
+  if (pct < 0.43) return HEAT_TIERS[1];
+  return HEAT_TIERS[2];
+}
+
+function HeatScale({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={compact ? 'space-y-1' : 'space-y-2'}>
+      <div className="flex gap-1">
+        {HEAT_TIERS.map(t => (
+          <div key={t.label} className="flex-1 min-w-0">
+            <div className={`${compact ? 'h-3' : 'h-5'} rounded-sm border border-slate-800`} style={{ backgroundColor: t.bg }} />
+            <div className={`mt-1 text-center ${compact ? 'text-[10px]' : 'text-xs'} text-slate-400 truncate`}>{t.label}</div>
+          </div>
+        ))}
+      </div>
+      <div className={`flex justify-between ${compact ? 'text-[10px]' : 'text-xs'} text-slate-500`}>
+        <span>← Row manager losing</span>
+        <span>Row manager winning →</span>
+      </div>
+    </div>
+  );
+}
+
 export default function MatrixPage() {
   const activeManagers = useMemo(() => getCurrentManagers().sort(), []);
   const [selectedPair, setSelectedPair] = useState<{ m1: string; m2: string } | null>(null);
   const [selectedDominance, setSelectedDominance] = useState<string | null>(null);
+  const [includePlayoffs, setIncludePlayoffs] = useState(true);
 
-  const getHeatmapColor = (m1: string, m2: string) => {
-    if (m1 === m2) return 'bg-slate-950';
-    const s = getLifetimeH2H(m1, m2);
-    const total = s.total.wins + s.total.losses;
-    if (total === 0) return 'bg-slate-900/50 text-slate-700';
-    const diff = s.total.wins - s.total.losses;
-    if (diff > 0) return 'bg-emerald-500/20 text-emerald-400';
-    if (diff < 0) return 'bg-red-500/20 text-red-400';
-    return 'bg-slate-900 text-slate-500';
+  const getHeatmapStyle = (m1: string, m2: string): { className: string; style?: React.CSSProperties } => {
+    if (m1 === m2) return { className: 'bg-slate-950' };
+    const r = getRecord(m1, m2, includePlayoffs);
+    if (r.wins + r.losses === 0) return { className: 'bg-slate-900/50 text-slate-700' };
+    const tier = getHeatTier(r.wins, r.losses);
+    return { className: tier.text, style: { backgroundColor: tier.bg } };
   };
 
   // Calculate dominance statistics
@@ -219,11 +272,11 @@ export default function MatrixPage() {
 
     activeManagers.forEach(opponent => {
       if (manager !== opponent) {
-        const h2h = getLifetimeH2H(manager, opponent);
-        wins += h2h.total.wins;
-        losses += h2h.total.losses;
+        const r = getRecord(manager, opponent, includePlayoffs);
+        wins += r.wins;
+        losses += r.losses;
 
-        const diff = h2h.total.wins - h2h.total.losses;
+        const diff = r.wins - r.losses;
         if (diff > 0) dominated++;
         if (diff < 0) dominatedBy++;
       }
@@ -243,10 +296,10 @@ export default function MatrixPage() {
   return (
     <>
       {selectedPair && (
-        <H2HModal m1={selectedPair.m1} m2={selectedPair.m2} onClose={() => setSelectedPair(null)} />
+        <H2HModal m1={selectedPair.m1} m2={selectedPair.m2} includePlayoffs={includePlayoffs} onClose={() => setSelectedPair(null)} />
       )}
       {selectedDominance && (
-        <DominanceModal manager={selectedDominance} onClose={() => setSelectedDominance(null)} />
+        <DominanceModal manager={selectedDominance} includePlayoffs={includePlayoffs} onClose={() => setSelectedDominance(null)} />
       )}
       <div className="space-y-8 md:space-y-16">
       <header className="border-b border-slate-800 pb-8">
@@ -261,28 +314,40 @@ export default function MatrixPage() {
 
       <div className="hidden md:block">
         <CollapsibleLegend title="How to Read the Matrix">
-          <div className="grid md:grid-cols-3 gap-4 text-sm">
-            <div className="flex items-center gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-              <div className="w-4 h-4 bg-emerald-500/20 shrink-0"></div>
-              <span>Winning record against opponent</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-              <div className="w-4 h-4 bg-red-500/20 shrink-0"></div>
-              <span>Losing record against opponent</span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-slate-800/50 border border-slate-700 rounded-lg">
-              <div className="w-4 h-4 bg-slate-900 shrink-0"></div>
-              <span>Even record or no games</span>
-            </div>
+          <div className="space-y-3 text-sm">
+            <HeatScale />
+            <p className="text-xs text-slate-500">
+              Shading uses an adjusted win % that pulls small samples toward .500 — (W+2)/(W+L+4) — so a 2-0 record doesn&apos;t look as dominant as 9-2. Exact records are shown in each tile.
+            </p>
           </div>
         </CollapsibleLegend>
       </div>
 
       {/* SUPREMACY MATRIX */}
       <section>
-        <p className="text-xs text-slate-500 mb-3 px-1">
+        <div className="flex flex-col-reverse gap-3 md:flex-row md:items-end md:justify-between mb-3 px-1">
+        <p className="text-xs text-slate-500">
           <span className="font-semibold">Reading tip:</span> The record shown is the <span className="text-emerald-400/70 font-medium">Row Manager</span> vs the <span className="text-blue-400/70 font-medium">Column Manager</span>. Tap a tile to see the H2H game log.
         </p>
+          <div role="group" aria-label="Games included" className="inline-flex self-start shrink-0 rounded-lg border border-slate-800 bg-slate-900 p-0.5 text-xs font-medium">
+            {[
+              { value: true, label: 'All games' },
+              { value: false, label: 'Regular season' },
+            ].map(opt => (
+              <button
+                key={opt.label}
+                type="button"
+                aria-pressed={includePlayoffs === opt.value}
+                onClick={() => setIncludePlayoffs(opt.value)}
+                className={`px-3 py-1.5 rounded-md transition-colors ${
+                  includePlayoffs === opt.value ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-center border-collapse">
@@ -299,16 +364,18 @@ export default function MatrixPage() {
                   <tr key={m1}>
                     <td className="p-3 bg-slate-950 border border-slate-800 text-emerald-400 font-bold text-left">{m1}</td>
                     {activeManagers.map(m2 => {
-                      const s = getLifetimeH2H(m1, m2);
+                      const s = getRecord(m1, m2, includePlayoffs);
                       const isSelf = m1 === m2;
+                      const heat = getHeatmapStyle(m1, m2);
                       return (
                         <td
                           key={m2}
-                          className={`p-3 border border-slate-800 transition-colors ${getHeatmapColor(m1, m2)} ${!isSelf ? 'cursor-pointer hover:brightness-125' : ''}`}
-                          title={isSelf ? '' : `${m1} vs ${m2}: ${s.total.wins}-${s.total.losses} — click for game log`}
+                          className={`p-3 border border-slate-800 transition-colors ${heat.className} ${!isSelf ? 'cursor-pointer hover:brightness-125' : ''}`}
+                          style={heat.style}
+                          title={isSelf ? '' : `${m1} vs ${m2}: ${s.wins}-${s.losses} — click for game log`}
                           onClick={() => !isSelf && setSelectedPair({ m1, m2 })}
                         >
-                          {isSelf ? '-' : `${s.total.wins}-${s.total.losses}`}
+                          {isSelf ? '-' : `${s.wins}-${s.losses}`}
                         </td>
                       );
                     })}
@@ -322,19 +389,8 @@ export default function MatrixPage() {
 
       {/* MATRIX LEGEND */}
       {/* MATRIX LEGEND - mobile only, below chart */}
-      <div className="md:hidden flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 bg-emerald-500/20 border border-emerald-500/30 shrink-0 rounded-sm"></div>
-          <span>Winning record</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 bg-red-500/20 border border-red-500/30 shrink-0 rounded-sm"></div>
-          <span>Losing record</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 bg-slate-800 border border-slate-700 shrink-0 rounded-sm"></div>
-          <span>Even / no games</span>
-        </div>
+      <div className="md:hidden">
+        <HeatScale compact />
       </div>
 
       <hr className="border-slate-800" />
