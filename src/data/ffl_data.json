@@ -4,18 +4,18 @@
     {
       "manager": "Nikhil",
       "wins": 55,
-      "losses": 50,
-      "pf_vs_avg": 1.06,
-      "pa_vs_avg": 0.96,
+      "losses": 51,
+      "pf_vs_avg": 0.72,
+      "pa_vs_avg": 1.32,
       "championships": 0,
       "playoff_record": "5-5"
     },
     {
       "manager": "Arun",
       "wins": 52,
-      "losses": 53,
-      "pf_vs_avg": -3.99,
-      "pa_vs_avg": -2.14,
+      "losses": 54,
+      "pf_vs_avg": -3.9,
+      "pa_vs_avg": -1.91,
       "championships": 1,
       "playoff_record": "3-4"
     },
@@ -30,36 +30,36 @@
     },
     {
       "manager": "Asad",
-      "wins": 53,
+      "wins": 54,
       "losses": 52,
-      "pf_vs_avg": -0.8,
-      "pa_vs_avg": -0.32,
+      "pf_vs_avg": -0.58,
+      "pa_vs_avg": -0.27,
       "championships": 1,
       "playoff_record": "7-4"
     },
     {
       "manager": "Manuj",
-      "wins": 49,
+      "wins": 50,
       "losses": 56,
-      "pf_vs_avg": -2.17,
-      "pa_vs_avg": -1.43,
+      "pf_vs_avg": -1.79,
+      "pa_vs_avg": -1.58,
       "championships": 0,
       "playoff_record": "1-2"
     },
     {
       "manager": "Palanki",
-      "wins": 51,
+      "wins": 52,
       "losses": 54,
-      "pf_vs_avg": 3.67,
-      "pa_vs_avg": 2.21,
+      "pf_vs_avg": 4,
+      "pa_vs_avg": 1.87,
       "championships": 1,
       "playoff_record": "5-3"
     },
     {
       "manager": "Ameesh",
       "wins": 56,
-      "losses": 49,
-      "pf_vs_avg": -0.72,
+      "losses": 50,
+      "pf_vs_avg": -0.83,
       "pa_vs_avg": -0.1,
       "championships": 1,
       "playoff_record": "4-4"
@@ -75,55 +75,55 @@
     },
     {
       "manager": "Ro K",
-      "wins": 47,
+      "wins": 48,
       "losses": 58,
-      "pf_vs_avg": 3.45,
-      "pa_vs_avg": 4.49,
+      "pf_vs_avg": 3.38,
+      "pa_vs_avg": 4.23,
       "championships": 0,
       "playoff_record": "2-3"
     },
     {
       "manager": "Sai",
       "wins": 52,
-      "losses": 53,
-      "pf_vs_avg": 0.3,
-      "pa_vs_avg": 1.88,
+      "losses": 54,
+      "pf_vs_avg": 0.13,
+      "pa_vs_avg": 2.23,
       "championships": 2,
       "playoff_record": "10-3"
     },
     {
       "manager": "Swapnav",
       "wins": 57,
-      "losses": 48,
-      "pf_vs_avg": 3.28,
-      "pa_vs_avg": -0.36,
+      "losses": 49,
+      "pf_vs_avg": 2.97,
+      "pa_vs_avg": -0.19,
       "championships": 1,
       "playoff_record": "4-4"
     },
     {
       "manager": "Ro B",
-      "wins": 51,
+      "wins": 52,
       "losses": 54,
-      "pf_vs_avg": -1.65,
-      "pa_vs_avg": -2.33,
+      "pf_vs_avg": -1.47,
+      "pa_vs_avg": -2.59,
       "championships": 0,
       "playoff_record": "2-5"
     },
     {
       "manager": "Smeet",
-      "wins": 41,
+      "wins": 42,
       "losses": 51,
-      "pf_vs_avg": -4.38,
-      "pa_vs_avg": 0.66,
+      "pf_vs_avg": -4.34,
+      "pa_vs_avg": 0.52,
       "championships": 0,
       "playoff_record": "1-3"
     },
     {
       "manager": "Shrey",
       "wins": 38,
-      "losses": 27,
-      "pf_vs_avg": 3.2,
-      "pa_vs_avg": -1.87,
+      "losses": 28,
+      "pf_vs_avg": 2.8,
+      "pa_vs_avg": -1.9,
       "championships": 0,
       "playoff_record": "0-4"
     }
@@ -2417,11 +2417,11 @@
         "team": "all’s fair in love&warren",
         "regular_season": {
           "wins": 7,
-          "losses": 2,
-          "pf": 998.08,
-          "pa": 869.74,
-          "pf_pg": 110.9,
-          "pa_pg": 96.64
+          "losses": 3,
+          "pf": 1079.74,
+          "pa": 998.34,
+          "pf_pg": 107.97,
+          "pa_pg": 99.83
         },
         "post_season": {
           "wins": 0,
@@ -2444,11 +2444,11 @@
         "team": "It Matters. ",
         "regular_season": {
           "wins": 3,
-          "losses": 6,
-          "pf": 889.88,
-          "pa": 889.54,
-          "pf_pg": 98.88,
-          "pa_pg": 98.84
+          "losses": 7,
+          "pf": 966.92,
+          "pa": 1039.98,
+          "pf_pg": 96.69,
+          "pa_pg": 104
         },
         "post_season": {
           "wins": 0,
@@ -2470,12 +2470,12 @@
         "owner": "Asad",
         "team": "Bhayshul Bhai",
         "regular_season": {
-          "wins": 7,
+          "wins": 8,
           "losses": 2,
-          "pf": 1140.16,
-          "pa": 902.5,
-          "pf_pg": 126.68,
-          "pa_pg": 100.28
+          "pf": 1274.22,
+          "pa": 1019.52,
+          "pf_pg": 127.42,
+          "pa_pg": 101.95
         },
         "post_season": {
           "wins": 0,
@@ -2498,11 +2498,11 @@
         "team": "PantomimeKane",
         "regular_season": {
           "wins": 4,
-          "losses": 5,
-          "pf": 901.02,
-          "pa": 878.2,
-          "pf_pg": 100.11,
-          "pa_pg": 97.58
+          "losses": 6,
+          "pf": 1018.04,
+          "pa": 1012.26,
+          "pf_pg": 101.8,
+          "pa_pg": 101.23
         },
         "post_season": {
           "wins": 0,
@@ -2525,11 +2525,11 @@
         "team": "Brian Cortese",
         "regular_season": {
           "wins": 3,
-          "losses": 6,
-          "pf": 892.34,
-          "pa": 1030.58,
-          "pf_pg": 99.15,
-          "pa_pg": 114.51
+          "losses": 7,
+          "pf": 991.06,
+          "pa": 1142,
+          "pf_pg": 99.11,
+          "pa_pg": 114.2
         },
         "post_season": {
           "wins": 0,
@@ -2551,12 +2551,12 @@
         "owner": "Ro B",
         "team": "ICEMAN SZN",
         "regular_season": {
-          "wins": 5,
+          "wins": 6,
           "losses": 4,
-          "pf": 859.28,
-          "pa": 883.3,
-          "pf_pg": 95.48,
-          "pa_pg": 98.14
+          "pf": 987.88,
+          "pa": 964.96,
+          "pf_pg": 98.79,
+          "pa_pg": 96.5
         },
         "post_season": {
           "wins": 0,
@@ -2578,12 +2578,12 @@
         "owner": "Smeet",
         "team": "#Swacko",
         "regular_season": {
-          "wins": 6,
+          "wins": 7,
           "losses": 3,
-          "pf": 958.4,
-          "pa": 874.36,
-          "pf_pg": 106.49,
-          "pa_pg": 97.15
+          "pf": 1069.82,
+          "pa": 973.08,
+          "pf_pg": 106.98,
+          "pa_pg": 97.31
         },
         "post_season": {
           "wins": 0,
@@ -2605,12 +2605,12 @@
         "owner": "Ro K",
         "team": "rokrish96",
         "regular_season": {
-          "wins": 4,
+          "wins": 5,
           "losses": 5,
-          "pf": 894.14,
-          "pa": 957.7,
-          "pf_pg": 99.35,
-          "pa_pg": 106.41
+          "pf": 1001.56,
+          "pa": 1046.28,
+          "pf_pg": 100.16,
+          "pa_pg": 104.63
         },
         "post_season": {
           "wins": 0,
@@ -2632,12 +2632,12 @@
         "owner": "Manuj",
         "team": "The Blue Tent",
         "regular_season": {
-          "wins": 6,
+          "wins": 7,
           "losses": 3,
-          "pf": 888.28,
-          "pa": 854.66,
-          "pf_pg": 98.7,
-          "pa_pg": 94.96
+          "pf": 1038.16,
+          "pa": 949.14,
+          "pf_pg": 103.82,
+          "pa_pg": 94.91
         },
         "post_season": {
           "wins": 0,
@@ -2659,12 +2659,12 @@
         "owner": "Palanki",
         "team": "It Doesn’t Matter.",
         "regular_season": {
-          "wins": 5,
+          "wins": 6,
           "losses": 4,
-          "pf": 932.28,
-          "pa": 937.86,
-          "pf_pg": 103.59,
-          "pa_pg": 104.21
+          "pf": 1082.72,
+          "pa": 1014.9,
+          "pf_pg": 108.27,
+          "pa_pg": 101.49
         },
         "post_season": {
           "wins": 0,
@@ -2687,11 +2687,11 @@
         "team": "Falafel over Rice ",
         "regular_season": {
           "wins": 1,
-          "losses": 8,
-          "pf": 785.34,
-          "pa": 977,
-          "pf_pg": 87.26,
-          "pa_pg": 108.56
+          "losses": 9,
+          "pf": 879.82,
+          "pa": 1126.88,
+          "pf_pg": 87.98,
+          "pa_pg": 112.69
         },
         "post_season": {
           "wins": 0,
@@ -2714,11 +2714,11 @@
         "team": "Cookin’ with Kraft cheese",
         "regular_season": {
           "wins": 3,
-          "losses": 6,
-          "pf": 884.02,
-          "pa": 967.78,
-          "pf_pg": 98.22,
-          "pa_pg": 107.53
+          "losses": 7,
+          "pf": 972.6,
+          "pa": 1075.2,
+          "pf_pg": 97.26,
+          "pa_pg": 107.52
         },
         "post_season": {
           "wins": 0,
